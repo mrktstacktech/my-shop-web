@@ -1,8 +1,7 @@
 import { Routes, Route, useNavigate } from "react-router-dom";
 import { Signup, Login, HomePage } from './pages';
 import { useEffect } from "react";
-import { useAuthContext } from "./context/auth-context";
-
+import { useAuthContext } from "./context/auth-hook";
 export default function Router() {
     const navigate = useNavigate();
     const { isAuthenticated } = useAuthContext();

@@ -11,7 +11,7 @@ const styles = {
 
 export function InputFormField(props: InputFormFieldType) {
     return (
-        <div className="mb-4">
+        <>
             {props.label? (
                 <label htmlFor={props.id} className={styles.label}>
                     {props.label}
@@ -35,6 +35,6 @@ export function InputFormField(props: InputFormFieldType) {
             </div>
             {props.errorText && <p className="text-red-500 text-xs mt-1">{props.errorText}</p>}
             {props.hintText && !props.errorText && <p className="text-gray-500 text-xs mt-1">{props.hintText}</p>}
-        </div>
+        </>
     )
 }

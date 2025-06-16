@@ -1,6 +1,6 @@
 import { InputFormField, Button } from "../../components";
 import React, { useState } from "react";
-import { useAuthContext } from "../../context/auth-context";
+import { useAuthContext } from "../../context/auth-hook";
 
 const styles = {
     container: "grid grid-cols-5 bg-gray-100",
@@ -14,34 +14,26 @@ const styles = {
 };
 
 export function Login() {
-    const [name, setName] = useState<string>("emilys");
-    const [password, setPassword] = useState<string>("emilyspass");
+    const [name, setName] = useState<string>("");
+    const [password, setPassword] = useState<string>("");
     const [error, setError] = useState<string>("");
-    const { setAuthenticated, setUser, login } = useAuthContext();
+    const { login } = useAuthContext();
 
     const handleSubmit = async (event: React.FormEvent) => {
         event.preventDefault();
-        login({ username: name, password });
-        // // Handle form submission logic here
-        // const response = await fetch('https://dummyjson.com/auth/login', {
-        //     method: 'POST',
-        //     headers: { 'Content-Type': 'application/json' },
-        //     body: JSON.stringify({
-        //         username: name,
-        //         password: password,
-        //         expiresInMins: 30, // optional, defaults to 60
-        //     }),
-        // })
-        // if (!response.ok) {
-        //     setError("Failed to login.");
-        // }
-        // else {
-        //     const data = await response.json()
-        //     setUser(data);
-        //     setAuthenticated && setAuthenticated(true);
-        //     localStorage.setItem("token", JSON.stringify(data.accessToken));
-        // }
-        // console.log("Form submitted");
+        setName (name.trim());
+        setPassword(password.trim());
+        try {
+            const response = await login({ username: name, password: password });
+            if (!response) {
+                setError("Login failed. Please check your credentials.");
+                return;
+            }
+        }
+        catch (error) {
+            console.error("Login error:", error);
+            setError("An error occurred while logging in. Please try again.");
+        }
     }
 
     return (

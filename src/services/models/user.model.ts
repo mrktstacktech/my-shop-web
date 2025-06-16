@@ -6,4 +6,11 @@ export type User = Partial<{
     firstName: string,
     gender: string,
     image: string,
+    accessToken: string,
+    refreshToken: string,
 }>;
+
+export type Login = {
+    username: string;
+    password: string;
+}

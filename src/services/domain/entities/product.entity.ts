@@ -39,9 +39,10 @@ export interface ProductEntity {
     images: string[];
 };
 
-export type ProductListEntity = {
-    products: ProductEntity[];
+export type ProductPagination = {
     total: number;
     skip: number;
     limit: number;
-};
+}
+
+export type ProductListEntity = ProductEntity[];

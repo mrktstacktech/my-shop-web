@@ -7,3 +7,4 @@ export * from './carousel';
 export * from './images';
 export * from './card';
 export * from './star-rating';
+export * from './clock';

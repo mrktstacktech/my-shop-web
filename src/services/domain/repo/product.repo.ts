@@ -1,7 +1,8 @@
 import type { ProductListEntity } from "../entities/product.entity";
 
 export abstract class IProductRepo {
-    abstract getProductList(): Promise<ProductListEntity>;
-    // abstract getProductById(id: string): Promise<ProductListEntity>;
+    abstract getProductList(limit: number, skip: number): Promise<ProductListEntity>;
     abstract getProductByCategory(categorySlug: string): Promise<ProductListEntity>;
+    abstract getProductSorted(limit: number, skip: number, sort: string): Promise<ProductListEntity>;
+    abstract searchProduct(query: string): Promise<ProductListEntity>;
 }

@@ -4,7 +4,7 @@ import type { Any } from "../../types/types";
 export interface ApiRequest {
     endpoint: string;
     body?: Any;
-    params?: string;
+    params?: Any;
 }
 
 export class ServerAPI {
@@ -31,6 +31,20 @@ export class ServerAPI {
                 return config;
             },
             (error: Any) => {
+                return Promise.reject(error);
+            }
+        );
+
+        this.axiosInstance.interceptors.response.use(
+            (response: Any) => {
+                return response;
+            },
+            (error: Any) => {
+                // Handle errors globally
+                if (error.response && error.response.status === 401) {
+                    // Handle unauthorized access, e.g., redirect to login
+                    console.error("Unauthorized access - redirecting to login");
+                }
                 return Promise.reject(error);
             }
         );

@@ -6,7 +6,7 @@ export function Image(props: ImageType) {
             <img
                 src={props.src}
                 alt={props.alt}
-                className={props.className}
+                className={props.className + `object-scale-down`}
                 style={props.style}
             />
             {props.children}

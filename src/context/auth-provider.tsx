@@ -38,6 +38,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
             setUser(null);
             setIsAuthenticated(false);
             //clear localStorage
+            // localStorage.removeItem('accessToken');
             return null;
         }
     }, []);

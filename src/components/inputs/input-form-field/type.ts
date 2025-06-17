@@ -11,6 +11,7 @@ export type InputFormFieldType = {
     defaultValue?: string;
     onChange: (value: string) => void;
     onBlur?: (value: string) => void;
+    onClick?: () => void;
     required?: boolean;
     className?: string;
     style?: React.CSSProperties;

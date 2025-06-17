@@ -1,0 +1,51 @@
+.arrowButton {
+  border-radius: 50%;
+  background-color: rgb(236, 236, 236);
+  padding: 2px;
+}
+
+.arrowButton:hover {
+  background-color: rgb(209, 209, 209);
+}
+
+.title-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 1.5rem;
+}
+
+.title {
+  font-size: 1.6em;
+  font-weight: 500;
+  color: black;
+}
+
+.subtitle-container {
+  display: flex;
+  align-items: center;
+  justify-content: start;
+  gap: 0.5rem;
+  color: oklch(63.7% 0.237 25.331);
+  font-weight: 500;
+  margin-bottom: 0.5rem;
+}
+
+.red-block {
+  width: 0.8rem;
+  height: 1.5rem;
+  border-radius: 0.1rem;
+  background-color: oklch(63.7% 0.237 25.331);
+}
+
+.view-button {
+    background-color: oklch(63.7% 0.237 25.331);
+    color: white;
+    padding: 0.3rem 1rem;
+    border-radius: 0.375rem;
+}
+
+.view-button:hover {
+    background-color: oklch(63.7% 0.237 25.331);
+    opacity: 0.8;
+}

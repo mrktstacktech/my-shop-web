@@ -3,7 +3,8 @@ import { DropDown } from "../dropdown";
 import { NAV_ITEMS, searchIcon, heartIcon, cartIcon, userIcon, USER_DROPDOWN_ITEMS } from "../../constants";
 import { useEffect, useState } from "react";
 import { useAuthContext } from "../../context/auth-hook";
-
+import { ProductRepository } from "../../services/repositories";
+import type { ProductListEntity } from "../../services/domain/entities";
 
 const styles = {
     header: "shadow-(--shadow-header)",
@@ -20,6 +21,49 @@ const styles = {
 export function AppHeader() {
     const [selectedItem, setSelectedItem] = useState('Home');
     const { isAuthenticated } = useAuthContext();
+    const [inputValue, setInputValue] = useState<string>('');
+    const [searchValue, setSearchValue] = useState<ProductListEntity>([]);
+    const [loading, setLoading] = useState<boolean>(false);
+    // const [debounceTimeout, setDebounceTimeout] = useState<NodeJS.Timeout | null>(null);
+
+    const fetchSearchResults = (value: string) => {
+        setLoading(true);
+        if (value.length > 0) {
+            new ProductRepository().searchProduct(value).then(data => {
+                setSearchValue(data);
+            }).catch(error => {
+                console.error("Error fetching search results:", error);
+            }).finally(() => {
+                setLoading(false);
+            });
+        } else {
+            setSearchValue([]);
+        }
+    }
+
+    // const onChangeTextSearch = useCallback((text: string) => {
+    //     setInputValue(text);
+
+    //     if (debounceTimeout) {
+    //         clearTimeout(debounceTimeout);
+    //     }
+
+    //     // Set a new timeout to debounce
+    //     const timeout = setTimeout(() => {
+    //         // setPage(pre => {
+    //         //     if (pre === 1) {
+    //         //         handleSearch({ page: pre, limit: kLimitPerPage, searchText: text });
+    //         //     }
+    //         //     return 1;
+    //         // })
+    //     }, 500);
+
+    //     setDebounceTimeout(timeout);
+    // }, [debounceTimeout, handleSearch]);
+
+    useEffect(() => {
+        fetchSearchResults(inputValue);
+    }, [inputValue]);
 
     const handleClick = (item: string) => {
         setSelectedItem(item);
@@ -33,8 +77,7 @@ export function AppHeader() {
         } else {
             setSelectedItem('Home'); // Default to Home if no match found
         }
-    }
-        , []);
+    }, []);
 
     return (
         <header className={styles.header}>
@@ -59,16 +102,32 @@ export function AppHeader() {
                         placeholder="What are you looking for?"
                         className={`${styles.searchInput}`}
                         required={false}
-                        onChange={() => { }}
+                        value={inputValue}
+                        onChange={(value: string) => setInputValue(value)}
                         suffix={searchIcon}
                     />
+                    {inputValue.length > 0 && (
+                        <div className="absolute top-12 left-0 w-[250px] bg-white shadow-lg z-10">
+                            {loading
+                                ? <p className="p-2 text-gray-500">Searching...</p>
+                                : (searchValue.length > 0
+                                    ? <ul className="max-h-60 overflow-y-auto">
+                                        {searchValue.map((product, index) => (
+                                            <li key={index} className="p-2 hover:bg-gray-100 cursor-pointer">
+                                                <a href={`/product/${product.id}`}>{product.title}</a>
+                                            </li>
+                                        ))}
+                                    </ul>
+                                    : <p className="p-2 text-gray-500">No results found</p>)}
+                        </div>
+                    )}
                     <button className={styles.button}>
                         {heartIcon}
                     </button>
                     <button className={styles.button}>
                         {cartIcon}
                     </button>
-                    {isAuthenticated ? (
+                    {isAuthenticated && (
                         <DropDown
                             label={userIcon}
                             value=""
@@ -77,7 +136,7 @@ export function AppHeader() {
                             className={styles.button}
                             classNameModal={styles.modal}
                         />
-                    ) : <div>Not login</div>}
+                    )}
                 </div>
             </div>
         </header>

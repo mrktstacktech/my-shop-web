@@ -30,6 +30,7 @@ export function InputFormField(props: InputFormFieldType) {
                     className={`w-full resize-none focus:ring-none focus:border-none focus:outline-none`}
                     style={props.style}
                     onChange={(e) => props.onChange(e.target.value)}
+                    onClick={() => props.onClick && props.onClick()}
                 />
                 {props.suffix && <span className="ml-2">{props.suffix}</span>}
             </div>

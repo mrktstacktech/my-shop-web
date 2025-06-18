@@ -1,8 +1,8 @@
 import { EndPoints } from "../../constants/endpoints";
 import { server } from "../axios/server.api";
-import type { AuthEntity, UserInfoEntity } from "../domain/entities";
+import type { AuthEntity, UserInfoEntity, RefreshTokenEntity } from "../domain/entities";
 import type { IAuthRepo } from "../domain/repo/auth.repo";
-import type { GetUserResponse, LoginResponse } from "../models/auth/auth.reponse";
+import type { GetUserResponse, LoginResponse, RefreshTokenResponse } from "../models/auth";
 
 export class AuthRepository implements IAuthRepo {
     async login(username: string, password: string): Promise<AuthEntity> {
@@ -18,7 +18,24 @@ export class AuthRepository implements IAuthRepo {
             }
         }
         catch (error) {
-            alert(error);
+            // alert(error);
+            console.error("Login error:", error);
+            throw error; // Re-throw the error for further handling
+        }
+    }
+
+    async requestNewToken(refreshToken: string): Promise<RefreshTokenEntity> {
+        try {
+            const response = await server.post<RefreshTokenResponse>({
+                endpoint: EndPoints.REFRESH_TOKEN,
+                body: { 
+                    refreshToken: refreshToken },
+            });
+            return response;
+        }
+        catch (error) {
+            // alert(error);
+            console.error("Error requesting new token:", error);
             throw error; // Re-throw the error for further handling
         }
     }
@@ -31,7 +48,8 @@ export class AuthRepository implements IAuthRepo {
             return response;
         }
         catch (error) {
-            alert(error);
+            // alert(error);
+            console.log("Error fetching user info:", error);
             throw error; // Re-throw the error for further handling
         }
     }

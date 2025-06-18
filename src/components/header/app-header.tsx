@@ -1,7 +1,7 @@
 import { InputFormField } from "../inputs";
 import { DropDown } from "../dropdown";
 import { NAV_ITEMS, searchIcon, heartIcon, cartIcon, userIcon, USER_DROPDOWN_ITEMS } from "../../constants";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import { useAuthContext } from "../../context/auth-hook";
 import { ProductRepository } from "../../services/repositories";
 import type { ProductListEntity } from "../../services/domain/entities";
@@ -24,9 +24,9 @@ export function AppHeader() {
     const [inputValue, setInputValue] = useState<string>('');
     const [searchValue, setSearchValue] = useState<ProductListEntity>([]);
     const [loading, setLoading] = useState<boolean>(false);
-    // const [debounceTimeout, setDebounceTimeout] = useState<NodeJS.Timeout | null>(null);
+    const [debounceTimeout, setDebounceTimeout] = useState<NodeJS.Timeout | null>(null);
 
-    const fetchSearchResults = (value: string) => {
+    const fetchSearchResults = useCallback((value: string) => {
         setLoading(true);
         if (value.length > 0) {
             new ProductRepository().searchProduct(value).then(data => {
@@ -39,31 +39,22 @@ export function AppHeader() {
         } else {
             setSearchValue([]);
         }
-    }
+    }, []);
 
-    // const onChangeTextSearch = useCallback((text: string) => {
-    //     setInputValue(text);
+    const onChangeTextSearch = useCallback((text: string) => {
+        setInputValue(text);
 
-    //     if (debounceTimeout) {
-    //         clearTimeout(debounceTimeout);
-    //     }
+        if (debounceTimeout) {
+            clearTimeout(debounceTimeout);
+        }
 
-    //     // Set a new timeout to debounce
-    //     const timeout = setTimeout(() => {
-    //         // setPage(pre => {
-    //         //     if (pre === 1) {
-    //         //         handleSearch({ page: pre, limit: kLimitPerPage, searchText: text });
-    //         //     }
-    //         //     return 1;
-    //         // })
-    //     }, 500);
+        // Set a new timeout to debounce
+        const timeout = setTimeout(() => {
+            fetchSearchResults(text);
+        }, 500);
 
-    //     setDebounceTimeout(timeout);
-    // }, [debounceTimeout, handleSearch]);
-
-    useEffect(() => {
-        fetchSearchResults(inputValue);
-    }, [inputValue]);
+        setDebounceTimeout(timeout);
+    }, [debounceTimeout, fetchSearchResults]);
 
     const handleClick = (item: string) => {
         setSelectedItem(item);
@@ -103,7 +94,7 @@ export function AppHeader() {
                         className={`${styles.searchInput}`}
                         required={false}
                         value={inputValue}
-                        onChange={(value: string) => setInputValue(value)}
+                        onChange={(value: string) => onChangeTextSearch(value)}
                         suffix={searchIcon}
                     />
                     {inputValue.length > 0 && (

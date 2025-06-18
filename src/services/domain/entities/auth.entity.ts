@@ -10,4 +10,9 @@ export interface AuthEntity {
     refreshToken: string,
 }
 
+export interface RefreshTokenEntity {
+    refreshToken: string,
+    accessToken: string,
+}
+
 export type UserInfoEntity = Omit<AuthEntity, 'accessToken' | 'refreshToken'>;

@@ -1,4 +1,5 @@
 export * from './auth.request';
+export * from './auth.response';
 
 export type User = {
     username: string,

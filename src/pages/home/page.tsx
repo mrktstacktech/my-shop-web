@@ -1,6 +1,5 @@
 import { useMemo } from "react";
 import './components/style.css';
-import { Clock } from "../../components";
 import { ProductList, FlashSaleProduct, Banner, BestSeller, PosterGrid } from "./components";
 
 export function HomePage() {
@@ -14,8 +13,6 @@ export function HomePage() {
             <BestSeller />
             <ProductListComponent />
             <PosterGrid />
-            <Clock targetTime={new Date("2025-06-10")} />
-
         </div>
 
     );

@@ -2,7 +2,7 @@ import { Image } from "../../../components"
 
 export function PosterGrid() {
     return (
-        <div>
+        <div className="component-container">
             <div className="subtitle-container">
                 <div className="red-block"></div>
                 <div className="subtitle">Featured</div>
@@ -12,7 +12,7 @@ export function PosterGrid() {
             </div>
             <div className="grid grid-cols-2 gap-4">
                 <Image src="/public/ps5.svg" alt="PS5" className="w-full object-cover" classNameBackground="relative items-end  bg-black w-full h-full object-cover rounded-sm">
-                    <div className="absolute flex flex-col bottom-0 left-0 pl-5 transform -translate-y-1/3">
+                    <div className="absolute flex flex-col bottom-0 pl-5 left-0 transform  -translate-y-1/3">
                         <p className="font-bold text-white text-xl mt-4 w-4/5">Play Station 5</p>
                         <p className=" text-white text-sm">
                             Black and White version of the PS5 coming out on sale.

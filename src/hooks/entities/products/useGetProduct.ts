@@ -2,7 +2,7 @@ import { useState, useCallback, useEffect } from "react";
 import type { ProductEntity, ProductListEntity } from "../../../services/domain/entities";
 import { ProductRepository } from "../../../services/repositories";
 
-type GetProductOutput = BaseFetchListData<ProductEntity>;
+export type GetProductOutput = BaseFetchListData<ProductEntity>;
 
 interface BaseFetchListData<T>{
     data: T[];
@@ -13,11 +13,12 @@ interface BaseFetchListData<T>{
     setSkip: (value: number) => void;
 }
 
-export function useGetProduct(): GetProductOutput {
+const DEFAULT_LIMIT = 8;
+
+export function useGetProduct(limit = DEFAULT_LIMIT): GetProductOutput {
     const [productList, setProductList] = useState<ProductListEntity>([]);
     const [loading, setLoading] = useState<boolean>(false);
     const [skip, setSkip] = useState<number>(0);
-    const limit = 8;
 
     const fetchProducts = useCallback(() => {
         setLoading(true);

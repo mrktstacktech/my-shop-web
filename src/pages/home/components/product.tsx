@@ -10,7 +10,7 @@ export function ProductList() {
         limit } = useGetProduct();
 
     return (
-        <div>
+        <div className="component-container">
             <div className="subtitle-container">
                 <div className="red-block"></div>
                 <div className="subtitle">Our products</div>

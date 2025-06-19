@@ -5,6 +5,7 @@
   font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
   font-weight: 400;
+  text-overflow: ellipsis;
 
   color-scheme: light dark;
   color: rgba(255, 255, 255, 0.87);
@@ -53,6 +54,11 @@ h1 {
   transition: background-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
 }
 
+button:hover {
+  cursor: pointer;
+
+}
+
 button:disabled {
   background-color: rgb(209, 209, 209);
   color: white;
@@ -76,3 +82,4 @@ button:disabled > svg {
     background-color: #f9f9f9;
   } */
 }
+

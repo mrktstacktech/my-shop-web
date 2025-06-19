@@ -1,11 +1,9 @@
-import { useEffect, useMemo, useState, useCallback } from "react";
+import { useMemo } from "react";
 import { Image, Carousel } from "../../../components";
-import type { CategoryListEntity } from "../../../services/domain/entities";
-import { CategoryRepository } from "../../../services/repositories";
+import { useGetCategories } from "../../../hooks";
 
 export function Banner() {
-    const [loading, setLoading] = useState<boolean>(false);
-    const [list, setList] = useState<CategoryListEntity>([]);
+    const { data: list, loading } = useGetCategories();
 
     const images = useMemo(() => [
         <Image src="/public/mobile-image.svg" alt="Banner 1" className="absolute right-0 w-1/2 p-4 min-w-300[px]" classNameBackground="relative bg-black w-full h-full object-cover">
@@ -43,29 +41,13 @@ export function Banner() {
         </Image>,
     ], []);
 
-    const fetchCategories = useCallback(() => {
-        setLoading(true);
-        const response = new CategoryRepository().getCategoryList();
-        response.then(data => {
-            setList(data);
-        }).catch(error => {
-            console.error("Error fetching categories:", error);
-        }).finally(() => {
-            setLoading(false);
-        });
-    }, []);
-
-    useEffect(() => {
-        fetchCategories();
-    }, [fetchCategories]);
-
     return (
-        <div className="flex justify-between items-start w-full h-68 overscroll-contain mb-3">
+        <div className="component-container flex justify-between items-start w-full h-68 overscroll-contain mb-3">
             {loading
                 ? <div>Loading categories...</div>
-                : <div className="flex flex-col w-1/6 h-full overflow-y-scroll scrollbar-hide">
+                : <div className="category-container flex flex-col h-full overflow-y-scroll scrollbar-hide">
                     {list.map((category) => (
-                        <a href="#" key={category.slug} className="hover:underline hover:text-blue-300 my-2">
+                        <a href="#" key={category.slug} className="text-ellipsis line-clamp-1 category-name hover:underline hover:text-blue-300 my-2">
                             {category.name}
                         </a>
                     ))}

@@ -1,46 +1,36 @@
-import { useState, useCallback, useEffect } from "react";
-import { ProductRepository } from "../../../services/repositories";
-import type { ProductListEntity } from "../../../services/domain/entities";
 import { Card } from "../../../components";
 import { angleLeftIcon, angleRightIcon } from "../../../constants";
+import { useGetProductsSorted } from "../../../hooks";
+import { Clock } from "../../../components";
 
-const K_LIMIT_PER_PAGE = 4;
+const K_SORT_FIELD_NAME = 'discountPercentage';
 
 export function FlashSaleProduct() {
-    const [products, setProducts] = useState<ProductListEntity>([]);
-    const [loading, setLoading] = useState<boolean>(false);
-    const [skip, setSkip] = useState<number>(0);
-
-    const fetchBestSellers = useCallback(() => {
-        setLoading(true);
-        const response = new ProductRepository().getProductSorted(K_LIMIT_PER_PAGE, skip, 'discountPercentage');
-        response.then(data => {
-            setProducts(data);
-        }).catch(error => {
-            console.error("Error fetching products:", error);
-        }).finally(() => {
-            setLoading(false);
-        });
-    }, [skip]);
-
-    useEffect(() => {
-        fetchBestSellers();
-    }, [fetchBestSellers]);
+    const {
+        data: products,
+        loading,
+        limit,
+        skip,
+        setSkip
+    } = useGetProductsSorted(4, K_SORT_FIELD_NAME);
 
     return (
-        <div>
+        <div className="component-container">
             <div className="subtitle-container">
                 <div className="red-block"></div>
                 <div className="subtitle">Today</div>
             </div>
 
             <div className="title-container">
-                <h2 className="title">Flash Sale</h2>
+                <div className="flex items-end gap-5">
+                    <h2 className="title w-full">Flash Sale</h2>
+                    <Clock targetTime={new Date(Date.now() + 3600000)} />
+                </div>
                 <div>
-                    <button className={`arrowButton mr-1`} onClick={() => setSkip(prev => Math.max(prev - K_LIMIT_PER_PAGE, 0))} disabled={skip === 0} >
+                    <button className={`arrowButton mr-1`} onClick={() => setSkip(Math.max(skip - limit, 0))} disabled={skip === 0} >
                         {angleLeftIcon}
                     </button>
-                    <button className={`arrowButton`} onClick={() => setSkip(prev => prev + K_LIMIT_PER_PAGE)} disabled={products.length === 0} >
+                    <button className={`arrowButton`} onClick={() => setSkip(skip + limit)} disabled={products.length === 0} >
                         {angleRightIcon}
                     </button>
                 </div>

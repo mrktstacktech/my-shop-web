@@ -1,30 +1,14 @@
-import type { ProductListEntity } from "../../../services/domain/entities";
-import { ProductRepository } from "../../../services/repositories";
-import { useCallback, useState, useEffect } from "react";
 import { Card } from "../../../components";
+import { useGetProductsSorted } from "../../../hooks";
 
 export function BestSeller() {
-    const [products, setProducts] = useState<ProductListEntity>([]);
-    const [loading, setLoading] = useState<boolean>(false);
-
-    const fetchBestSellers = useCallback(() => {
-        setLoading(true);
-        const response = new ProductRepository().getProductSorted(4, 0, 'price');
-        response.then(data => {
-            setProducts(data);
-        }).catch(error => {
-            console.error("Error fetching products:", error);
-        }).finally(() => {
-            setLoading(false);
-        });
-    }, []);
-
-    useEffect(() => {
-        fetchBestSellers();
-    }, [fetchBestSellers]);
+    const {
+        data: products,
+        loading,
+    } = useGetProductsSorted(4, 'price');
 
     return (
-        <div>
+        <div className="component-container">
             <div className="subtitle-container">
                 <div className="red-block"></div>
                 <div className="subtitle">This month</div>

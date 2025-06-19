@@ -1,13 +1,12 @@
 import { InputFormField } from "../inputs";
 import { DropDown } from "../dropdown";
 import { NAV_ITEMS, searchIcon, heartIcon, cartIcon, userIcon, USER_DROPDOWN_ITEMS } from "../../constants";
-import { useEffect, useState, useCallback } from "react";
 import { useAuthContext } from "../../context/auth-hook";
-import { ProductRepository } from "../../services/repositories";
-import type { ProductListEntity } from "../../services/domain/entities";
+import { useSearchProduct } from "../../hooks";
+import { useState, useEffect } from "react";
 
 const styles = {
-    header: "shadow-(--shadow-header)",
+    header: "shadow-(--shadow-header) mb-2",
     topHeader: "bg-black text-white text-center p-2",
     container: "flex justify-between items-center px-3 pt-3 pb-1",
     navigation: "flex justify-between items-center space-x-6",
@@ -21,40 +20,12 @@ const styles = {
 export function AppHeader() {
     const [selectedItem, setSelectedItem] = useState('Home');
     const { isAuthenticated } = useAuthContext();
-    const [inputValue, setInputValue] = useState<string>('');
-    const [searchValue, setSearchValue] = useState<ProductListEntity>([]);
-    const [loading, setLoading] = useState<boolean>(false);
-    const [debounceTimeout, setDebounceTimeout] = useState<NodeJS.Timeout | null>(null);
-
-    const fetchSearchResults = useCallback((value: string) => {
-        setLoading(true);
-        if (value.length > 0) {
-            new ProductRepository().searchProduct(value).then(data => {
-                setSearchValue(data);
-            }).catch(error => {
-                console.error("Error fetching search results:", error);
-            }).finally(() => {
-                setLoading(false);
-            });
-        } else {
-            setSearchValue([]);
-        }
-    }, []);
-
-    const onChangeTextSearch = useCallback((text: string) => {
-        setInputValue(text);
-
-        if (debounceTimeout) {
-            clearTimeout(debounceTimeout);
-        }
-
-        // Set a new timeout to debounce
-        const timeout = setTimeout(() => {
-            fetchSearchResults(text);
-        }, 500);
-
-        setDebounceTimeout(timeout);
-    }, [debounceTimeout, fetchSearchResults]);
+    const {
+        inputValue,
+        searchValue,
+        loading,
+        onChangeTextSearch
+    } = useSearchProduct();
 
     const handleClick = (item: string) => {
         setSelectedItem(item);

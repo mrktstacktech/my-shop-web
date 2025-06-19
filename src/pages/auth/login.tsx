@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import { useAuthContext } from "../../context/auth-hook";
 
 const styles = {
-    container: "grid grid-cols-5 bg-gray-100",
+    container: "grid grid-cols-5",
     formContainer: "col-span-2 flex items-center justify-center bg-white w-full max-w-sm",
     photoContainer: "col-span-3 mb-4 flex flex-row items-center justify-center",
     photo: "w-auto mx-auto mb-4",

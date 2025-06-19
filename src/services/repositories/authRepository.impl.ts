@@ -28,8 +28,9 @@ export class AuthRepository implements IAuthRepo {
         try {
             const response = await server.post<RefreshTokenResponse>({
                 endpoint: EndPoints.REFRESH_TOKEN,
-                body: { 
-                    refreshToken: refreshToken },
+                body: {
+                    refreshToken: refreshToken
+                },
             });
             return response;
         }
@@ -50,8 +51,7 @@ export class AuthRepository implements IAuthRepo {
         catch (error) {
             // alert(error);
             console.log("Error fetching user info:", error);
-            throw error; // Re-throw the error for further handling
+            throw error; // Re-throw the error for further handling}
         }
     }
-
 }

@@ -1,5 +1,6 @@
 import axios, { type AxiosInstance } from "axios";
 import type { Any } from "../../types/types";
+import { AuthRepository } from "../repositories";
 // import { useNavigate } from "react-router-dom";
 
 export interface ApiRequest {
@@ -37,12 +38,30 @@ export class ServerAPI {
         );
 
         this.axiosInstance.interceptors.response.use(
-            (response: Any) => {
-                return response;
-            },
-            (error: Any) => {
-                // Handle errors globally
-                return Promise.reject(error);
+            (response: Any) => response,
+            async (error: Any) => {
+                if (error.response.status === 401) {
+                    localStorage.removeItem('accessToken');
+                    const refreshToken = localStorage.getItem('refreshToken');
+
+                    if (refreshToken) {
+                        try {
+                            const newTokens = await new AuthRepository().requestNewToken(refreshToken);
+                            localStorage.setItem('accessToken', newTokens.accessToken);
+                            localStorage.setItem('refreshToken', newTokens.refreshToken);
+                            // Retry the original request with the new access token
+                            error.config.headers['Authorization'] = `Bearer ${newTokens.accessToken}`;
+                            console.log("retrying request with new access token");
+                            return this.axiosInstance(error.config);
+                        }
+                        catch {
+                            localStorage.removeItem('refreshToken');
+                            // Redirect to login page
+                            window.location.href = '/login';
+                        }
+
+                    }
+                }
             }
         );
     }
@@ -67,8 +86,9 @@ export class ServerAPI {
         return new Promise((resolve, reject) => {
             this.axiosInstance.post<T>(`${endpointUrl}`, request.body)
                 .then(response => resolve(response.data))
-                .catch(error => reject(error));
+                .catch(error => { reject(error) });
         });
+
     }
 
     public get<T>(request: Omit<ApiRequest, "body">): Promise<T> {
@@ -77,7 +97,11 @@ export class ServerAPI {
         return new Promise((resolve, reject) => {
             this.axiosInstance.get<T>(`${endpointUrl}`, { params: request.params })
                 .then(response => resolve(response.data))
-                .catch(error => reject(error));
+                .catch(error => {
+
+                    console.log("Error in GET request:", error);
+                    reject(error)
+                });
         });
     }
 

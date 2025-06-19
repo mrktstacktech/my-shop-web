@@ -1,3 +1,6 @@
+.component-container {
+  margin-bottom: 30px;
+}
 .arrowButton {
   border-radius: 50%;
   background-color: rgb(236, 236, 236);
@@ -48,4 +51,8 @@
 .view-button:hover {
     background-color: oklch(63.7% 0.237 25.331);
     opacity: 0.8;
+}
+
+.category-name {
+  text-overflow: ellipsis;
 }

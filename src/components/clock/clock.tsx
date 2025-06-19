@@ -1,32 +1,33 @@
-import { useState, useEffect } from 'react';
-
-export function Clock({targetTime} : {targetTime?: Date}) {
-    const [current, setCurrent] = useState<Date>(new Date());
-
-    useEffect(() => {
-        const interval = setInterval(() => {
-            setCurrent(new Date());
-        }, 1000);
-
-        return () => clearInterval(interval);
-    }, []);
-
-    const timeLeft = targetTime ? Math.max(0, targetTime.getTime() - current.getTime()) : 0;
-    const days = Math.floor(timeLeft / (1000 * 60 * 60 * 24));
-    const hours = Math.floor((timeLeft % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-    const minutes = Math.floor((timeLeft % (1000 * 60 * 60)) / (1000 * 60));
-    const seconds = Math.floor((timeLeft % (1000 * 60)) / 1000);
+import { useCountDown } from "../../hooks/clock";
+import './style.css';
+export function Clock({ targetTime }: { targetTime?: Date }) {
+    const {
+        days,
+        hours,
+        minutes,
+        seconds
+    } = useCountDown(targetTime ?? new Date());
 
     return (
-        <>
-            <div className="flex justify-center items-center space-x-4">
-                <div className="text-2xl font-bold">{days} Days</div>
-                <div className="text-2xl font-bold">{hours} Hours</div>
-                <div className="text-2xl font-bold">{minutes} Minutes</div>
-                <div className="text-2xl font-bold">{seconds} Seconds</div>
+        <div className="clock-container">
+            <div className="item flex flex-col items-center">
+                <span className="text-sm">Days</span>
+                <span className="text-xl font-bold">{days}</span>
             </div>
-        </>
+            <div className="item flex flex-col items-center">
+                <span className="text-sm">Hours</span>
+                <span className="text-xl font-bold">{hours}</span>
+            </div>
+            <div className="item flex flex-col items-center">
+                <span className="text-sm">Minutes</span>
+                <span className="text-xl font-bold">{minutes}</span>
+            </div>
+            <div className="item flex flex-col items-center">
+                <span className="text-sm">Seconds</span>
+                <span className="text-xl font-bold">{seconds}</span>
+            </div>
+        </div>
     )
-    
+
 
 }

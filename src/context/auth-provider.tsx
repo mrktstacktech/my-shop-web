@@ -1,16 +1,14 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import type { User } from '../services/models';
-import { AuthContext } from './auth-context';
-import { AuthRepository } from '../services/repositories/authRepository.impl';
-// import { useNavigate } from 'react-router-dom';
+import type { User } from '@services/models';
+import { AuthContext } from '@context/auth-context';
+import { AuthRepository } from '@services/repositories/authRepository.impl';
+
 export function AuthProvider({ children }: { children: React.ReactNode }) {
     const [isAuthenticated, setIsAuthenticated] = useState<boolean>();
     const [user, setUser] = useState<User | null>(null);
-    // const navigate = useNavigate();
 
     const login = async ({ username, password }: { username: string, password: string }) => {
         try {
-            // const response = await server.post<User>({ body: { username: username, password: password }, endpoint: EndPoints.LOGIN });
             const response = await new AuthRepository().login(username, password);
             const data = response;
             setUser(data);
@@ -28,24 +26,6 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         setIsAuthenticated(false);
         setUser(null);
     };
-
-    // const refreshToken = useCallback(async (refreshToken: string) => {
-    //     try {
-    //         // const response = await server.post<User>({ body: { refreshToken: refreshToken }, endpoint: EndPoints.REFRESH_TOKEN });
-    //         const response = await new AuthRepository().requestNewToken(refreshToken);
-    //         const data = response;
-    //         setIsAuthenticated(true);
-    //         localStorage.setItem('accessToken', data.accessToken || '');
-    //         localStorage.setItem('refreshToken', data.refreshToken || '');
-    //     } catch (error) {
-    //         localStorage.removeItem('refreshToken');
-    //         localStorage.removeItem('accessToken');
-    //         setIsAuthenticated(false);
-    //         setUser(null);
-    //         navigate("/login");
-    //         console.error("Refresh token error:", error);
-    //     }
-    // }, [navigate]);
 
     const getUserInfo = useCallback(async () => {
         try {

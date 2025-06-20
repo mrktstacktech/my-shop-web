@@ -1,4 +1,4 @@
-import { useCountDown } from "../../hooks/clock";
+import { useCountDown } from "@hooks";
 import './style.css';
 export function Clock({ targetTime }: { targetTime?: Date }) {
     const {

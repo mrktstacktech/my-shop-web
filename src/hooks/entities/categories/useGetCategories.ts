@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useState } from 'react';
-import type { CategoryListEntity } from '../../../services/domain/entities';
-import { CategoryRepository } from '../../../services/repositories';
+import type { CategoryListEntity } from '@services/domain/entities';
+import { CategoryRepository } from '@services/repositories';
 
 export function useGetCategories() {
     const [loading, setLoading] = useState<boolean>(false);

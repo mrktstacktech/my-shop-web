@@ -21,7 +21,25 @@
     "noUnusedParameters": true,
     "erasableSyntaxOnly": true,
     "noFallthroughCasesInSwitch": true,
-    "noUncheckedSideEffectImports": true
+    "noUncheckedSideEffectImports": true,
+
+    /* Alias import */
+    "baseUrl": "./src",
+    "paths": {
+      "@/*": ["*"],
+      "@components": ["components/index.ts"],
+      "@hooks": ["hooks/index.ts"],
+      "@pages/*": ["pages/*"],
+      "@constants": ["constants/index.ts"],
+      "@context/*": ["context/*"],
+      "@services/*": ["services/*"],
+      "@slices/*": ["slices/*"],
+      "@axios/*": ["services/axios/*"],
+      "@domain/*": ["services/domain/*"],
+      "@models": ["services/models/index.ts"],
+      "@repositories": ["services/repositories/index.ts"],
+      "@types/*": ["types/*"],
+    }
   },
   "include": ["src"]
 }

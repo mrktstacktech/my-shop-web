@@ -1,7 +1,6 @@
-import { Card } from "../../../components";
-import { angleLeftIcon, angleRightIcon } from "../../../constants";
-import { useGetProductsSorted } from "../../../hooks";
-import { Clock } from "../../../components";
+import { Card, Clock } from "@components";
+import { angleLeftIcon, angleRightIcon } from "@constants";
+import { useGetProductsSorted } from "@hooks";
 
 const K_SORT_FIELD_NAME = 'discountPercentage';
 

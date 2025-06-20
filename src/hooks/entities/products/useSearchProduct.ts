@@ -1,6 +1,6 @@
 import { useState, useCallback } from 'react';
-import type { ProductListEntity } from '../../../services/domain/entities';
-import { ProductRepository } from '../../../services/repositories';
+import type { ProductListEntity } from '@services/domain/entities';
+import { ProductRepository } from '@services/repositories';
 
 
 export function useSearchProduct() {

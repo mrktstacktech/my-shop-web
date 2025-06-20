@@ -1,6 +1,6 @@
-import { Card } from "../../../components";
-import { angleLeftIcon, angleRightIcon } from "../../../constants";
-import { useGetProduct } from "../../../hooks";
+import { Card } from "@components";
+import { angleLeftIcon, angleRightIcon } from "@constants";
+import { useGetProduct } from "@hooks";
 
 export function ProductList() {
     const { data,

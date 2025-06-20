@@ -1,5 +1,5 @@
 import { createContext } from "react";
-import type { User } from "../services/models";
+import type { User } from "@services/models";
 
 
 export interface AuthContextType {
@@ -17,5 +17,5 @@ export const AuthContext = createContext<AuthContextType>({
     login:() => Promise.resolve(null),
     logout: () => { },
     user: null,
-    setUser: (user: User | null) => { }
+    setUser: () => { }
 })

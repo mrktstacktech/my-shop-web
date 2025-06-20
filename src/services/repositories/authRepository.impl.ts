@@ -1,7 +1,7 @@
-import { EndPoints } from "../../constants/endpoints";
-import { server } from "../axios/server.api";
-import type { AuthEntity, UserInfoEntity, RefreshTokenEntity } from "../domain/entities";
-import type { IAuthRepo } from "../domain/repo/auth.repo";
+import { EndPoints } from "@constants";
+import { server } from "@axios/server.api";
+import type { AuthEntity, UserInfoEntity, RefreshTokenEntity } from "@domain/entities";
+import type { IAuthRepo } from "@domain/repo/auth.repo";
 import type { GetUserResponse, LoginResponse, RefreshTokenResponse } from "../models/auth";
 
 export class AuthRepository implements IAuthRepo {

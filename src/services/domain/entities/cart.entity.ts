@@ -1,4 +1,4 @@
-type ProductsInCartResponse = {
+type ProductsInCartEntity = {
     id: string;
     title: string;
     price: number;
@@ -9,9 +9,9 @@ type ProductsInCartResponse = {
     thumbnail: string;
 }
 
-export type CartResponse = {
+export type CartEntity = {
     id: string;
-    products: ProductsInCartResponse[];
+    products: ProductsInCartEntity[];
     total: number;
     discountedTotal: number;
     userId: string;
@@ -19,11 +19,10 @@ export type CartResponse = {
     totalQuantity: number;
 }
 
-export type CartListResponse = CartResponse[];
-
-export type UpdatedCartResponse = CartResponse;
-
-export type DeletedCartResponse = CartResponse & {
+export type DeletedCartEntity = CartEntity & {
     isDeleted: boolean;
     deletedOn: string;
 };
+
+export type CurrentCartIdEntity = string;
+

@@ -7,5 +7,7 @@ export class EndPoints{
     public static readonly PRODUCTS = '/products';
     public static readonly CATEGORY_LIST = '/products/categories';
     public static readonly PRODUCT_SEARCH = '/products/search';
-    public static readonly CARTS = '/carts/users';
+    public static readonly USER_CART = '/carts/user';
+    public static readonly ADD_NEW_CART = '/carts/add';
+    public static readonly CART = '/carts'
 }

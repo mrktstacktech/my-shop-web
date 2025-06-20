@@ -1,5 +1,5 @@
-import { Card } from "../../../components";
-import { useGetProductsSorted } from "../../../hooks";
+import { Card } from "@components";
+import { useGetProductsSorted } from "@hooks";
 
 export function BestSeller() {
     const {

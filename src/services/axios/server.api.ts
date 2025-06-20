@@ -1,6 +1,6 @@
 import axios, { type AxiosInstance } from "axios";
 import type { Any } from "../../types/types";
-import { AuthRepository } from "../repositories";
+import { AuthRepository } from "@repositories";
 // import { useNavigate } from "react-router-dom";
 
 export interface ApiRequest {
@@ -107,9 +107,9 @@ export class ServerAPI {
 
     public put<T>(request: ApiRequest): Promise<T> {
         // Implementation for PUT request
-        const endpointUrl = `${this.base_url}${request.endpoint}/${request.params}`;
+        const endpointUrl = `${this.base_url}${request.endpoint}`;
         return new Promise((resolve, reject) => {
-            this.axiosInstance.put<T>(`${endpointUrl}`, request.body)
+            this.axiosInstance.put<T>(endpointUrl, request.body)
                 .then(response => resolve(response.data))
                 .catch(error => reject(error));
         });

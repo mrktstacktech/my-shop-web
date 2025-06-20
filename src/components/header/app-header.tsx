@@ -1,8 +1,7 @@
-import { InputFormField } from "../inputs";
-import { DropDown } from "../dropdown";
-import { NAV_ITEMS, searchIcon, heartIcon, cartIcon, userIcon, USER_DROPDOWN_ITEMS } from "../../constants";
-import { useAuthContext } from "../../context/auth-hook";
-import { useSearchProduct } from "../../hooks";
+import { InputFormField, DropDown } from "@components";
+import { NAV_ITEMS, searchIcon, heartIcon, cartIcon, userIcon, USER_DROPDOWN_ITEMS } from "@constants";
+import { useAuthContext } from "@context/auth-hook";
+import { useSearchProduct } from "@hooks";
 import { useState, useEffect } from "react";
 
 const styles = {

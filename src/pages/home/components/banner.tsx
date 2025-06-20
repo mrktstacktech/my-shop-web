@@ -1,6 +1,6 @@
 import { useMemo } from "react";
-import { Image, Carousel } from "../../../components";
-import { useGetCategories } from "../../../hooks";
+import { Image, Carousel } from "@components";
+import { useGetCategories } from "@hooks";
 
 export function Banner() {
     const { data: list, loading } = useGetCategories();

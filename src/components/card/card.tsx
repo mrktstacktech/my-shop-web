@@ -1,6 +1,6 @@
 import type { CardType } from "./type"
 import { useState } from "react";
-import { StarRating } from "../star-rating";
+import { StarRating } from "@components";
 
 const styles = {
     hovered: "absolute flex flex-col right-0 top-0 bottom-0 left-0 h-full p-0",

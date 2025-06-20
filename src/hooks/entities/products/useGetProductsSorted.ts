@@ -1,7 +1,7 @@
 import type { GetProductOutput } from "./useGetProduct";
 import { useState, useCallback, useEffect } from "react";
-import type { ProductListEntity } from "../../../services/domain/entities";
-import { ProductRepository } from "../../../services/repositories";
+import type { ProductListEntity } from "@services/domain/entities";
+import { ProductRepository } from "@services/repositories";
 
 const DEFAULT_LIMIT = 4;
 

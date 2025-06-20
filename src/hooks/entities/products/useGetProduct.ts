@@ -1,6 +1,6 @@
 import { useState, useCallback, useEffect } from "react";
-import type { ProductEntity, ProductListEntity } from "../../../services/domain/entities";
-import { ProductRepository } from "../../../services/repositories";
+import type { ProductEntity, ProductListEntity } from "@services/domain/entities";
+import { ProductRepository } from "@services/repositories";
 
 export type GetProductOutput = BaseFetchListData<ProductEntity>;
 

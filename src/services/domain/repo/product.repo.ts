@@ -1,4 +1,4 @@
-import type { ProductListEntity } from "../entities/product.entity";
+import type { ProductListEntity } from "@domain/entities/product.entity";
 
 export abstract class IProductRepo {
     abstract getProductList(limit: number, skip: number): Promise<ProductListEntity>;

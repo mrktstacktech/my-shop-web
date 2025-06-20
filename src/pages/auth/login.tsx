@@ -1,6 +1,6 @@
-import { InputFormField, Button } from "../../components";
+import { InputFormField, Button } from "@components";
 import React, { useState } from "react";
-import { useAuthContext } from "../../context/auth-hook";
+import { useAuthContext } from "@context/auth-hook";
 
 const styles = {
     container: "grid grid-cols-5",

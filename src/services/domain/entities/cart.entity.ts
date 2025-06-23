@@ -1,4 +1,4 @@
-type ProductsInCartEntity = {
+export type ProductsInCartEntity = {
     id: string;
     title: string;
     price: number;
@@ -24,5 +24,10 @@ export type DeletedCartEntity = CartEntity & {
     deletedOn: string;
 };
 
-export type CurrentCartIdEntity = string;
+
+// TODO: remove
+export type CurrentCartInforEntity = {
+    id: string;
+    totalQuantity: number;
+};
 

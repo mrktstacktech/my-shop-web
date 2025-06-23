@@ -8,4 +8,5 @@ export type CardType = {
     rating?: number;
     stock?: number;
     reviewNumber?: number;
+    className?: string;
 }

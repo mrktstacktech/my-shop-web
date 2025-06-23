@@ -14,7 +14,6 @@ export class ServerAPI {
     private axiosInstance: AxiosInstance;
     //   private base_url = process.env.REACT_APP_API_URL;
     private base_url = 'https://dummyjson.com'; // Replace with your actual API URL
-
     private constructor() {
         this.axiosInstance = axios.create({
             baseURL: this.base_url,
@@ -43,7 +42,6 @@ export class ServerAPI {
                 if (error.response.status === 401) {
                     localStorage.removeItem('accessToken');
                     const refreshToken = localStorage.getItem('refreshToken');
-
                     if (refreshToken) {
                         try {
                             const newTokens = await new AuthRepository().requestNewToken(refreshToken);
@@ -91,11 +89,11 @@ export class ServerAPI {
 
     }
 
-    public get<T>(request: Omit<ApiRequest, "body">): Promise<T> {
+    public get<T>(request: ApiRequest): Promise<T> {
         // Implementation for GET request
-        const endpointUrl = `${this.base_url}${request.endpoint}`;
+        const endpointUrl = `${this.base_url}${request.endpoint}${request.params ? `/${request.params}` : ''}`;
         return new Promise((resolve, reject) => {
-            this.axiosInstance.get<T>(`${endpointUrl}`, { params: request.params })
+            this.axiosInstance.get<T>(`${endpointUrl}`, { params: request.body })
                 .then(response => resolve(response.data))
                 .catch(error => {
 
@@ -107,7 +105,7 @@ export class ServerAPI {
 
     public put<T>(request: ApiRequest): Promise<T> {
         // Implementation for PUT request
-        const endpointUrl = `${this.base_url}${request.endpoint}`;
+        const endpointUrl = `${this.base_url}${request.endpoint}${request.params ? `/${request.params}` : ''}`;
         return new Promise((resolve, reject) => {
             this.axiosInstance.put<T>(endpointUrl, request.body)
                 .then(response => resolve(response.data))

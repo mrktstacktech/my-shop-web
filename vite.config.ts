@@ -19,6 +19,7 @@ export default defineConfig({
       '@types': path.resolve(__dirname, './src/types'),
       '@services': path.resolve(__dirname, './src/services'),
       '@slices': path.resolve(__dirname, './src/slices'),
+      '@store': path.resolve(__dirname, './src/store'),
       '@axios': path.resolve(__dirname, './src/services/axios'),
       '@domain': path.resolve(__dirname, './src/services/domain'),
       '@models': path.resolve(__dirname, './src/services/models/index.ts'),

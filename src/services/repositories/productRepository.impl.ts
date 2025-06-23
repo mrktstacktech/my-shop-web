@@ -1,7 +1,7 @@
-import type { IProductRepo } from "../domain/repo/product.repo";
-import type { ProductListEntity } from "../domain/entities/product.entity";
-import { EndPoints } from "../../constants/endpoints";
-import { server } from "../axios/server.api";
+import type { IProductRepo } from "@domain/repo/product.repo";
+import type { ProductListEntity } from "@domain/entities/product.entity";
+import { EndPoints } from "@constants";
+import { server } from "@axios/server.api";
 import type { ProductListResponse } from "../models";
 
 export class ProductRepository implements IProductRepo {
@@ -9,7 +9,7 @@ export class ProductRepository implements IProductRepo {
         try {
             const response = await server.get<ProductListResponse>({
                 endpoint: EndPoints.PRODUCTS,
-                params: { limit, skip },
+                body: { limit, skip },
             });
             return response.products;
         }
@@ -24,7 +24,7 @@ export class ProductRepository implements IProductRepo {
         try {
             const response = await server.get<ProductListResponse>({
                 endpoint: EndPoints.PRODUCTS,
-                params: categorySlug,
+                body: categorySlug,
             });
             return response.products;
         }
@@ -39,7 +39,7 @@ export class ProductRepository implements IProductRepo {
         try {
             const response = await server.get<ProductListResponse>({
                 endpoint: EndPoints.PRODUCTS,
-                params: { limit, skip, sortBy: sort, order: 'desc' },
+                body: { limit, skip, sortBy: sort, order: 'desc' },
             });
             return response.products;
         }
@@ -55,7 +55,7 @@ export class ProductRepository implements IProductRepo {
         try {
             const response = await server.get<ProductListResponse>({
                 endpoint: EndPoints.PRODUCT_SEARCH,
-                params: { q: query },
+                body: { q: query },
             });
             return response.products;
         }

@@ -15,7 +15,7 @@ export function DropDown(props: DropDownType) {
 
     return (
         <div className={`dropdown items-center static ${props.className || ""}`} id={props.id}>
-            <button onClick={(e) => handleToggle(e)} className="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+            <button onClick={(e) => handleToggle(e)} className="btn btn-secondary dropdown-toggle flex" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                 {props.prefix} {props.label}
             </button>
             { isOpen && (

@@ -1,5 +1,7 @@
+import type React from "react";
+
 export type ButtonType = {
-    label: string;
+    label: React.ReactNode;
     onClick: () => void;
     disabled?: boolean;
     className?: string;

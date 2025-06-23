@@ -1,7 +1,7 @@
-import { EndPoints } from "@constants";  
-import { server } from "../axios/server.api";
-import type { CartEntity, DeletedCartEntity, CurrentCartIdEntity } from "../domain/entities";
-import type { ICartRepo } from "../domain/repo/cart.repo";
+import { EndPoints } from "@constants";
+import { server } from "@axios/server.api";
+import type { CartEntity, DeletedCartEntity, CurrentCartInforEntity } from "@domain/entities";
+import type { ICartRepo } from "@domain/repo/cart.repo";
 import type { CartResponse, CartListResponse } from "../models/cart/cart.response";
 import type { AddNewCartRequest, UpdateCartRequest } from "../models/cart/cart.resquest";
 
@@ -10,7 +10,7 @@ export class CartRepository implements ICartRepo {
         try {
             const response = await server.get<CartResponse>({
                 endpoint: EndPoints.CART,
-                params: { cartId },
+                params:  cartId ,
             });
             return response;
         } catch (error) {
@@ -19,13 +19,17 @@ export class CartRepository implements ICartRepo {
         }
     }
 
-    async getCurrentCartId(userId: string): Promise<CurrentCartIdEntity> {
+    async getCurrentCartInfor(userId: string): Promise<CurrentCartInforEntity> {
         try {
+            const id = userId || '';
             const response = await server.get<CartListResponse>({
-                endpoint: EndPoints.CART,
-                params: { userId },
-            }); 
-            return response[0].id;
+                endpoint: EndPoints.USER_CART,
+                params: id,
+            });
+            return {
+                id: response.carts[0].id || '',
+                totalQuantity: response.carts[0].totalQuantity || 0,
+            };
         } catch (error) {
             console.error("Error fetching current cart ID:", error);
             throw error; // Re-throw the error for further handling
@@ -35,7 +39,7 @@ export class CartRepository implements ICartRepo {
     async addNewCart({
         userId,
         products,
-    }: AddNewCartRequest = {userId: '', products: []}): Promise<CartEntity> {
+    }: AddNewCartRequest = { userId: '', products: [] }): Promise<CartEntity> {
         try {
             const response = await server.post<CartResponse>({
                 endpoint: EndPoints.ADD_NEW_CART,
@@ -55,11 +59,13 @@ export class CartRepository implements ICartRepo {
         id,
         merge,
         products = [],
-    }: UpdateCartRequest) : Promise<CartEntity> {
+    }: UpdateCartRequest): Promise<CartEntity> {
         try {
+            console.log("Updating cart with ID:", id, "Merge:", merge, "Products:", products);
             const response = await server.put<CartResponse>({
                 endpoint: EndPoints.CART,
-                body: { id, merge, products },
+                params: id,
+                body: { merge, products },
             });
             return response;
         } catch (error) {

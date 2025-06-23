@@ -1,7 +1,7 @@
-import { InputFormField, DropDown } from "@components";
+import { InputFormField, DropDown, Badges } from "@components";
 import { NAV_ITEMS, searchIcon, heartIcon, cartIcon, userIcon, USER_DROPDOWN_ITEMS } from "@constants";
 import { useAuthContext } from "@context/auth-hook";
-import { useSearchProduct } from "@hooks";
+import { useSearchProduct, useGetCurrentCart } from "@hooks";
 import { useState, useEffect } from "react";
 
 const styles = {
@@ -17,7 +17,7 @@ const styles = {
     modal: "bg-gray-900 text-white p-2 w-48 text-gray-900 opacity-80 hover:bg-gray-800",
 };
 export function AppHeader() {
-    const [selectedItem, setSelectedItem] = useState('Home');
+    const [selectedItem, setSelectedItem] = useState<string | undefined>('Home');
     const { isAuthenticated } = useAuthContext();
     const {
         inputValue,
@@ -26,6 +26,11 @@ export function AppHeader() {
         onChangeTextSearch
     } = useSearchProduct();
 
+    const { totalQuantity } = useGetCurrentCart();
+
+    const cartItemCount = totalQuantity;
+    const wishlistCount = totalQuantity;
+
     const handleClick = (item: string) => {
         setSelectedItem(item);
     }
@@ -33,11 +38,7 @@ export function AppHeader() {
     useEffect(() => {
         const currentPath = window.location.pathname;
         const currentItem = NAV_ITEMS.find(item => item.href === currentPath);
-        if (currentItem) {
-            setSelectedItem(currentItem.label);
-        } else {
-            setSelectedItem('Home'); // Default to Home if no match found
-        }
+        setSelectedItem(currentItem?.label);
     }, []);
 
     return (
@@ -81,13 +82,18 @@ export function AppHeader() {
                                     </ul>
                                     : <p className="p-2 text-gray-500">No results found</p>)}
                         </div>
-                    )}
-                    <button className={styles.button}>
-                        {heartIcon}
-                    </button>
-                    <button className={styles.button}>
-                        {cartIcon}
-                    </button>
+                )}
+                {/* TODO: fix href */}
+                    <Badges
+                        title={heartIcon}
+                        notification={isAuthenticated ? wishlistCount : 0}
+                        href={isAuthenticated ? "/my-wishlist" : "/login"}
+                    />
+                    <Badges
+                        title={cartIcon}
+                        notification={isAuthenticated ? cartItemCount : 0}
+                        href={isAuthenticated ? "/my-cart" : "/login"}
+                    />
                     {isAuthenticated && (
                         <DropDown
                             label={userIcon}
@@ -100,6 +106,7 @@ export function AppHeader() {
                     )}
                 </div>
             </div>
+
         </header>
     );
 }

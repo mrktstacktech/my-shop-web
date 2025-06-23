@@ -1,27 +1,35 @@
 import type { CartEntity } from "@services/domain/entities";
-import { useState, useCallback, useEffect } from "react";
+import { useState, useCallback } from "react";
 import { CartRepository } from "@services/repositories";
+import { useSelector } from "react-redux";
+import type { RootState } from "@/store/store"; // Adjust the import path based on your project structure
+import type { ProductsInCartEntity } from "@services/domain/entities";
 
 interface ProductInput {
     id: string;
     quantity: number;
 }
 
-const CURRENT_CART_ID = "12345"; // Example cart ID, replace with actual logic to get current cart ID
-
-export function useAddToCart(productList: ProductInput[] = []) {
+export function useAddToCart(productList: ProductsInCartEntity[] = []) {
     const [loading, setLoading] = useState<boolean>(false);
     const [cart, setCart] = useState<CartEntity>();
-    const id = CURRENT_CART_ID; 
-    
+    const cartId = useSelector((state: RootState) => state.root.cart.currentCartId);
+
+    const listToProductInput = (products: ProductsInCartEntity[]): ProductInput[] => {
+        return products.map(product => ({
+            id: product.id,
+            quantity: product.quantity
+        }));
+    }
+
     const addToCart = useCallback(() => {
         setLoading(true);
-        const response = new CartRepository().updateCart({
-            id: id,
+        new CartRepository().updateCart({
+            id: cartId,
             merge: true,
-            products: productList
-        })
-        response.then(data => {
+            products: listToProductInput(productList)
+        }).then(data => {
+            console.log("Cart updated successfully:", data);
             setCart(data);
         }
         ).catch(error => {
@@ -29,15 +37,15 @@ export function useAddToCart(productList: ProductInput[] = []) {
         }).finally(() => {
             setLoading(false);
         });
-    }, [id, productList]);
+    }, [cartId, productList]);
 
-    useEffect(() => {
-        addToCart();
-    }, [addToCart]);
+    // useEffect(() => {
+    //     addToCart();
+    // }, [addToCart]);
 
     return {
         cart,
-        loading
+        loading,
+        addToCart
     }
-
 }

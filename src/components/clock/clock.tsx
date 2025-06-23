@@ -25,9 +25,7 @@ export function Clock({ targetTime }: { targetTime?: Date }) {
             <div className="item flex flex-col items-center">
                 <span className="text-sm">Seconds</span>
                 <span className="text-xl font-bold">{seconds}</span>
-            </div>
+            </div>``
         </div>
     )
-
-
 }

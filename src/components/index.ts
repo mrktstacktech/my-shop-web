@@ -8,3 +8,4 @@ export * from './images';
 export * from './card';
 export * from './star-rating';
 export * from './clock';
+export * from './badges';

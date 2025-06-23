@@ -30,7 +30,7 @@ export function Card({ ...props }: CardType) {
         </svg>;
 
     return (
-        <div className="max-w-[250px] w-full">
+        <div className={`max-w-[250px] w-full ${props.className}`}>
             <div onMouseOver={() => setIsHovered(true)}
                 onMouseLeave={() => setIsHovered(false)}
                 className="relative bg-(--item-background-color) flex items-center justify-center h-48 w-full p-0 rounded-sm mb-2"
@@ -49,7 +49,8 @@ export function Card({ ...props }: CardType) {
             <h2 className="font-medium mt-1 mb-1">{props.title}</h2>
             <div className={props.discountPercentage ? "flex-col" : " flex items-center gap-2 mb-2"}>
                 <div className="text-sm"><span className="text-red-500">${priceDiscounted}</span> {props.discountPercentage ? <span className="line-through text-gray-400">${props.price}</span> : null}</div>
-                <StarRating rating={props.rating ?? 0} reviewNumber={props.reviewNumber ?? 0} />
+                {props.rating &&  <StarRating rating={props.rating} reviewNumber={props.reviewNumber ?? 0} />}
+               
             </div>
 
         </div>

@@ -6,5 +6,9 @@ const rootReducer = combineSlices({
 });
 
 export const store = configureStore({
-    reducer: rootReducer
+    reducer: {
+        root: rootReducer,
+    }
 });
+
+export type RootState = ReturnType<typeof store.getState>

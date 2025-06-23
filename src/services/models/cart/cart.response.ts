@@ -19,7 +19,12 @@ export type CartResponse = {
     totalQuantity: number;
 }
 
-export type CartListResponse = CartResponse[];
+export type CartListResponse = {
+    carts: CartResponse[];
+    total: number;
+    skip: number;
+    limit: number;
+};
 
 export type UpdatedCartResponse = CartResponse;
 

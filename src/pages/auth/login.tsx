@@ -1,6 +1,7 @@
 import { InputFormField, Button } from "@components";
 import React, { useState } from "react";
 import { useAuthContext } from "@context/auth-hook";
+import { useNavigate } from "react-router-dom";
 
 const styles = {
     container: "grid grid-cols-5",
@@ -14,10 +15,11 @@ const styles = {
 };
 
 export function Login() {
-    const [name, setName] = useState<string>("");
-    const [password, setPassword] = useState<string>("");
+    const [name, setName] = useState<string>("oliviaw");
+    const [password, setPassword] = useState<string>("oliviawpass");
     const [error, setError] = useState<string>("");
     const { login } = useAuthContext();
+    const navigate = useNavigate();
 
     const handleSubmit = async (event: React.FormEvent) => {
         event.preventDefault();
@@ -29,6 +31,7 @@ export function Login() {
                 setError("Login failed. Please check your credentials.");
                 return;
             }
+            navigate("/");
         }
         catch (error) {
             console.error("Login error:", error);

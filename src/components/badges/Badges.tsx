@@ -2,15 +2,14 @@ import './style.css'
 import type { BadgeType } from './type';
 
 export function Badges({
-    title,
     notification,
     styles,
     className,
-    href = '#'
+    onClick,
+    children
 }: BadgeType) {
     return (
-        <a href={href} className={`btn + ${className}`} style={styles}>
-            {title}
+        <div onClick = {onClick} className={`btn ${className}`} style={styles}>
             {notification > 0 && notification < 100 && (
                 <span className="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
                     {notification}
@@ -21,6 +20,7 @@ export function Badges({
                     </span>
                 )
             }
-        </a>
+            {children}
+        </div>
     );
 }

@@ -4,7 +4,7 @@ import { CartRepository } from "@services/repositories";
 import { useSelector } from "react-redux";
 import type { RootState } from "@/store/store"; // Adjust the import path based on your project structure
 import type { ProductsInCartEntity } from "@services/domain/entities";
-
+import { store } from "@/store/store";
 interface ProductInput {
     id: string;
     quantity: number;
@@ -15,29 +15,23 @@ export function useAddToCart(productList: ProductsInCartEntity[] = []) {
     const [cart, setCart] = useState<CartEntity>();
     const cartId = useSelector((state: RootState) => state.root.cart.currentCartId);
 
-    const listToProductInput = (products: ProductsInCartEntity[]): ProductInput[] => {
-        return products.map(product => ({
-            id: product.id,
-            quantity: product.quantity
-        }));
-    }
-
     const addToCart = useCallback(() => {
         setLoading(true);
-        new CartRepository().updateCart({
-            id: cartId,
-            merge: true,
-            products: listToProductInput(productList)
-        }).then(data => {
-            console.log("Cart updated successfully:", data);
+        if (!cart) {
+            console.warn("No carts found, cannot add products to cart.");
+            setLoading(false);
+            return;
+        }
+        new CartRepository().updateCart(true, cart).then(data => {
             setCart(data);
+            store.dispatch({ type: 'cart/addCurrentCartItem', payload: data.products });
         }
         ).catch(error => {
             console.error("Error adding to cart:", error);
         }).finally(() => {
             setLoading(false);
         });
-    }, [cartId, productList]);
+    }, [cart]);
 
     // useEffect(() => {
     //     addToCart();

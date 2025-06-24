@@ -38,7 +38,7 @@ export function CartPage() {
                                         <img src={product.thumbnail} alt={product.title} />
                                         <span>{product.title}</span>
                                     </td>
-                                    <td>${product.price.toFixed(2)}</td>
+                                    <td>${product.price.toFixed(FIX_NUMBER)}</td>
                                     <td className="quantity-cell">
                                         <span>{product.quantity}</span>
                                         <div className="quantity-controls">
@@ -46,7 +46,7 @@ export function CartPage() {
                                             <button onClick={() => handleDecreaseQuantity(product.id)} disabled={product.quantity <= 0}>-</button>
                                         </div>
                                     </td>
-                                    <td className="total-cell">${product.total.toFixed(2)}</td>
+                                    <td className="total-cell">${product.total.toFixed(FIX_NUMBER)}</td>
                                 </tr>
                             ))
                         )}

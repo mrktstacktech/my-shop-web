@@ -1,24 +1,23 @@
 import { Card } from "@components";
-import { useGetCurrentCartItems, useAddToCart } from "@hooks";
+import { useMoveToBag } from "@hooks";
 import './style.css';
 import { useState, useEffect } from "react";
 import type { ProductsInCartEntity } from "@/services/domain/entities";
-
+import { useSelector } from "react-redux";
+import type { RootState } from "@/store/store";
 export function WishListPage() {
-    const {
-        cart,
-        loading
-    } = useGetCurrentCartItems();
+    const loading = false;
+    const cart = useSelector((state: RootState) => state.root.cart.currentWishlistItems);
 
-    const { addToCart } = useAddToCart(cart?.products || []);
+    const { moveToBag } = useMoveToBag(cart || []);
     const [products, setProducts] = useState<ProductsInCartEntity[]>([]);
 
     useEffect(() => {
-        setProducts(cart?.products || []);
+        setProducts(cart || []);
     }, [cart]);
 
     const handleMoveAllToBag = () => {
-        addToCart();
+        moveToBag();
         setProducts([]);
     }
 

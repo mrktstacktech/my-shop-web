@@ -6,11 +6,11 @@ import { store } from '@/store/store'; // Adjust the import path based on your p
 import { cartSlice } from '@/slices';
 import type { RootState } from '@/store/store';
 
-export function useGetCurrentCart() {
-    const [totalQuantity, setTotalQuantity] = useState<number>(0);
+export function useGetCurrentWishlist() {
+    const [totalWishlistQuantity, setTotalWishlistQuantity] = useState<number>(0);
     const { user } = useAuthContext();
-    const currentCartId = useSelector((state: RootState) => state.root.cart.currentCartId); 
-    const currentCartItems = useSelector((state: RootState) => state.root.cart.totalItems);
+    const currentWishlistId = useSelector((state: RootState) => state.root.cart.currentWishlistId); 
+    const totalWishlistItems = useSelector((state: RootState) => state.root.cart.totalWishlistItems);
 
     const fetchCurrentCart = useCallback(() => {
         if (!user) {
@@ -23,26 +23,26 @@ export function useGetCurrentCart() {
         }
         const response = new CartRepository().getCurrentCartInfor(user.id);
         response.then(cart => {
-            setTotalQuantity(cart.totalQuantity);
-            store.dispatch(cartSlice.actions.setCurrentCartId(cart.id));
-            store.dispatch(cartSlice.actions.setTotalItems(cart.totalQuantity));
-            store.dispatch(cartSlice.actions.setCurrentCartItems(cart.products || []));
+            setTotalWishlistQuantity(cart.totalProducts);
+            store.dispatch(cartSlice.actions.setCurrentWishListId(cart.id || ''));
+            store.dispatch(cartSlice.actions.setTotalWishListItems(cart.totalProducts));
+            store.dispatch(cartSlice.actions.setCurrentWishlistItems(cart.products || []));
         }).catch(error => {
             console.error("Error fetching current cart information:", error);
         });
     }, [user]);
 
     useEffect(() => {
-        if (!currentCartId) {
+        if (!currentWishlistId) {
             fetchCurrentCart();
         }
-    }, [fetchCurrentCart, currentCartId]);
+    }, [fetchCurrentCart, currentWishlistId]);
 
     useEffect(() => {
-        setTotalQuantity(currentCartItems);
-    }, [currentCartItems]);
+        setTotalWishlistQuantity(totalWishlistItems);
+    }, [totalWishlistItems]);
 
     return {
-        totalQuantity
+        totalWishlistQuantity
     };
 }

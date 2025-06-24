@@ -1,16 +1,16 @@
 import { EndPoints } from "@constants";
 import { server } from "@axios/server.api";
-import type { CartEntity, DeletedCartEntity, CurrentCartInforEntity } from "@domain/entities";
+import type { CartEntity, DeletedCartEntity } from "@domain/entities";
 import type { ICartRepo } from "@domain/repo/cart.repo";
 import type { CartResponse, CartListResponse } from "../models/cart/cart.response";
-import type { AddNewCartRequest, UpdateCartRequest } from "../models/cart/cart.resquest";
+import type { AddNewCartRequest } from "../models/cart/cart.resquest";
 
 export class CartRepository implements ICartRepo {
     async getCurrentCart(cartId: string): Promise<CartEntity> {
         try {
             const response = await server.get<CartResponse>({
                 endpoint: EndPoints.CART,
-                params:  cartId ,
+                params: cartId,
             });
             return response;
         } catch (error) {
@@ -19,17 +19,14 @@ export class CartRepository implements ICartRepo {
         }
     }
 
-    async getCurrentCartInfor(userId: string): Promise<CurrentCartInforEntity> {
+    async getCurrentCartInfor(userId: string): Promise<CartEntity> {
         try {
             const id = userId || '';
             const response = await server.get<CartListResponse>({
                 endpoint: EndPoints.USER_CART,
                 params: id,
             });
-            return {
-                id: response.carts[0].id || '',
-                totalQuantity: response.carts[0].totalQuantity || 0,
-            };
+            return response.carts[0];
         } catch (error) {
             console.error("Error fetching current cart ID:", error);
             throw error; // Re-throw the error for further handling
@@ -55,13 +52,11 @@ export class CartRepository implements ICartRepo {
         }
     }
 
-    async updateCart({
+    async updateCart(merge: boolean, {
         id,
-        merge,
         products = [],
-    }: UpdateCartRequest): Promise<CartEntity> {
+    }: CartEntity): Promise<CartEntity> {
         try {
-            console.log("Updating cart with ID:", id, "Merge:", merge, "Products:", products);
             const response = await server.put<CartResponse>({
                 endpoint: EndPoints.CART,
                 params: id,

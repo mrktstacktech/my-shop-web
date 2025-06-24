@@ -23,20 +23,15 @@ export function Login() {
 
     const handleSubmit = async (event: React.FormEvent) => {
         event.preventDefault();
-        setName (name.trim());
-        setPassword(password.trim());
-        try {
-            const response = await login({ username: name, password: password });
-            if (!response) {
-                setError("Login failed. Please check your credentials.");
-                return;
-            }
-            navigate("/");
+        setName(name);
+        setPassword(password);
+
+        const response = await login({ username: name, password: password });
+        if (!response) {
+            setError("Login failed. Please check your credentials.");
+            return;
         }
-        catch (error) {
-            console.error("Login error:", error);
-            setError("An error occurred while logging in. Please try again.");
-        }
+        navigate("/");
     }
 
     return (

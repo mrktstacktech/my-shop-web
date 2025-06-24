@@ -1,11 +1,13 @@
 
-import { useEffect, useMemo, useState } from 'react';
-import { useGetCurrentCartItems } from './useGetCurrentCartItems';
+import { useEffect, useState } from 'react';
 import type { ProductsInCartEntity } from '@/services/domain/entities/cart.entity';
+import { useSelector } from 'react-redux';
+import type { RootState } from '@/store/store';
 
 export function useHandleItemQuantity() {
-    const { cart, loading } = useGetCurrentCartItems();
-    const products = useMemo(() => cart?.products || [], [cart?.products]);
+    //TODO: fix this
+    const loading = false;
+    const products = useSelector((state: RootState) => state.root.cart.currentCartItems) as ProductsInCartEntity[];
 
     const [productsInCart, setProductsInCart] = useState<ProductsInCartEntity[]>([]);
     const [total, setTotal] = useState<number>(0);

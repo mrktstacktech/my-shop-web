@@ -49,7 +49,6 @@ export class ServerAPI {
                             localStorage.setItem('refreshToken', newTokens.refreshToken);
                             // Retry the original request with the new access token
                             error.config.headers['Authorization'] = `Bearer ${newTokens.accessToken}`;
-                            console.log("retrying request with new access token");
                             return this.axiosInstance(error.config);
                         }
                         catch {

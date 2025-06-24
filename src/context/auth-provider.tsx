@@ -9,13 +9,19 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
     const login = async ({ username, password }: { username: string, password: string }) => {
         try {
-            const response = await new AuthRepository().login(username, password);
-            const data = response;
-            setUser(data);
+            const response = await new AuthRepository().login(username.trim(), password.trim());
+
+            if (!response) {
+                setIsAuthenticated(false);
+                setUser(null);
+                return null; 
+            }
+            setUser(response);
             setIsAuthenticated(true);
-            localStorage.setItem('accessToken', data.accessToken || '');
-            localStorage.setItem('refreshToken', data.refreshToken || '');
-            return data;
+            localStorage.setItem('accessToken', response.accessToken || '');
+            localStorage.setItem('refreshToken', response.refreshToken || '');
+
+            return response;
         } catch (error) {
             console.error("Login error:", error);
             return null; // or throw an error based on your error handling strategy

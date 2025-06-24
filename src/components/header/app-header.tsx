@@ -1,8 +1,10 @@
 import { InputFormField, DropDown, Badges } from "@components";
-import { NAV_ITEMS, searchIcon, heartIcon, cartIcon, userIcon, USER_DROPDOWN_ITEMS } from "@constants";
+import { searchIcon, heartIcon, cartIcon, userIcon, USER_DROPDOWN_ITEMS } from "@constants";
 import { useAuthContext } from "@context/auth-hook";
-import { useSearchProduct, useGetCurrentCart } from "@hooks";
-import { useState, useEffect } from "react";
+import { useSearchProduct, useGetCurrentCart, useGetCurrentWishlist } from "@hooks";
+import { useCallback } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { Navigation } from "./components";
 
 const styles = {
     header: "shadow-(--shadow-header) mb-2",
@@ -17,7 +19,7 @@ const styles = {
     modal: "bg-gray-900 text-white p-2 w-48 text-gray-900 opacity-80 hover:bg-gray-800",
 };
 export function AppHeader() {
-    const [selectedItem, setSelectedItem] = useState<string | undefined>('Home');
+    const navigator = useNavigate();
     const { isAuthenticated } = useAuthContext();
     const {
         inputValue,
@@ -27,19 +29,19 @@ export function AppHeader() {
     } = useSearchProduct();
 
     const { totalQuantity } = useGetCurrentCart();
+    const { totalWishlistQuantity} = useGetCurrentWishlist();
 
     const cartItemCount = totalQuantity;
-    const wishlistCount = totalQuantity;
+    const wishlistCount = totalWishlistQuantity;
+    
 
-    const handleClick = (item: string) => {
-        setSelectedItem(item);
-    }
+    const handleWishlistClick = useCallback(() => {
+        navigator("/my-wishlist");
+    }, [navigator]);
 
-    useEffect(() => {
-        const currentPath = window.location.pathname;
-        const currentItem = NAV_ITEMS.find(item => item.href === currentPath);
-        setSelectedItem(currentItem?.label);
-    }, []);
+    const handleCartClick = useCallback(() => {
+        navigator("/my-cart"); 
+    }, [navigator]);
 
     return (
         <header className={styles.header}>
@@ -51,11 +53,7 @@ export function AppHeader() {
                 <div className="logo-container">
                     <img src="/logo.svg" alt="Logo" className="logo w-40" />
                 </div>
-                <nav className={styles.navigation}>
-                    {NAV_ITEMS.map((item, index) => (
-                        <a key={index} onClick={() => handleClick(item.label)} className={selectedItem == item.label ? styles.navItemSelected : styles.navItem} href={item.href}>{item.label}</a>
-                    ))}
-                </nav>
+                <Navigation />
                 <div className={styles.buttonContainer}>
                     <InputFormField
                         type="text"
@@ -68,6 +66,7 @@ export function AppHeader() {
                         onChange={(value: string) => onChangeTextSearch(value)}
                         suffix={searchIcon}
                     />
+                    {/* TODO: hidden when not focus on input */}
                     {inputValue.length > 0 && (
                         <div className="absolute top-12 left-0 w-[250px] bg-white shadow-lg z-10">
                             {loading
@@ -76,24 +75,26 @@ export function AppHeader() {
                                     ? <ul className="max-h-60 overflow-y-auto">
                                         {searchValue.map((product, index) => (
                                             <li key={index} className="p-2 hover:bg-gray-100 cursor-pointer">
-                                                <a href={`/product/${product.id}`}>{product.title}</a>
+                                                {/* <a href={`/product/${product.id}`}>{product.title}</a> */}
+                                                <Link to={`/product/${product.id}`} > {product.title}</Link>
                                             </li>
                                         ))}
                                     </ul>
                                     : <p className="p-2 text-gray-500">No results found</p>)}
                         </div>
-                )}
-                {/* TODO: fix href */}
+                    )}
                     <Badges
-                        title={heartIcon}
                         notification={isAuthenticated ? wishlistCount : 0}
-                        href={isAuthenticated ? "/my-wishlist" : "/login"}
-                    />
+                        onClick={handleWishlistClick}
+                    >
+                        {heartIcon}
+                    </Badges>
                     <Badges
-                        title={cartIcon}
                         notification={isAuthenticated ? cartItemCount : 0}
-                        href={isAuthenticated ? "/my-cart" : "/login"}
-                    />
+                        onClick={handleCartClick}
+                    >
+                        {cartIcon}
+                    </Badges>
                     {isAuthenticated && (
                         <DropDown
                             label={userIcon}
@@ -106,7 +107,6 @@ export function AppHeader() {
                     )}
                 </div>
             </div>
-
         </header>
     );
 }

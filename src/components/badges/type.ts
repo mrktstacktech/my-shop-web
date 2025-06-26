@@ -1,7 +1,7 @@
 import type React from "react"
-// TODO :fix
+
 export type BadgeType = {
-    notification: number;
+    notification: React.ReactNode;
     styles?: React.CSSProperties;
     className?: string;
     children?: React.ReactNode;

@@ -1,22 +1,26 @@
-import { cancelIcon, logOutIcon, orderIcon, reviewIcon, accountIcon } from './icon';
+import { cancelIcon, logOutIcon, orderIcon, reviewIcon, accountIcon, HomeIcon, AboutIcon, ContactIcon, SignUpIcon } from './icon';
 
 export * from './icon'
 export const NAV_ITEMS = [
     {
         label: 'Home',
         href: '/',
+        icon: HomeIcon
     },
     {
         label: 'About',
         href: '/about',
+        icon: AboutIcon 
     },
     {
         label: 'Contact',
         href: '/contact',
+        icon: ContactIcon
     },
     {
         label: 'Sign Up',
         href: '/signup',
+        icon: SignUpIcon
     }
 ];
 

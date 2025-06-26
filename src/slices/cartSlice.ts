@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 import type { ProductsInCartEntity } from '@/services/domain/entities';
-// TODO: save list carts & wishlists to state
+
 export interface CartState {
     currentCartId: string;
     currentCartItems: ProductsInCartEntity[];

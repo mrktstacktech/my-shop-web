@@ -10,16 +10,16 @@ export function Badges({
 }: BadgeType) {
     return (
         <div onClick = {onClick} className={`btn ${className}`} style={styles}>
-            {notification > 0 && notification < 100 && (
+            {typeof notification === 'number' && notification > 0 && notification < 100 && (
                 <span className="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
                     {notification}
-                </span>) ||
-                notification >= 100 && (
-                    <span className="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
-                        99+
-                    </span>
-                )
-            }
+                </span>
+            )}
+            {typeof notification === 'number' && notification >= 100 && (
+                <span className="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                    99+
+                </span>
+            )}
             {children}
         </div>
     );

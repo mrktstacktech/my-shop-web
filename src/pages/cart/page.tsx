@@ -5,12 +5,11 @@ import { InputFormField } from "@components";
 const FIX_NUMBER = 2;
 
 export function CartPage() {
-    const {productsInCart,
-            total,
-            loading,
-            handleIncreaseQuantity,
-            handleDecreaseQuantity 
-        } = useHandleItemQuantity();
+    const { productsInCart,
+        total,
+        handleIncreaseQuantity,
+        handleDecreaseQuantity
+    } = useHandleItemQuantity();
 
     const { addToCart } = useAddToCart(productsInCart);
 
@@ -27,29 +26,23 @@ export function CartPage() {
                         </tr>
                     </thead>
                     <tbody>
-                        {loading ? (
-                            <tr>
-                                <td colSpan={4} className="loading-cell">Loading...</td>
+                        {productsInCart.map((product) => (
+                            <tr key={product.id}>
+                                <td className="product-cell">
+                                    <img src={product.thumbnail} alt={product.title} />
+                                    <span>{product.title}</span>
+                                </td>
+                                <td>${product.price.toFixed(FIX_NUMBER)}</td>
+                                <td className="quantity-cell">
+                                    <span>{product.quantity}</span>
+                                    <div className="quantity-controls">
+                                        <button onClick={() => handleIncreaseQuantity(product.id)}>+</button>
+                                        <button onClick={() => handleDecreaseQuantity(product.id)} disabled={product.quantity <= 0}>-</button>
+                                    </div>
+                                </td>
+                                <td className="total-cell">${product.total.toFixed(FIX_NUMBER)}</td>
                             </tr>
-                        ) : (
-                            productsInCart.map((product) => (
-                                <tr key={product.id}>
-                                    <td className="product-cell">
-                                        <img src={product.thumbnail} alt={product.title} />
-                                        <span>{product.title}</span>
-                                    </td>
-                                    <td>${product.price.toFixed(FIX_NUMBER)}</td>
-                                    <td className="quantity-cell">
-                                        <span>{product.quantity}</span>
-                                        <div className="quantity-controls">
-                                            <button onClick={() => handleIncreaseQuantity(product.id)}>+</button>
-                                            <button onClick={() => handleDecreaseQuantity(product.id)} disabled={product.quantity <= 0}>-</button>
-                                        </div>
-                                    </td>
-                                    <td className="total-cell">${product.total.toFixed(FIX_NUMBER)}</td>
-                                </tr>
-                            ))
-                        )}
+                        ))}
                     </tbody>
                 </table>
             </div>
@@ -69,7 +62,7 @@ export function CartPage() {
                         className="coupon-input"
                         required={false}
                         value=""
-                        onChange={() => {}}
+                        onChange={() => { }}
                     />
                     <button className="button red">Apply Coupon</button>
                 </div>

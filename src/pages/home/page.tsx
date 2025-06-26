@@ -1,5 +1,6 @@
 import { useMemo } from "react";
-import './components/style.css';
+// import './components/style.css';
+import './components/style.scss';
 import { ProductList, FlashSaleProduct, Banner, BestSeller, PosterGrid } from "./components";
 
 export function HomePage() {

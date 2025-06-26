@@ -24,10 +24,3 @@ export type DeletedCartEntity = CartEntity & {
     deletedOn: string;
 };
 
-
-// TODO: remove
-export type CurrentCartInforEntity = {
-    id: string;
-    totalQuantity: number;
-};
-

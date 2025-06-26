@@ -5,8 +5,6 @@ import { useSelector } from 'react-redux';
 import type { RootState } from '@/store/store';
 
 export function useHandleItemQuantity() {
-    //TODO: fix this
-    const loading = false;
     const products = useSelector((state: RootState) => state.root.cart.currentCartItems) as ProductsInCartEntity[];
 
     const [productsInCart, setProductsInCart] = useState<ProductsInCartEntity[]>([]);
@@ -46,7 +44,6 @@ export function useHandleItemQuantity() {
     return {
         productsInCart,
         total,
-        loading,
         handleIncreaseQuantity,
         handleDecreaseQuantity
     };

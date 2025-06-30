@@ -9,4 +9,5 @@ export type CardType = {
     stock?: number;
     reviewNumber?: number;
     className?: string;
+    onClick?: () => void;
 }

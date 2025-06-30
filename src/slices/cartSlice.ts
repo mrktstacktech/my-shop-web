@@ -37,13 +37,14 @@ export const cartSlice = createSlice({
         },
         setCurrentCartItems: (state, action) => {
             state.currentCartItems = action.payload;
+            state.totalItems = state.currentCartItems.reduce((sum, item) => sum + (item.quantity ?? 1), 0);
         },
         setCurrentWishlistItems: (state, action) => {
             state.currentWishlistItems = action.payload;
         },
+        // TODO: Only use if save state in local
         addCurrentCartItem: (state, action) => {
             const newItem = action.payload;
-
             if (Array.isArray(newItem)) {
                 const cartItems = state.currentCartItems ?? [];
 
@@ -62,7 +63,6 @@ export const cartSlice = createSlice({
 
                 return;
             }
-
         },
         moveAllItemsToCart: (state, action) => {
             const newItem = action.payload;

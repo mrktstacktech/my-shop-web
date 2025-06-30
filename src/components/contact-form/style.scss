@@ -1,0 +1,57 @@
+@import "@/App";
+.contact-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+  padding: 2rem;
+  height: 100%;
+  &__personal-fields {
+    display: flex;
+    gap: 1rem;
+
+    &__inline-fields {
+      @extend .input-style;
+    }
+
+    @include sm {
+      flex-direction: column;
+    }
+  }
+
+  &__message-field {
+    @extend .input-style;
+  }
+
+  &__error-text {
+    &__error-message {
+      color: red;
+      font-size: 0.9rem;
+    }
+
+    &__success-message {
+      color: green;
+      font-size: 0.9rem;
+    }
+  }
+
+  &__submit-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+
+    &__submit-button {
+      width: fit-content;
+      background-color: #db4444;
+      color: white;
+      padding: 0.5rem 1rem;
+      border-radius: 0.2rem;
+    }
+  }
+}
+
+.input-style {
+  width: 100%;
+  padding: 0.5rem;
+  background-color: #f5f5f5;
+  border-radius: 0.15rem;
+}

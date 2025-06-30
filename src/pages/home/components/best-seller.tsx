@@ -1,11 +1,13 @@
 import { Card } from "@components";
-import { useGetProductsSorted } from "@hooks";
+import { useGetProductsSorted, useAddToCart } from "@hooks";
 
 export function BestSeller() {
     const {
         data: products,
         loading,
     } = useGetProductsSorted(4, 'price');
+
+    const { addToCart } = useAddToCart();
 
     return (
         <div className="component-container best-seller">
@@ -35,6 +37,7 @@ export function BestSeller() {
                                 discountPercentage={product.discountPercentage}
                                 reviewNumber={product.reviews.length}
                                 className="best-seller__products__product-card"
+                                onClick={() => addToCart([product])}
                             />
                         ))}
                     </div>

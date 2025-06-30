@@ -6,6 +6,10 @@
     margin-top: 2rem;
     margin-bottom: 2rem;
 
+    opacity: 1;
+    transform: translateY(0);
+    animation: fade-in 0.6s ease-in;
+
     div {
       flex: 1;
       text-align: left;
@@ -50,6 +54,29 @@
 
       &__icon {
         @extend .icon;
+      }
+
+      &:hover {
+        background-color: #db4444;
+        transition: 0.2s;
+        border: none;
+
+        .about-page__intro__intro-item__icon {
+          box-shadow: 0 0 0px 6px rgba(255, 255, 255, 0.5);
+          background-color: white;
+          padding: 0.4rem;
+
+          svg {
+            width: 1.5rem;
+            height: 1.5rem;
+            color: black;
+          }
+        }
+
+        .about-page__intro__intro-item__title,
+        .about-page__intro__intro-item__description {
+          color: white;
+        }
       }
     }
   }
@@ -173,5 +200,18 @@
       margin: 1rem;
       width: fit-content;
     }
+
+    &__feature {
+      display: flex;
+      flex-direction: column;
+    }
+  }
+}
+
+@keyframes fade-in {
+  0% {
+    /* Effect values */
+    opacity: 0;
+    transform: translateY(50px);
   }
 }

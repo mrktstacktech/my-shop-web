@@ -9,29 +9,47 @@ const styles = {
     hintText: "text-gray-500 text-xs mt-1",
 }
 
-export function InputFormField(props: InputFormFieldType) {
+export function InputFormField({ isMultiline = false, ...props }: InputFormFieldType) {
     return (
         <>
-            {props.label? (
+            {props.label ? (
                 <label htmlFor={props.id} className={styles.label}>
                     {props.label}
                 </label>
             ) : null}
-            
+
             <div className={`${props.className}`}>
                 {props.prefix && <span className="mr-2">{props.prefix}</span>}
-                <input
-                    type={props.type}
-                    id={props.id}
-                    name={props.name}
-                    value={props.value}
-                    placeholder={props.placeholder}
-                    required={props.required}
-                    className={`w-full resize-none focus:ring-none focus:border-none focus:outline-none`}
-                    style={props.style}
-                    onChange={(e) => props.onChange(e.target.value)}
-                    onClick={() => props.onClick && props.onClick()}
-                />
+
+                {isMultiline
+                    ? <textarea
+                        ref={props.ref}
+                        id={props.id}
+                        name={props.name}
+                        value={props.value}
+                        placeholder={props.placeholder}
+                        required={props.required}
+                        className={`w-full resize-none focus:ring-none focus:border-none focus:outline-none`}
+                        style={props.style}
+                        onChange={(e) => props.onChange(e.target.value)}
+                        onClick={() => props.onClick && props.onClick()}
+                        rows={isMultiline ? 4 : 1}
+                    />
+                    // TODO: fix ref type
+                    : <input
+                        // ref={props.ref}
+                        id={props.id}
+                        name={props.name}
+                        value={props.value}
+                        type={props.type}
+                        placeholder={props.placeholder}
+                        required={props.required}
+                        className={`w-full resize-none focus:ring-none focus:border-none focus:outline-none`}
+                        style={props.style}
+                        onChange={(e) => props.onChange(e.target.value)}
+                        onClick={() => props.onClick && props.onClick()}
+                    />
+                }
                 {props.suffix && <span className="ml-2">{props.suffix}</span>}
             </div>
             {props.errorText && <p className="text-red-500 text-xs mt-1">{props.errorText}</p>}

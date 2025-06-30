@@ -1,6 +1,6 @@
 import { Card } from "@components";
 import { angleLeftIcon, angleRightIcon } from "@constants";
-import { useGetProduct } from "@hooks";
+import { useGetProduct, useAddToCart } from "@hooks";
 
 export function ProductList() {
     const { data,
@@ -8,6 +8,8 @@ export function ProductList() {
         skip,
         setSkip,
         limit } = useGetProduct();
+
+    const { addToCart } = useAddToCart();
 
     return (
         <div className="component-container product-list">
@@ -43,6 +45,7 @@ export function ProductList() {
                                 rating={product.rating}
                                 discountPercentage={product.discountPercentage}
                                 reviewNumber={product.reviews.length}
+                                onClick={() => addToCart([product])}
                             />
                         ))}
                     </div>)

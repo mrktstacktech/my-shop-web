@@ -11,3 +11,4 @@ export * from './clock';
 export * from './badges';
 export * from './feature';
 export * from './avatar';
+export * from './contact-form';

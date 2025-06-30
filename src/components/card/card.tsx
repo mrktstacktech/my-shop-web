@@ -41,7 +41,7 @@ export function Card({ ...props }: CardType) {
                 >
                     <button className={`${styles.button} ${styles.likeIcon}`}>{likeIcon}</button>
                     <button className={`${styles.button} ${styles.eyeIcon}`}>{eyeIcon}</button>
-                    <button className={`${styles.addToCart}`}>Add to cart</button>
+                    <button onClick={props.onClick} className={`${styles.addToCart}`}>Add to cart</button>
                 </div>
                 <img className={`w-20`} src={props.thumbnail} alt={props.title} />
 

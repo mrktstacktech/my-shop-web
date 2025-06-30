@@ -13,7 +13,7 @@ export function CartPage() {
         handleDecreaseQuantity
     } = useHandleItemQuantity();
 
-    const { addToCart } = useAddToCart(productsInCart);
+    const { addToCart } = useAddToCart();
 
     return (
         <div className="cart-table">
@@ -52,7 +52,7 @@ export function CartPage() {
 
             <div className="cart-table__cart-buttons">
                 <Link to="/" className="button" onClick={() => console.log("Return to Shop clicked")}>Return to Shop</Link>
-                <button className="button" onClick={() => addToCart()}>Update Cart</button>
+                <button className="button" onClick={() => addToCart(productsInCart)}>Update Cart</button>
             </div>
 
             <div className="cart-table__total-container">

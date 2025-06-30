@@ -1,6 +1,6 @@
 import { EndPoints } from "@constants";
 import { server } from "@axios/server.api";
-import type { CartEntity, DeletedCartEntity } from "@domain/entities";
+import type { CartEntity, DeletedCartEntity, ProductEntity, ProductsInCartEntity } from "@domain/entities";
 import type { ICartRepo } from "@domain/repo/cart.repo";
 import type { CartResponse, CartListResponse } from "../models/cart/cart.response";
 import type { AddNewCartRequest } from "../models/cart/cart.resquest";
@@ -52,16 +52,21 @@ export class CartRepository implements ICartRepo {
         }
     }
 
-    async updateCart(merge: boolean, {
-        id,
-        products = [],
-    }: CartEntity): Promise<CartEntity> {
+    async updateCart(merge: boolean, id: string, products: ProductsInCartEntity[] | ProductEntity[]): Promise<CartEntity> {
         try {
+            const productList = products.map(product => ({
+                id: product.id,
+                quantity: 'quantity' in product && typeof (product as ProductsInCartEntity).quantity === 'number' ? (product as ProductsInCartEntity).quantity : 1,
+            }));
             const response = await server.put<CartResponse>({
                 endpoint: EndPoints.CART,
                 params: id,
-                body: { merge, products },
+                body: { 
+                    merge: merge,
+                    products: productList, // Ensure the products are in the correct format
+                 },
             });
+            console.log("Cart updated successfully:", response);
             return response;
         } catch (error) {
             console.error("Error updating cart:", error);

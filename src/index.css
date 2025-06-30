@@ -23,6 +23,8 @@
   --webkit-padding-top: 2.2rem;
   --webkit-padding-horizontal: 2rem;
 
+  --ms-text-size-sm: 0.875rem;
+
 }
 
 body {
@@ -60,10 +62,6 @@ button:disabled {
   cursor: not-allowed;
 }
 
-button:disabled > svg {
-  opacity: 0.5;
-  
-}
 
 @media (prefers-color-scheme: light) {
   :root {

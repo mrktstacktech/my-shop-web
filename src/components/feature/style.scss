@@ -1,0 +1,36 @@
+.feature-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 2rem;
+  max-width: 20rem;
+
+  &__icon {
+    margin-bottom: 0.6rem;
+    background-color: black;
+    border-radius: 50%;
+    padding: 0.4rem;
+    box-shadow: 0 0 0px 6px rgba(156, 156, 156, 0.5);
+
+    svg {
+      width: 1.5rem;
+      height: 1.5rem;
+      color: white;
+    }
+  }
+
+  &__title {
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin-bottom: 0.1rem;
+    color: black;
+    text-align: center;
+  }
+
+  &__description {
+    font-size: 1rem;
+    color: #666;
+    text-align: center;
+    max-width: 600px;
+  }
+}

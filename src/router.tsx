@@ -1,10 +1,10 @@
 import { Routes, Route } from "react-router-dom";
-import { Signup, Login, HomePage, CartPage, WishListPage } from './pages';
+import { Signup, Login, HomePage, CartPage, WishListPage, AboutPage } from '@/pages';
 import { Layout } from '@pages/Layout';
 
 
 import { useAuthContext } from "./context/auth-hook";
-export default function Router() {
+export default function Router() { 
     const { isAuthenticated } = useAuthContext();
 
     return (
@@ -15,6 +15,7 @@ export default function Router() {
                 <Route path="my-wishlist" element={<WishListPage />} />
                 <Route path="signup" element={<Signup />} />
                 <Route path="login" element={<Login />} />
+                <Route path="about" element={<AboutPage />} />
                 <Route path="*" element={<div>404 Not Found</div>} />
             </Route>
         </Routes>

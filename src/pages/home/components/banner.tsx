@@ -74,7 +74,7 @@ export function Banner() {
                         <a
                             href="#"
                             key={category.slug}
-                            className="banner__category"
+                            className="banner__categories__category"
                         >
                             {category.name}
                         </a>

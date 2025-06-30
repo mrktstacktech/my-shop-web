@@ -1,5 +1,8 @@
+@import "@/App";
+
 .component-container {
-  margin-bottom: 30px;
+  margin-bottom: 3rem;
+  margin-top: 2rem;
 }
 .arrowButton {
   border-radius: 50%;
@@ -12,10 +15,10 @@
 }
 
 .title-container {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin-bottom: 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1.5rem;
 }
 
 .title {
@@ -42,119 +45,384 @@
 }
 
 .view-button {
-    background-color: oklch(63.7% 0.237 25.331);
-    color: white;
-    padding: 0.3rem 1rem;
-    border-radius: 0.375rem;
+  background-color: oklch(63.7% 0.237 25.331);
+  color: white;
+  padding: 0.3rem 1rem;
+  border-radius: 0.375rem;
 }
 
 .view-button:hover {
-    background-color: oklch(63.7% 0.237 25.331);
-    opacity: 0.8;
+  background-color: oklch(63.7% 0.237 25.331);
+  opacity: 0.8;
 }
 
 .category-name {
   text-overflow: ellipsis;
 }
 
-
 /* New scss for banner */
 .banner {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
-    width: 100%;
-    height: 17rem; // Tailwind's h-68 (~272px)
-    margin-bottom: 0.75rem;
-    overscroll-behavior: contain;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  width: 100%;
+  height: 17rem; // Tailwind's h-68 (~272px)
+  margin-bottom: 0.75rem;
+  overscroll-behavior: contain;
 
-    &__categories {
-        display: flex;
-        flex-direction: column;
-        height: 100%;
-        overflow-y: scroll;
-        scrollbar-width: none; // Firefox
-        -ms-overflow-style: none; // IE and Edge
+  @include sm {
+    flex-direction: column;
+    height: fit-content;
+  }
+
+  &__categories {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    max-width: 150px;
+    text-overflow: ellipsis;
+    overflow-y: scroll;
+    scrollbar-width: none; // Firefox
+    -ms-overflow-style: none; // IE and Edge
+
+    &::-webkit-scrollbar {
+      display: none;
     }
 
-    &__categories::-webkit-scrollbar {
-        display: none;
+    @include sm {
+      width: fit-content;
+      max-width: 92vw;
+      height: fit-content;
+      flex-direction: row;
+      gap: 0.5rem;
+      overflow-x: scroll;
+      overflow-y: hidden;
     }
 
     &__category {
-        margin: 0.5rem 0;
-        // text-overflow: ellipsis;
-        white-space: nowrap;
-        // overflow: hidden;
-        display: inline-block;
-        max-width: 100%;
-        &:hover {
-            text-decoration: underline;
-            color: #60a5fa; 
-        }
-    }
+      margin: 0.5rem 0;
+      white-space: nowrap;
+      display: inline-block;
+      max-width: 100%;
 
-    &__carousel {
-        width: 83.333333%;
-        height: 100%;
-    }
-
-    &__carousel-inner {
-        height: 15rem; 
-    }
-
-    &__image {
-        position: absolute;
-        right: 0;
-        width: 50%;
-        padding: 1rem;
-        min-width: 300px;
-    }
-
-    &__background {
-        position: relative;
-        background-color: black;
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-    }
-
-    &__content {
-        position: absolute;
-        display: flex;
-        flex-direction: column;
-        left: 0;
-        padding-left: 3.75rem; 
-        top: 50%;
-        transform: translateY(-50%);
-    }
-
-    &__logo {
-        width: 10rem;
-    }
-
-    &__text {
-        font-weight: bold;
-        color: white;
-        font-size: 2.25rem; 
-        margin-top: 1rem;
-        width: 60%;
-    }
-
-    &__link {
-        color: white;
+      &:hover {
         text-decoration: underline;
-        text-underline-offset: 8px;
-        margin-top: 1rem;
-        &:hover {
-            font-weight: bold;
-        }
-    }
+        color: #60a5fa;
+      }
 
-    &__loading {
-        padding: 1rem;
-        font-size: 1rem;
-        color: #999;
+      @include sm {
+        padding: 0.2rem 0.5rem;
+        border-radius: 2rem;
+        background-color: rgba(0, 0, 0, 0.1);
+      }
     }
+  }
+
+  &__carousel {
+    width: 83.333333%;
+    height: 100%;
+
+    @include sm {
+      margin-top: 0.5rem;
+      width: 100%;
+
+      border-radius: 2rem;
+    }
+  }
+
+  &__carousel-inner {
+    height: 15rem;
+  }
+
+  &__image {
+    position: absolute;
+    right: 0;
+    width: 50%;
+    padding: 1rem;
+    min-width: 300px;
+
+    @include sm {
+      min-width: 200px;
+    }
+  }
+
+  &__background {
+    position: relative;
+    background-color: black;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  &__content {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    left: 0;
+    padding-left: 3.75rem;
+    top: 50%;
+    transform: translateY(-50%);
+
+    @include sm {
+      padding-left: 1.2rem;
+      width: 100%;
+    }
+  }
+
+  &__logo {
+    width: 10rem;
+  }
+
+  &__text {
+    font-weight: bold;
+    color: white;
+    font-size: 2.25rem;
+    margin-top: 1rem;
+    width: 60%;
+
+    @include sm {
+      font-size: 1.5rem;
+    }
+  }
+
+  &__link {
+    color: white;
+    text-decoration: underline;
+    text-underline-offset: 8px;
+    margin-top: 1rem;
+    &:hover {
+      font-weight: bold;
+    }
+  }
+
+  &__loading {
+    padding: 1rem;
+    font-size: 1rem;
+    color: #999;
+  }
 }
 
+/* Flash sale styles */
+.sale {
+  @include sm {
+    width: 100%;
+    padding: 0.2rem;
+
+    &__title {
+      display: flex;
+      justify-content: space-between;
+
+      @include sm {
+        align-items: flex-start;
+      }
+
+      &__buttons {
+        display: none;
+      }
+
+      &__title-content {
+        @include sm {
+          display: flex;
+          flex-direction: column;
+          width: 100%;
+        }
+      }
+    }
+  }
+
+  &__products {
+    @extend .card-grid;
+  }
+
+  &__view-all {
+    @include sm {
+      padding: 0.1rem 0.5rem;
+      font-size: var(--ms-text-size-sm);
+    }
+  }
+}
+
+.best-seller {
+  &__products {
+    @extend .card-grid;
+  }
+
+  &__title {
+    &__view-all-inline {
+      @include sm {
+        display: none;
+      }
+    }
+  }
+
+  &__view-all {
+    display: none;
+    @extend .button-in-home;
+
+    @include sm {
+      display: flex;
+      justify-content: center;
+      margin-top: 1rem;
+    }
+  }
+}
+
+.product-list {
+  &__title {
+    &__buttons {
+      @include sm {
+        display: none;
+      }
+    }
+  }
+  &__products {
+    @extend .card-grid-8;
+  }
+
+  &__view-all {
+    display: none;
+    @extend .button-in-home;
+
+    @include sm {
+      display: flex;
+      justify-content: center;
+      margin-top: 1rem;
+    }
+  }
+}
+
+.poster-grid {
+  &__posters {
+    height: 60vh;
+    @include sm {
+      // display: grid;
+      // gap: 1rem;
+      // padding: 0.2rem;
+      // grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+      display: flex;
+      flex-wrap: wrap;
+    }
+  }
+}
+
+.card-grid {
+  @include sm {
+    display: grid;
+    gap: 1rem;
+    padding: 0.2rem;
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  }
+
+  @include md {
+    display: grid;
+    grid-auto-flow: column;
+    grid-auto-columns: minmax(150px, 1fr);
+    overflow-x: auto;
+    overflow-y: hidden;
+    gap: 1rem;
+    padding: 1rem;
+    scroll-snap-type: x mandatory;
+
+    &::-webkit-scrollbar {
+      display: none;
+    }
+  }
+
+  @include lg {
+    display: grid;
+    gap: 1rem;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    padding: 0.5rem;
+    
+    display: grid;
+    grid-auto-flow: column;
+    grid-auto-columns: minmax(200px, 1fr);
+    overflow-x: auto;
+    overflow-y: hidden;
+    gap: 1rem;
+    padding: 1rem;
+    scroll-snap-type: x mandatory;
+
+    // Prevent horizontal padding from affecting scroll
+    // Add this fix to prevent "first item cut off"
+    scroll-padding-left: 1rem;
+
+    &::-webkit-scrollbar {
+      display: none;
+    }
+  }
+
+  &__products {
+    scroll-snap-align: start;
+    // optional: ensure child items don't collapse
+    min-width: 150px;
+  }
+}
+
+.card-grid-8 {
+  @include sm {
+    display: grid;
+    gap: 1rem;
+    padding: 0.2rem;
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  }
+
+  @include md {
+    display: grid;
+    gap: 1rem;
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    padding: 0.5rem;
+
+    display: grid;
+    grid-auto-flow: column;
+    grid-auto-columns: minmax(150px, 1fr);
+    overflow-x: auto;
+    overflow-y: hidden;
+    gap: 1rem;
+    padding: 1rem;
+    scroll-snap-type: x mandatory;
+
+    // Prevent horizontal padding from affecting scroll
+    // Add this fix to prevent "first item cut off"
+    scroll-padding-left: 1rem;
+
+    &::-webkit-scrollbar {
+      display: none;
+    }
+  }
+
+  @include lg {
+    display: grid;
+    gap: 1rem;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    padding: 0.5rem;
+    
+    display: grid;
+    grid-auto-flow: column;
+    grid-auto-columns: minmax(200px, 1fr);
+    overflow-x: auto;
+    overflow-y: hidden;
+    gap: 1rem;
+    padding: 1rem;
+    scroll-snap-type: x mandatory;
+
+    // Prevent horizontal padding from affecting scroll
+    // Add this fix to prevent "first item cut off"
+    scroll-padding-left: 1rem;
+
+    &::-webkit-scrollbar {
+      display: none;
+    }
+  }
+
+  &__products {
+    scroll-snap-align: start;
+    // optional: ensure child items don't collapse
+    min-width: 150px;
+  }
+}
+
+.button-in-home {
+  padding: 0.1rem 0.5rem;
+  font-size: var(--ms-text-size-sm);
+}

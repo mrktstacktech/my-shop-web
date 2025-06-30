@@ -9,3 +9,5 @@ export * from './card';
 export * from './star-rating';
 export * from './clock';
 export * from './badges';
+export * from './feature';
+export * from './avatar';

@@ -1,6 +1,8 @@
 import { useHandleItemQuantity, useAddToCart } from "@hooks";
-import './style.css'
+// import './style.css'
 import { InputFormField } from "@components";
+import './style.scss'
+import { Link } from "react-router-dom";
 
 const FIX_NUMBER = 2;
 
@@ -14,73 +16,74 @@ export function CartPage() {
     const { addToCart } = useAddToCart(productsInCart);
 
     return (
-        <div className="cart-container">
-            <div className="cart-table-wrapper">
-                <table className="cart-table">
+        <div className="cart-table">
+            <div className="cart-table__wrapper">
+                <table className="cart-table__wrapper__table">
                     <thead>
                         <tr>
-                            <th>Product</th>
+                            <th className="product-header">Product</th>
                             <th>Price</th>
                             <th>Quantity</th>
                             <th>Subtotal</th>
                         </tr>
                     </thead>
-                    <tbody>
+                    <tbody className="cart-table__wrapper__table__body">
                         {productsInCart.map((product) => (
-                            <tr key={product.id}>
-                                <td className="product-cell">
+                            <tr className="cart-table__wrapper__table__body__row" key={product.id}>
+                                <td className="cart-table__wrapper__table__body__row__product-cell" data-label="Product">
                                     <img src={product.thumbnail} alt={product.title} />
                                     <span>{product.title}</span>
                                 </td>
-                                <td>${product.price.toFixed(FIX_NUMBER)}</td>
-                                <td className="quantity-cell">
+                                <td data-label="Price">${product.price.toFixed(FIX_NUMBER)}</td>
+                                <td className="cart-table__wrapper__table__body__row__quantity-cell" data-label="Quantity">
                                     <span>{product.quantity}</span>
                                     <div className="quantity-controls">
                                         <button onClick={() => handleIncreaseQuantity(product.id)}>+</button>
                                         <button onClick={() => handleDecreaseQuantity(product.id)} disabled={product.quantity <= 0}>-</button>
                                     </div>
                                 </td>
-                                <td className="total-cell">${product.total.toFixed(FIX_NUMBER)}</td>
+                                <td className="cart-table__wrapper__table__body__row__total-cell" data-label="Subtotal">${product.total.toFixed(FIX_NUMBER)}</td>
                             </tr>
                         ))}
                     </tbody>
+
                 </table>
             </div>
 
-            <div className="cart-buttons">
-                <a href="/" className="button outline" onClick={() => console.log("Return to Shop clicked")}>Return to Shop</a>
-                <button className="button outline" onClick={() => addToCart()}>Update Cart</button>
+            <div className="cart-table__cart-buttons">
+                <Link to="/" className="button" onClick={() => console.log("Return to Shop clicked")}>Return to Shop</Link>
+                <button className="button" onClick={() => addToCart()}>Update Cart</button>
             </div>
 
-            <div className="total-container">
-                <div className="input-coupon-container">
+            <div className="cart-table__total-container">
+                <div className="cart-table__total-container__input-coupon-container">
                     <InputFormField
                         type="text"
                         id="coupon"
                         name="coupon"
                         placeholder="Coupon Code"
-                        className="coupon-input"
+                        className="cart-table__total-container__input-coupon-container__coupon-input"
                         required={false}
                         value=""
                         onChange={() => { }}
                     />
-                    <button className="button red">Apply Coupon</button>
+                    <button className="cart-table__total-container__input-coupon-container__button red">Apply Coupon</button>
                 </div>
-                <div className="cart-summary">
+                <div className="cart-table__total-container__cart-summary">
                     <h2>Cart Total</h2>
-                    <div className="summary-row">
+                    <div className="cart-table__total-container__cart-summary__summary-row">
                         <p>Subtotal:</p>
                         <p>${total.toFixed(FIX_NUMBER)}</p>
                     </div>
-                    <div className="summary-row">
+                    <div className="cart-table__total-container__cart-summary__summary-row">
                         <p>Shipping:</p>
                         <p>Free</p>
                     </div>
-                    <div className="summary-row total">
+                    <div className="cart-table__total-container__cart-summary__summary-row total">
                         <p>Total:</p>
                         <p>${total.toFixed(FIX_NUMBER)}</p>
                     </div>
-                    <button className="button red">Process to checkout</button>
+                    <button className="cart-table__total-container__cart-summary__button red">Process to checkout</button>
                 </div>
             </div>
         </div>

@@ -1,50 +1,56 @@
 @import "@/App";
 
 .app-header {
-    // --webkit-padding-right: 2.2rem;
-    box-shadow: var(--shadow-header);
-    margin-bottom: 0.5rem;
+  // --webkit-padding-right: 2.2rem;
+  box-shadow: var(--shadow-header);
+  margin-bottom: 0.5rem;
 
-    &__top {
-      background-color: black;
-      color: white;
-      text-align: center;
-      padding: 0.5rem;
+  &__top {
+    background-color: black;
+    color: white;
+    text-align: center;
+    padding: 0.5rem;
 
-      &__shop-link {
-          text-decoration: underline;
-          font-weight: bold;
-          margin-left: 0.75rem;
-      }
-
-      @include sm {
-          display: none;
-      }
+    &__shop-link {
+      text-decoration: underline;
+      font-weight: bold;
+      margin-left: 0.75rem;
     }
 
-    &__container {
-        display: flex;
-        flex-direction: row;
-        justify-content: space-between;
-        align-items: center;
-        justify-items: end;
-        padding: var(--webkit-padding-top) var(--webkit-padding-horizontal) 0.8rem;
-    
+    @include sm {
+      display: none;
+    }
+  }
 
+  &__container {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    justify-items: end;
+    padding: var(--webkit-padding-top) var(--webkit-padding-horizontal) 0.8rem;
+
+    @include sm {
+      padding: var(--webkit-padding-top) 1rem 0.6rem;
+    }
     &__logo img {
-        width: 7rem;
+      width: 7rem;
 
-        @include sm {
-          display: none;
-        }
+      @include sm {
+        display: none;
+      }
+
+      @include md {
+        display: none;
+      }
     }
 
     &__controls {
-        display: flex;
-        align-items: center;
-        position: relative;
+      display: flex;
+      align-items: center;
+      position: relative;
 
-        &__search-input {
+      &__search-input {
         display: flex;
         align-items: center;
         border: 1px solid #d1d5db; // gray-300
@@ -54,24 +60,39 @@
         margin-right: 0.5rem;
 
         &:focus {
-            outline: none;
-            box-shadow: 0 0 0 2px #3b82f6; // blue-500 ring
+          outline: none;
+          box-shadow: 0 0 0 2px #3b82f6; // blue-500 ring
         }
 
         @include sm {
+          transition: 0.2s ease-in-out;
           width: 160px;
 
           #search::placeholder {
-            font-size: 10px;
+            font-size: 11px;
           }
 
           span svg {
-            width: 1rem;
+            width: 0.75rem;
           }
         }
-    
 
-      &__search-dropdown {
+        @include md {
+          width: 160px;
+
+          transition: 0.2s ease-in-out;
+          width: 160px;
+
+          #search::placeholder {
+            font-size: 11px;
+          }
+
+          span svg {
+            width: 0.75rem;
+          }
+        }
+
+        &__search-dropdown {
           position: absolute;
           top: 3rem;
           left: 0;
@@ -79,36 +100,44 @@
           background-color: white;
           box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
           z-index: 10;
-      }
+        }
 
-      &__search-status {
+        &__search-status {
           padding: 0.5rem;
           color: #6b7280; // gray-500
-      }
+        }
 
-      &__search-results {
+        &__search-results {
           max-height: 15rem;
           overflow-y: auto;
-      }
+        }
 
-      &__search-item {
+        &__search-item {
           padding: 0.5rem;
           cursor: pointer;
 
           &:hover {
-              background-color: #f9fafb; // gray-100
+            background-color: #f9fafb; // gray-100
           }
-      }
+        }
 
-      &__dropdown-button {
+        &__dropdown-button {
           padding: 0.5rem;
 
-          @include sm {
-              padding: 0;
+          &:hover {
+            background-color: #4e71b6; // gray-200
           }
-      }
 
-      &__dropdown-modal {
+          ul {
+            background-color: #1f2937;
+          }
+
+          @include sm {
+            padding: 0;
+          }
+        }
+
+        &__dropdown-modal {
           background-color: #1f2937; // gray-900
           color: white;
           padding: 0.5rem;
@@ -116,11 +145,10 @@
           opacity: 0.8;
 
           &:hover {
-              background-color: #374151; // gray-800
+            background-color: #374151; // gray-800
           }
+        }
       }
     }
   }
-}
-
 }

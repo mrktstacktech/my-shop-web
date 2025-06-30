@@ -30,3 +30,9 @@ $breakpoints: (
     @content;
   }
 }
+
+@mixin lg {
+  @media (min-width: map-get($breakpoints, "md")) and (max-width: map-get($breakpoints, "lg")) {
+    @content;
+  }
+};

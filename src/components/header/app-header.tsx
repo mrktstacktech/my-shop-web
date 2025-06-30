@@ -94,7 +94,6 @@ export function AppHeader() {
                             prefix={null}
                             options={USER_DROPDOWN_ITEMS}
                             className="app-header__container__controls__dropdown-button"
-                            classNameModal="app-header__container__controls__dropdown-modal"
                         />
                     )}
                 </div>

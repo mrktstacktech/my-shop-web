@@ -1,3 +1,5 @@
 export * from './route';
 export * from './icon';
 export * from './endpoints';
+export * from './feature';
+export * from './avatar';

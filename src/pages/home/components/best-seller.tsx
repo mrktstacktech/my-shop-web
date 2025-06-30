@@ -8,15 +8,15 @@ export function BestSeller() {
     } = useGetProductsSorted(4, 'price');
 
     return (
-        <div className="component-container">
+        <div className="component-container best-seller">
             <div className="subtitle-container">
                 <div className="red-block"></div>
                 <div className="subtitle">This month</div>
             </div>
 
-            <div className="title-container">
+            <div className="title-container best-seller__title">
                 <h2 className="title">Best Selling Products</h2>
-                <button className="button view-button">View All</button>
+                <button className="button view-button best-seller__title__view-all-inline">View All</button>
             </div>
             {loading ? (
                 <div className="flex items-center">
@@ -24,7 +24,7 @@ export function BestSeller() {
                 </div>
             ) : (
                 products.length > 0
-                    ? <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+                    ? <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 best-seller__products">
                         {products.map(product => (
                             <Card
                                 key={product.id}
@@ -34,12 +34,17 @@ export function BestSeller() {
                                 rating={product.rating}
                                 discountPercentage={product.discountPercentage}
                                 reviewNumber={product.reviews.length}
+                                className="best-seller__products__product-card"
                             />
                         ))}
                     </div>
                     : <p className="text-center">No products found.</p>
 
             )}
+
+            <div className="flex justify-center mt-4 best-seller__view-all">
+                <button className="button view-button">View All Products</button>
+            </div>
 
         </div>
     )

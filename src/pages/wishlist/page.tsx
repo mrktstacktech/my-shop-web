@@ -1,6 +1,6 @@
 import { Card } from "@components";
 import { useMoveToBag } from "@hooks";
-import './style.css';
+import './style.scss';
 import { useState, useEffect } from "react";
 import type { ProductsInCartEntity } from "@/services/domain/entities";
 import { useSelector } from "react-redux";
@@ -23,13 +23,13 @@ export function WishListPage() {
 
     return (
     <div className="wishlist-page">
-        <div className="title-container">
+        <div className="wishlist-page__title-container">
             <h2>Wishlist</h2>
-            <button className="button outline" onClick={() => handleMoveAllToBag()}>Move All To Bag</button>
+            <button className="wishlist-page__title-container__button" onClick={() => handleMoveAllToBag()}>Move All To Bag</button>
         </div>
-        <div className="wishlist-container">
+        <div className="wishlist-page__wishlist-container">
             {loading ? (
-                <p>Loading...</p>
+                <p className="wishlist-page__wishlist-container--loading">Loading...</p>
             ) : (
                 products?.length > 0 ? (
                     products.map((product) => (
@@ -38,12 +38,12 @@ export function WishListPage() {
                             title={product.title}
                             thumbnail="/public/item.svg"
                             price={product.price}
-                            className="wishlist"
+                            className="wishlist-page__wishlist-container__card"
                             discountPercentage={product.discountedPercentage}
                         />
                     ))
                 ) : (
-                    <p>Your wishlist is empty.</p>
+                    <p className="wishlist-page__wishlist-container--empty">Your wishlist is empty.</p>
                 )
             )}
         </div>

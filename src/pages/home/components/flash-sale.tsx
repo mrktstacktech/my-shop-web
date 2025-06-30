@@ -14,18 +14,18 @@ export function FlashSaleProduct() {
     } = useGetProductsSorted(4, K_SORT_FIELD_NAME);
 
     return (
-        <div className="component-container">
-            <div className="subtitle-container">
+        <div className="component-container sale">
+            <div className="subtitle-container sale__subtitle">
                 <div className="red-block"></div>
                 <div className="subtitle">Today</div>
             </div>
 
-            <div className="title-container">
-                <div className="flex items-end gap-5">
+            <div className="title-container sale__title">
+                <div className="flex items-end gap-5 sale__title-content">
                     <h2 className="title w-full">Flash Sale</h2>
                     <Clock targetTime={new Date(Date.now() + 3600000)} />
                 </div>
-                <div>
+                <div className="sale__title__buttons">
                     <button className={`arrowButton mr-1`} onClick={() => setSkip(Math.max(skip - limit, 0))} disabled={skip === 0} >
                         {angleLeftIcon}
                     </button>
@@ -40,7 +40,7 @@ export function FlashSaleProduct() {
                     <p>Loading...</p>
                 </div>
                 : products.length > 0
-                    ? <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+                    ? <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 sale__products">
                         {products.map(product => (
                             <Card
                                 key={product.id}
@@ -50,12 +50,13 @@ export function FlashSaleProduct() {
                                 rating={product.rating}
                                 discountPercentage={product.discountPercentage}
                                 reviewNumber={product.reviews.length}
+                                className="sale__products__product-card"
                             />
                         ))}
                     </div>
                     : <p className="text-center">No products found.</p>
             }
-            <div className="flex justify-center mt-4">
+            <div className="flex justify-center mt-4 sale__view-all">
                 <button className="button view-button">View All Products</button>
             </div>
         </div>

@@ -1,0 +1,53 @@
+.dropdown {
+    &__button {
+        display: flex;
+        align-items: center;
+        padding: 0.2rem;
+        cursor: pointer;
+
+        &:hover {
+            background-color: #DB4444;
+            border-radius: 50%;
+            transition: background-color 0.1s;
+
+            svg {
+                color: white;
+            }
+        }
+
+        &--open {
+            background-color: #DB4444;
+            border-radius: 50%;
+            padding: 0.2rem;
+
+            svg {
+                color: white;
+            }
+        }
+
+        &--close {
+            background-color: white;
+            border-radius: 50%;
+            padding: 0.2rem;
+
+            svg {
+                color: black;
+            }
+        }
+
+        span {
+            margin-right: 0.5rem;
+            color: white;
+
+            svg {
+                width: 1rem;
+                height: 1rem;
+                fill: currentColor;
+            }
+        }
+    }
+    &__menu {
+        background-color: rgba(56, 56, 56, 0.7);
+        color: white;
+    }
+}

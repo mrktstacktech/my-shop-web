@@ -1,6 +1,7 @@
 import { Card, Clock } from "@components";
-import { angleLeftIcon, angleRightIcon } from "@constants";
+import { AngleLeftIcon, AngleRightIcon } from "@constants";
 import { useGetProductsSorted, useAddToCart } from "@hooks";
+import { Link } from "react-router-dom";
 
 const K_SORT_FIELD_NAME = 'discountPercentage';
 
@@ -29,10 +30,10 @@ export function FlashSaleProduct() {
                 </div>
                 <div className="sale__title__buttons">
                     <button className={`arrowButton mr-1`} onClick={() => setSkip(Math.max(skip - limit, 0))} disabled={skip === 0} >
-                        {angleLeftIcon}
+                        {AngleLeftIcon}
                     </button>
                     <button className={`arrowButton`} onClick={() => setSkip(skip + limit)} disabled={products.length === 0} >
-                        {angleRightIcon}
+                        {AngleRightIcon}
                     </button>
                 </div>
             </div>
@@ -44,17 +45,19 @@ export function FlashSaleProduct() {
                 : products.length > 0
                     ? <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 sale__products">
                         {products.map(product => (
-                            <Card
-                                key={product.id}
-                                title={product.title}
-                                thumbnail="/public/item.svg"
-                                price={product.price}
-                                rating={product.rating}
-                                discountPercentage={product.discountPercentage}
-                                reviewNumber={product.reviews.length}
-                                className="sale__products__product-card"
-                                onClick={() => addToCart([product])}
-                            />
+                            <Link to={`/product/${product.id}`} key={product.id} className="sale__products__product-link">
+                                <Card
+                                    key={product.id}
+                                    title={product.title}
+                                    thumbnail="/public/item.svg"
+                                    price={product.price}
+                                    rating={product.rating}
+                                    discountPercentage={product.discountPercentage}
+                                    reviewNumber={product.reviews.length}
+                                    className="sale__products__product-card"
+                                    onClick={() => addToCart([product])}
+                                />
+                            </Link>
                         ))}
                     </div>
                     : <p className="text-center">No products found.</p>

@@ -1,0 +1,311 @@
+@import "@/App.scss";
+.product-detail-page {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  padding: 2rem;
+
+  &__product-detail {
+    display: grid;
+    grid-template-columns: 60% 40%;
+
+    &__thumbnail {
+      display: flex;
+      flex-direction: row;
+      gap: 1.5rem;
+
+      &__images {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        overflow-x: hidden;
+        overflow-y: auto;
+        gap: 0.5rem;
+
+        &::-webkit-scrollbar {
+          display: none;
+        }
+
+        img {
+          width: 80px;
+          height: 80px;
+          padding: 0.5rem;
+          cursor: pointer;
+          transition: transform 0.2s;
+          background-color: #f5f5f5;
+          &:hover {
+            transform: scale(1.05);
+          }
+        }
+      }
+
+      &__main-image {
+        overflow: hidden;
+        background-color: #f5f5f5;
+        max-width: 600px;
+        max-height: 500px;
+        width: 100%;
+
+        img {
+          width: 90%;
+          height: 100%;
+          padding: 1rem;
+          transition: transform 0.2s;
+        }
+      }
+    }
+
+    &__info {
+      padding-left: 1rem;
+      display: flex;
+      flex-direction: column;
+      &__title {
+        font-size: 1.5rem;
+        font-weight: bold;
+        margin-bottom: 0.5rem;
+      }
+
+      &__rating-stock {
+        display: flex;
+        align-items: center;
+        margin-bottom: 0.5rem;
+
+        div {
+          margin-right: 1rem;
+        }
+      }
+
+      &__price {
+        font-size: 1.5rem;
+        font-weight: 600;
+        margin-bottom: 0.7rem;
+      }
+
+      &__description {
+        margin-bottom: 1rem;
+        font-size: 0.8rem;
+        padding-bottom: 1.5rem;
+        border-bottom: 1px solid #dcdcdc;
+        text-align: justify;
+      }
+
+      &__actions {
+        display: flex;
+        gap: 1rem;
+        margin-bottom: 1.5rem;
+        padding-top: 0.7rem;
+        align-items: center;
+
+        &__buy-button {
+          padding: 0.3rem 1rem;
+          background-color: #db4444;
+          color: white;
+          border: none;
+          border-radius: 4px;
+          cursor: pointer;
+
+          &:disabled {
+            background-color: #ccc;
+            cursor: not-allowed;
+          }
+        }
+      }
+
+      &__delivery {
+        display: flex;
+        flex-direction: column;
+        padding-top: 1rem;
+
+        &__title {
+          display: flex;
+          flex-direction: row;
+          align-items: center;
+          border: 1px solid #dcdcdc;
+          padding: 1rem;
+
+          &__text {
+            margin-left: 0.5rem;
+            h4 {
+              font-size: 1rem;
+              font-weight: 600;
+              margin: 0;
+            }
+            p {
+              font-size: 0.8rem;
+            }
+          }
+        }
+      }
+    }
+  }
+
+  &__related-products {
+    width: 100%;
+    margin-top: 5rem;
+
+    &__header {
+      display: flex;
+      align-items: center;
+      margin-bottom: 2rem;
+      &__red-block {
+        width: 10px;
+        height: 25px;
+        background-color: #db4444;
+        margin-right: 0.5rem;
+        border-radius: 0.1rem;
+      }
+      &__title {
+        font-size: 1rem;
+        font-weight: 600;
+        color: #db4444;
+      }
+    }
+
+    &__list-container {
+      &__header {
+        display: flex;
+        align-items: center;
+        &__red-block {
+          width: 5px;
+          height: 20px;
+          background-color: #db4444;
+          margin-right: 0.5rem;
+        }
+
+        &__title {
+          font-size: 1.2rem;
+          font-weight: bold;
+        }
+      }
+      &__list {
+        display: grid;
+        grid-template-columns: 25% 25% 25% 25%;
+        gap: 1rem;
+
+        @include sm {
+          display: grid;
+          gap: 1rem;
+          padding: 0.1rem;
+          grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+        }
+
+        @include md {
+          display: grid;
+          grid-auto-flow: column;
+          grid-auto-columns: minmax(150px, 1fr);
+          overflow-x: auto;
+          overflow-y: hidden;
+          gap: 1rem;
+          padding: 1rem;
+          scroll-snap-type: x mandatory;
+
+          &::-webkit-scrollbar {
+            display: none;
+          }
+
+          @include lg {
+            display: grid;
+            gap: 1rem;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            padding: 0.5rem;
+
+            display: grid;
+            grid-auto-flow: column;
+            grid-auto-columns: minmax(200px, 1fr);
+            overflow-x: auto;
+            overflow-y: hidden;
+            gap: 1rem;
+            padding: 1rem;
+            scroll-snap-type: x mandatory;
+
+            // Prevent horizontal padding from affecting scroll
+            // Add this fix to prevent "first item cut off"
+            scroll-padding-left: 1rem;
+
+            &::-webkit-scrollbar {
+              display: none;
+            }
+          }
+        }
+      }
+    }
+  }
+
+  @include sm {
+    &__product-detail {
+      display: flex;
+      flex-direction: column;
+
+      &__thumbnail {
+        flex-direction: column-reverse;
+        align-items: center;
+        margin-bottom: 1.5rem;
+
+        &__images {
+          display: flex;
+          flex-direction: row;
+          overflow-x: auto;
+          overflow-y: hidden;
+        }
+
+        &__main-image {
+          width: 100%;
+          height: auto;
+
+          img {
+            width: 100%;
+            height: auto;
+          }
+        }
+      }
+
+      &__info {
+        padding-left: 0;
+
+        &__title {
+          font-size: 1.3rem;
+        }
+
+        &__price {
+          font-size: 1.2rem;
+        }
+      }
+    }
+
+    &__related-products {
+      margin-top: 2.5rem;
+    }
+  }
+
+  @include md {
+    &__product-detail {
+      &__thumbnail {
+        display: flex;
+        flex-direction: column-reverse;
+        justify-content: flex-end;
+
+        &__images {
+          display: grid;
+          grid-template-columns: repeat(5, 1fr);
+        }
+      }
+
+      &__info {
+        &__price {
+          font-size: 1.3rem;
+        }
+
+        &__actions {
+          &__buy-button {
+            padding: 0.5rem;
+          }
+        }
+
+        &__delivery {
+          padding-top: 0.5rem;
+        }
+      }
+    }
+  }
+}

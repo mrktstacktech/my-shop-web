@@ -1,5 +1,5 @@
 import { InputFormField, DropDown, Badges } from "@components";
-import { searchIcon, heartIcon, cartIcon, userIcon, USER_DROPDOWN_ITEMS } from "@constants";
+import { SearchIcon, HeartIcon, CartIcon, UserIcon, USER_DROPDOWN_ITEMS } from "@constants";
 import { useAuthContext } from "@context/auth-hook";
 import { useSearchProduct, useGetCurrentCart, useGetCurrentWishlist } from "@hooks";
 import { useCallback } from "react";
@@ -32,7 +32,6 @@ export function AppHeader() {
     }, [navigator]);
 
     return (
-        //TODO: follow BEM naming convention for class names
         <header className="app-header">
             <div id="top-header" className="app-header__top">
                 Summer Sale For All Swim Suits And Free Express Delivery - OFF 50%!
@@ -56,7 +55,7 @@ export function AppHeader() {
                         required={false}
                         value={inputValue}
                         onChange={onChangeTextSearch}
-                        suffix={searchIcon}
+                        suffix={SearchIcon}
                     />
 
                     {inputValue.length > 0 && (
@@ -80,16 +79,16 @@ export function AppHeader() {
                     )}
 
                     <Badges notification={isAuthenticated ? wishlistCount : 0} onClick={handleWishlistClick} className="app-header__container__controls__badge">
-                        {heartIcon}
+                        {HeartIcon}
                     </Badges>
 
                     <Badges notification={isAuthenticated ? cartItemCount : 0} onClick={handleCartClick} className="app-header__container__controls__badge">
-                        {cartIcon}
+                        {CartIcon}
                     </Badges>
 
                     {isAuthenticated && (
                         <DropDown
-                            label={userIcon}
+                            label={UserIcon}
                             value=""
                             prefix={null}
                             options={USER_DROPDOWN_ITEMS}

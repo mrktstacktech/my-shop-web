@@ -58,6 +58,7 @@ export class CartRepository implements ICartRepo {
                 id: product.id,
                 quantity: 'quantity' in product && typeof (product as ProductsInCartEntity).quantity === 'number' ? (product as ProductsInCartEntity).quantity : 1,
             }));
+            console.log("Updating cart with ID:", id, "Merge:", merge, "Products:", productList);
             const response = await server.put<CartResponse>({
                 endpoint: EndPoints.CART,
                 params: id,
@@ -66,7 +67,6 @@ export class CartRepository implements ICartRepo {
                     products: productList, // Ensure the products are in the correct format
                  },
             });
-            console.log("Cart updated successfully:", response);
             return response;
         } catch (error) {
             console.error("Error updating cart:", error);

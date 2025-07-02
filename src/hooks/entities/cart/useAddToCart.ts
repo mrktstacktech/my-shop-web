@@ -11,6 +11,7 @@ export function useAddToCart() {
 
     const addToCart = useCallback((products: ProductsInCartEntity[] | ProductEntity[]) => {
         new CartRepository().updateCart(true, cartId, products).then(data => {
+            console.log("Cart updated successfully:", data);
             store.dispatch({ type: 'cart/setCurrentCartItems', payload: data.products });
         }
         ).catch(error => {

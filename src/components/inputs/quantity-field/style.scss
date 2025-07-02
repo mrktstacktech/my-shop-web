@@ -1,0 +1,70 @@
+.quantity-field {
+  display: flex;
+  align-items: center;
+  height: 100%;
+
+  &__input {
+    transition: border 0.3s ease-in-out, color 0.3s ease-in-out;
+    appearance: textfield;
+    font-family: Arial, sans-serif;
+    font-size: 14px;
+    line-height: 24px;
+    font-weight: 700;
+    box-shadow: none;
+    outline: none;
+    width: 42px;
+    height: 34px;
+    text-align: center;
+    border: 1px solid #dcdcdc;
+    background-color: #fff;
+    color: #342f2f;
+  }
+
+  button {
+    width: 39px;
+    height: 34px;
+    position: relative;
+    cursor: pointer;
+    border: 1px solid #dcdcdc;
+    background-color: #fff;
+
+    &::before,
+    &::after {
+      position: absolute;
+      top: calc(50% - 1px);
+      left: calc(50% - 7px);
+      content: "";
+      width: 14px;
+      height: 2px;
+      background-color: currentColor;
+      display: block;
+    }
+
+    &:disabled {
+      cursor: not-allowed;
+      color: #dcdcdc;
+      border-color: #dcdcdc;
+
+      &::before,
+      &::after {
+        background-color: #dcdcdc;
+      }
+    }
+  }
+
+  &__remove-button {
+    border-top-left-radius: 0.2rem;
+    border-bottom-left-radius: 0.2rem;
+    &::after {
+      display: none; // horizontal only → minus
+    }
+  }
+
+  &__add-button {
+    border-top-right-radius: 0.2rem;
+    border-bottom-right-radius: 0.2rem;
+    &::after {
+      transform: rotate(90deg); // vertical line → makes +
+    }
+  }
+}

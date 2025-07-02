@@ -1,8 +1,8 @@
 import type { IProductRepo } from "@domain/repo/product.repo";
-import type { ProductListEntity } from "@domain/entities/product.entity";
+import type { ProductEntity, ProductListEntity } from "@domain/entities/product.entity";
 import { EndPoints } from "@constants";
 import { server } from "@axios/server.api";
-import type { ProductListResponse } from "../models";
+import type { ProductListResponse, ProductResponse } from "../models";
 
 export class ProductRepository implements IProductRepo {
     async getProductList(limit = 0, skip = 0): Promise<ProductListEntity> {
@@ -19,12 +19,13 @@ export class ProductRepository implements IProductRepo {
         }
     }
 
-    async getProductByCategory(categorySlug: string): Promise<ProductListEntity> {
+    async getProductByCategory(limit = 0, skip = 0, categorySlug: string): Promise<ProductListEntity> {
         // Implementation for fetching products by category slug
         try {
             const response = await server.get<ProductListResponse>({
-                endpoint: EndPoints.PRODUCTS,
-                body: categorySlug,
+                endpoint: EndPoints.PRODUCT_BY_CATEGORY,
+                params: categorySlug,
+                body: {limit, skip},
             });
             return response.products;
         }
@@ -62,6 +63,19 @@ export class ProductRepository implements IProductRepo {
         catch (error) {
             console.error(`Error searching products with query "${query}":`, error);
             throw error; // Re-throw the error for further handling
+        }
+    }
+
+    async getProductById(id: string): Promise<ProductEntity> {
+        try {
+            const response = await server.get<ProductResponse>({
+                endpoint: `${EndPoints.PRODUCTS}/${id}`,
+            });
+            return response;
+        }
+        catch (error) {
+            console.error(`Error fetching product with ID ${id}:`, error);
+            throw error; 
         }
     }
 }

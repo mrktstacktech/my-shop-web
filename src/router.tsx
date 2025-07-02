@@ -1,5 +1,5 @@
 import { Routes, Route } from "react-router-dom";
-import { Signup, Login, HomePage, CartPage, WishListPage, AboutPage, ContactPage } from '@/pages';
+import { Signup, Login, HomePage, CartPage, WishListPage, AboutPage, ContactPage, ProductDetailPage } from '@/pages';
 import { Layout } from '@pages/Layout';
 
 
@@ -18,6 +18,7 @@ export default function Router() {
                 <Route path="about" element={<AboutPage />} />
                 <Route path="contact" element={<ContactPage />} />
                 <Route path="*" element={<div>404 Not Found</div>} />
+                <Route path="product/:id" element={<ProductDetailPage />} />
             </Route>
         </Routes>
     );

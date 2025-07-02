@@ -5,6 +5,7 @@ import { useState, useEffect } from "react";
 import type { ProductsInCartEntity } from "@/services/domain/entities";
 import { useSelector } from "react-redux";
 import type { RootState } from "@/store/store";
+import { Link } from "react-router-dom";
 export function WishListPage() {
     const loading = false;
     const cart = useSelector((state: RootState) => state.root.cart.currentWishlistItems);
@@ -22,31 +23,33 @@ export function WishListPage() {
     }
 
     return (
-    <div className="wishlist-page">
-        <div className="wishlist-page__title-container">
-            <h2>Wishlist</h2>
-            <button className="wishlist-page__title-container__button" onClick={() => handleMoveAllToBag()}>Move All To Bag</button>
-        </div>
-        <div className="wishlist-page__wishlist-container">
-            {loading ? (
-                <p className="wishlist-page__wishlist-container--loading">Loading...</p>
-            ) : (
-                products?.length > 0 ? (
-                    products.map((product) => (
-                        <Card
-                            key={product.id}
-                            title={product.title}
-                            thumbnail="/public/item.svg"
-                            price={product.price}
-                            className="wishlist-page__wishlist-container__card"
-                            discountPercentage={product.discountedPercentage}
-                        />
-                    ))
+        <div className="wishlist-page">
+            <div className="wishlist-page__title-container">
+                <h2>Wishlist</h2>
+                <button className="wishlist-page__title-container__button" onClick={() => handleMoveAllToBag()}>Move All To Bag</button>
+            </div>
+            <div className="wishlist-page__wishlist-container">
+                {loading ? (
+                    <p className="wishlist-page__wishlist-container--loading">Loading...</p>
                 ) : (
-                    <p className="wishlist-page__wishlist-container--empty">Your wishlist is empty.</p>
-                )
-            )}
+                    products?.length > 0 ? (
+                        products.map((product) => (
+                            <Link to={`/product/${product.id}`} key={product.id} className="wishlist-page__wishlist-container__card-link">
+                                <Card
+                                    key={product.id}
+                                    title={product.title}
+                                    thumbnail="/public/item.svg"
+                                    price={product.price}
+                                    className="wishlist-page__wishlist-container__card"
+                                    discountPercentage={product.discountedPercentage}
+                                />
+                            </Link>
+                        ))
+                    ) : (
+                        <p className="wishlist-page__wishlist-container--empty">Your wishlist is empty.</p>
+                    )
+                )}
+            </div>
         </div>
-    </div>
     );
 }

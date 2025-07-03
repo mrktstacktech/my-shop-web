@@ -1,33 +1,27 @@
-import { useState, useEffect } from "react";
 import './style.scss';
 
 export function QuantityField({
     maxQuantity = 10,
     className = "",
-    setValue,
+    quantity,
+    setQuantity
 }: {
     maxQuantity?: number;
     className?: string;
-    setValue?: (value: number) => void;
-} = {}) {
-    // TODO: remove, using props from parent component
-    const [quantity, setQuantity] = useState(1);
-
+    quantity: number;
+    setQuantity: (value: number) => void;
+}) {
     const handleIncrement = () => {
         if (quantity < maxQuantity) {
-            setQuantity(prev => prev + 1);
+            setQuantity && setQuantity(quantity + 1);
         }
     };
 
     const handleDecrement = () => {
         if (quantity > 1) {
-            setQuantity(prev => prev - 1);
+            setQuantity && setQuantity(quantity - 1);
         }
     };
-
-    useEffect(() => {
-        if (setValue) setValue(quantity);
-    }, [quantity, setValue]);
 
     return (
         <div className={`quantity-field ${className}`}>

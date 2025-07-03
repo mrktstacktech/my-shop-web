@@ -1,6 +1,6 @@
 import { Card, Clock } from "@components";
 import { AngleLeftIcon, AngleRightIcon } from "@constants";
-import { useGetProductsSorted, useAddToCart } from "@hooks";
+import { useGetProductsSorted, useUpdateCart } from "@hooks";
 import { Link } from "react-router-dom";
 
 const K_SORT_FIELD_NAME = 'discountPercentage';
@@ -14,7 +14,7 @@ export function FlashSaleProduct() {
         setSkip
     } = useGetProductsSorted(4, K_SORT_FIELD_NAME);
 
-    const { addToCart } = useAddToCart();
+    const { updateCart } = useUpdateCart();
 
     return (
         <div className="component-container sale">
@@ -55,8 +55,8 @@ export function FlashSaleProduct() {
                                     discountPercentage={product.discountPercentage}
                                     reviewNumber={product.reviews.length}
                                     className="sale__products__product-card"
-                                    onClick={() => addToCart([product])}
-                                    id={product.id}
+                                    onClick={() => updateCart([product])}
+                                    productId={product.id}
                                 />
                             </Link>
                         ))}

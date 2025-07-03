@@ -1,4 +1,4 @@
-import { useHandleItemQuantity, useAddToCart } from "@hooks";
+import { useHandleItemQuantity, useUpdateCart } from "@hooks";
 // import './style.css'
 import { InputFormField } from "@components";
 import './style.scss'
@@ -9,11 +9,12 @@ const FIX_NUMBER = 2;
 export function CartPage() {
     const { productsInCart,
         total,
+        stock,
         handleIncreaseQuantity,
         handleDecreaseQuantity
     } = useHandleItemQuantity();
 
-    const { addToCart } = useAddToCart();
+    const { loading, updateCart } = useUpdateCart();
 
     return (
         <div className="cart-table">
@@ -29,7 +30,7 @@ export function CartPage() {
                     </thead>
                     <tbody className="cart-table__wrapper__table__body">
                         {productsInCart.map((product) => (
-                            <tr className="cart-table__wrapper__table__body__row" key={product.id}>
+                            <tr className={`cart-table__wrapper__table__body__row ${stock[product.id] ? '' : '`cart-table__wrapper__table__body__row--not-stock'}`} key={product.id}>
                                 <td className="cart-table__wrapper__table__body__row__product-cell" data-label="Product">
                                     <img src={product.thumbnail} alt={product.title} />
                                     <span>{product.title}</span>
@@ -38,7 +39,7 @@ export function CartPage() {
                                 <td className="cart-table__wrapper__table__body__row__quantity-cell" data-label="Quantity">
                                     <span>{product.quantity}</span>
                                     <div className="quantity-controls">
-                                        <button onClick={() => handleIncreaseQuantity(product.id)}>+</button>
+                                        <button onClick={() => handleIncreaseQuantity(product.id)} disabled={product.quantity >= stock[product.id]}>+</button>
                                         <button onClick={() => handleDecreaseQuantity(product.id)} disabled={product.quantity <= 0}>-</button>
                                     </div>
                                 </td>
@@ -46,13 +47,18 @@ export function CartPage() {
                             </tr>
                         ))}
                     </tbody>
-
                 </table>
             </div>
 
             <div className="cart-table__cart-buttons">
                 <Link to="/" className="button" onClick={() => console.log("Return to Shop clicked")}>Return to Shop</Link>
-                <button className="button" onClick={() => addToCart(productsInCart)}>Update Cart</button>
+                <button className="button" onClick={() => updateCart(productsInCart)} disabled={loading}>
+                    {loading ? 
+                            <span role="status">Updating...</span>
+                        :
+                        <span>Update Cart</span>
+                    }
+                </button>
             </div>
 
             <div className="cart-table__total-container">

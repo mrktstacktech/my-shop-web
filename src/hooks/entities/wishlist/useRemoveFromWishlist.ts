@@ -1,13 +1,14 @@
 import { useState, useCallback } from 'react';
-import { store } from '@/store/store';
+import type { RootState } from '@/store/store';
 import type { CartEntity } from '@services/domain/entities';
 import { WishlistRepository } from '@services/repositories';
+import { useDispatch, useSelector } from 'react-redux';
 
 export function useRemoveFromWishlist() {
     const [loading, setLoading] = useState(false);
-    //TODO : useSelector instead of store.getState()
     // This will allow the component to re-render when the state changes
-    const currentWishlistId = store.getState().root.cart.currentWishlistId;
+    const currentWishlistId = useSelector((state: RootState) => state.root.cart.currentWishlistId);
+    const dispatch = useDispatch();
 
     const removeFromWishlist = useCallback(async (productId: string) => {
         setLoading(true);
@@ -15,17 +16,16 @@ export function useRemoveFromWishlist() {
             const wishlistRepo = new WishlistRepository();
             const updatedCart: CartEntity = await wishlistRepo.removeFromWishlist(currentWishlistId, productId);
             const products = (updatedCart.products || []).filter(product => product.quantity > 0);
-            // TODO: use useDispatch instead of store.dispatch
-            store.dispatch({
+            dispatch({
                 type: 'cart/setCurrentWishlistItems', payload: products
             });
-            store.dispatch({ type: 'cart/setTotalWishListItems', payload: products.length });
+            dispatch({ type: 'cart/setTotalWishListItems', payload: products.length });
         } catch (error) {
             console.error("Error removing from wishlist:", error);
         } finally {
             setLoading(false);
         }
-    }, [currentWishlistId]);
+    }, [currentWishlistId, dispatch]);
 
     return { loading, removeFromWishlist };
 }

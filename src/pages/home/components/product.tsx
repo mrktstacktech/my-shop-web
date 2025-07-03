@@ -1,6 +1,6 @@
 import { Card } from "@components";
 import { AngleLeftIcon, AngleRightIcon } from "@constants";
-import { useGetProduct, useAddToCart } from "@hooks";
+import { useGetProduct, useUpdateCart } from "@hooks";
 import { Link } from "react-router-dom";
 
 export function ProductList() {
@@ -10,7 +10,7 @@ export function ProductList() {
         setSkip,
         limit } = useGetProduct();
 
-    const { addToCart } = useAddToCart();
+    const { updateCart } = useUpdateCart();
 
     return (
         <div className="component-container product-list">
@@ -47,8 +47,8 @@ export function ProductList() {
                                     rating={product.rating}
                                     discountPercentage={product.discountPercentage}
                                     reviewNumber={product.reviews.length}
-                                    onClick={() => addToCart([product])}
-                                    id = {product.id}
+                                    onClick={() => updateCart([product])}
+                                    productId = {product.id}
                                 />
                             </Link>
                         ))}

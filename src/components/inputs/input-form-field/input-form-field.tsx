@@ -1,4 +1,5 @@
 import type { InputFormFieldType } from "./type"
+import { useRef } from "react"
 
 const styles = {
     label: "block text-sm font-medium text-gray-700 mb-1",
@@ -10,10 +11,13 @@ const styles = {
 }
 
 export function InputFormField({ isMultiline = false, ...props }: InputFormFieldType) {
+    const inputRef = useRef<HTMLInputElement>(null)
+    const textareaRef = useRef<HTMLTextAreaElement>(null)
+    
     return (
         <div className={`${props.className}`}>
             {props.label ? (
-                <label htmlFor={props.id} className={styles.label + `${props.className}__label`}>
+                <label htmlFor={props.id} className={styles.label + ` ${props.className}__label`}>
                     {props.label}
                 </label>
             ) : null}
@@ -21,9 +25,9 @@ export function InputFormField({ isMultiline = false, ...props }: InputFormField
             <div className={`${props.className}__field`}>
                 {props.prefix && <span className={`mr-2 ${props.className}__field__prefix`}>{props.prefix}</span>}
 
-                {isMultiline
-                    ? <textarea
-                        ref={props.ref}
+                {isMultiline ? (
+                    <textarea
+                        ref={textareaRef}
                         id={props.id}
                         name={props.name}
                         value={props.value}
@@ -35,9 +39,9 @@ export function InputFormField({ isMultiline = false, ...props }: InputFormField
                         onClick={() => props.onClick && props.onClick()}
                         rows={4}
                     />
-                    // TODO: fix ref type
-                    : <input
-                        // ref={props.ref}
+                ) : (
+                    <input
+                        ref={inputRef}
                         id={props.id}
                         name={props.name}
                         value={props.value}
@@ -49,7 +53,7 @@ export function InputFormField({ isMultiline = false, ...props }: InputFormField
                         onChange={(e) => props.onChange(e.target.value)}
                         onClick={() => props.onClick && props.onClick()}
                     />
-                }
+                )}
                 {props.suffix && <span className={`ml-2 ${props.className}__field__suffix`}>{props.suffix}</span>}
             </div>
             {props.errorText && <p className={`text-red-500 text-xs mt-1 ${props.className}__errorText`}>{props.errorText}</p>}

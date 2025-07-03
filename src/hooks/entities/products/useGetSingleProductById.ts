@@ -4,8 +4,7 @@ import type { ProductEntity } from "@/services/domain/entities";
 
 export function useGetSingleProductById(id: string) {
     const [loading, setLoading] = useState<boolean>(true);
-    // TODO: rename to clear variable name
-    const [response, setResponse] = useState<ProductEntity>(
+    const [product, setProduct] = useState<ProductEntity>(
         {
             id: '',
             title: '',
@@ -49,7 +48,7 @@ export function useGetSingleProductById(id: string) {
                 const productRepo = new ProductRepository();
                 const product = await productRepo.getProductById(id);
                 if (product) {
-                    setResponse(product);
+                    setProduct(product);
                 } else {
                     setIsFound(false);
                 }
@@ -64,5 +63,5 @@ export function useGetSingleProductById(id: string) {
         fetchProduct();
     }, [id]);
 
-    return { isFound, loading, response };
+    return { isFound, loading, product };
 }

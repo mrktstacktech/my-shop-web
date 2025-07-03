@@ -3,12 +3,30 @@ import { useEffect, useState } from 'react';
 import type { ProductsInCartEntity } from '@/services/domain/entities/cart.entity';
 import { useSelector } from 'react-redux';
 import type { RootState } from '@/store/store';
+import { ProductRepository } from '@/services/repositories';
 
 export function useHandleItemQuantity() {
     const products = useSelector((state: RootState) => state.root.cart.currentCartItems) as ProductsInCartEntity[];
 
     const [productsInCart, setProductsInCart] = useState<ProductsInCartEntity[]>([]);
     const [total, setTotal] = useState<number>(0);
+    const [stock, setStock] = useState<Record<string, number>>({});
+    
+    const getProductById = new ProductRepository().getProductById;
+
+    useEffect(() => {
+        const fetchStock = async () => {
+            const stockMap: Record<string, number> = {};
+            for (const product of products) {
+                if (!stockMap[product.id]) {
+                    const productData = await getProductById(product.id);
+                    stockMap[product.id] = productData.stock;
+                }
+            }
+            setStock(stockMap);
+        };
+        fetchStock();
+    }, [products, getProductById]);
 
     useEffect(() => {
         if (products.length > 0) {
@@ -24,6 +42,10 @@ export function useHandleItemQuantity() {
     const handleIncreaseQuantity = (productId: string) => {
         const updatedProducts = productsInCart.map(product => {
             if (product.id === productId) {
+                const availableStock = stock[productId] || 0;
+                if (product.quantity >= availableStock) {
+                    return product; 
+                }
                 return { ...product, quantity: product.quantity + 1, total: (product.quantity + 1) * product.price };
             }
             return product;
@@ -44,6 +66,7 @@ export function useHandleItemQuantity() {
     return {
         productsInCart,
         total,
+        stock,
         handleIncreaseQuantity,
         handleDecreaseQuantity
     };

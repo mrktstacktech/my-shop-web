@@ -14,12 +14,12 @@ const styles = {
 
 export function Card({ ...props }: CardType) {
     const [isHovered, setIsHovered] = useState(false);
- 
+
     const priceDiscounted = props.discountPercentage
         ? Math.round(props.price - (props.price * props.discountPercentage / 100))
         : props.price;
 
-    const eyeIcon = 
+    const eyeIcon =
         <svg className=" text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
             <path stroke="currentColor" strokeWidth="2" d="M21 12c0 1.2-4.03 6-9 6s-9-4.8-9-6c0-1.2 4.03-6 9-6s9 4.8 9 6Z" />
             <path stroke="currentColor" strokeWidth="2" d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
@@ -38,7 +38,7 @@ export function Card({ ...props }: CardType) {
                     {/* <button className={`${styles.button} ${styles.likeIcon}`}>{likeIcon}</button> */}
                     <WishlistUpdateButton
                         className={`${styles.button} ${styles.likeIcon}`}
-                        productId={props.id}
+                        productId={props.productId}
                     />
                     <button className={`${styles.button} ${styles.eyeIcon}`}>{eyeIcon}</button>
                     <button onClick={props.onClick} className={`${styles.addToCart}`}>Add to cart</button>
@@ -49,8 +49,8 @@ export function Card({ ...props }: CardType) {
             <h2 className="font-medium mt-1 mb-1">{props.title}</h2>
             <div className={props.discountPercentage ? "flex-col" : " flex items-center gap-2 mb-2"}>
                 <div className="text-sm"><span className="text-red-500">${priceDiscounted}</span> {props.discountPercentage ? <span className="line-through text-gray-400">${props.price}</span> : null}</div>
-                {props.rating &&  <StarRating rating={props.rating} reviewNumber={props.reviewNumber ?? 0} />}
-               
+                {props.rating && <StarRating rating={props.rating} reviewNumber={props.reviewNumber ?? 0} />}
+
             </div>
 
         </div>

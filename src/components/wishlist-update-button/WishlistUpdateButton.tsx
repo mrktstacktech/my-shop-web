@@ -10,7 +10,7 @@ export function WishlistUpdateButton({
     productId: string;
     className?: string;
 }) {
-    const isInWishlist = useIsInWishlist(productId);
+    const {isInWishlist} = useIsInWishlist(productId);
     const { addToWishlist } = useAddToWishlist();
     const { removeFromWishlist } = useRemoveFromWishlist();
 

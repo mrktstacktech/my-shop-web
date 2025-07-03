@@ -14,3 +14,4 @@ export * from './avatar';
 export * from './contact-form';
 export * from './product-image';
 export * from './wishlist-update-button'
+export * from './radio';

@@ -1,5 +1,5 @@
 import { Card } from "@components";
-import { useGetProductsSorted, useAddToCart } from "@hooks";
+import { useGetProductsSorted, useUpdateCart } from "@hooks";
 import { Link } from "react-router-dom";
 
 export function BestSeller() {
@@ -8,7 +8,7 @@ export function BestSeller() {
         loading,
     } = useGetProductsSorted(4, 'price');
 
-    const { addToCart } = useAddToCart();
+    const { updateCart } = useUpdateCart();
 
     return (
         <div className="component-container best-seller">
@@ -39,8 +39,8 @@ export function BestSeller() {
                                     discountPercentage={product.discountPercentage}
                                     reviewNumber={product.reviews.length}
                                     className="best-seller__products__product-card"
-                                    onClick={() => addToCart([product])}
-                                    id = {product.id}
+                                    onClick={() => updateCart([product])}
+                                    productId = {product.id}
                                 />
                             </Link>
                         ))}

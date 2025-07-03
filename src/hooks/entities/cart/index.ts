@@ -1,4 +1,4 @@
-export * from './useAddToCart';
+export * from './useUpdateCart';
 export * from './useGetCurrentCart';
 export * from './useHandleItemQuantity';
 export * from '../wishlist/useGetCurrentWishlist'

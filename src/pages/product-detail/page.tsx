@@ -13,13 +13,13 @@ import { useEffect, useState } from 'react';
 
 export function ProductDetailPage() {
     const params = useParams();
-    const { isFound, loading, response } = useGetSingleProductById(params.id || '');
-    const { data: relatedProducts, loading: relatedLoading } = useGetProductByCategory(4, response?.category || '');
+    const { isFound, loading, product } = useGetSingleProductById(params.id || '');
+    const { data: relatedProducts, loading: relatedLoading } = useGetProductByCategory(4, product?.category || '');
     const productImages = [
-        response?.images[0],
-        response?.images[0],
-        response?.images[0],
-        response?.images[0],
+        product?.images[0],
+        product?.images[0],
+        product?.images[0],
+        product?.images[0],
         "/public/item.svg"
     ];
     
@@ -44,13 +44,13 @@ export function ProductDetailPage() {
                         />
                         
                         <div className="product-detail-page__product-detail__info">
-                            <div className="product-detail-page__product-detail__info__title">{response?.title}</div>
+                            <div className="product-detail-page__product-detail__info__title">{product?.title}</div>
                             <div className="product-detail-page__product-detail__info__rating-stock">
                                 <div>
-                                    <StarRating rating={response?.rating || 0} reviewNumber={response?.reviews.length} />
+                                    <StarRating rating={product?.rating || 0} reviewNumber={product?.reviews.length} />
                                 </div>
                                 <div>
-                                    {response?.stock > 0 ? (
+                                    {product?.stock > 0 ? (
                                         <span>In Stock</span>
                                     ) : (
                                         <span>Out of Stock</span>
@@ -58,22 +58,23 @@ export function ProductDetailPage() {
                                 </div>
                             </div>
                             <div className="product-detail-page__product-detail__info__price">
-                                ${response?.price.toFixed(2)}
+                                ${product?.price.toFixed(2)}
                             </div>
                             <div className="product-detail-page__product-detail__info__description">
-                                {response?.description}
+                                {product?.description}
                             </div>
                             <div className="product-detail-page__product-detail__info__actions">
                                 <div className='product-detail-page__product-detail__info__actions__quantity'>
                                     <QuantityField 
                                      className='product-detail-page__product-detail__info__actions__quantity'
-                                     maxQuantity={response.stock} 
-                                     setValue={setQuantity}
+                                     maxQuantity={product.stock} 
+                                     quantity = {quantity}
+                                     setQuantity={setQuantity}
                                     />
                                 </div>
-                                <button onClick={() => addSingleProductToCart(response.id, quantity)} className='product-detail-page__product-detail__info__actions__buy-button' disabled={response?.stock <= 0 ? true : false}>Buy now</button>
+                                <button onClick={() => addSingleProductToCart(product.id, quantity)} className='product-detail-page__product-detail__info__actions__buy-button' disabled={product?.stock <= 0 ? true : false}>Buy now</button>
                                 {/* <button className='product-detail-page__product-detail__info__actions__heart-button' >{HeartIcon}</button> */}
-                                <WishlistUpdateButton productId={response?.id || ''} className='product-detail-page__product-detail__info__actions__heart-button' />
+                                <WishlistUpdateButton productId={product?.id || ''} className='product-detail-page__product-detail__info__actions__heart-button' />
                             </div>
                             <div className="product-detail-page__product-detail__info__delivery">
                                 <div className="product-detail-page__product-detail__info__delivery__title">
@@ -119,7 +120,7 @@ export function ProductDetailPage() {
                                         rating={product.rating}
                                         discountPercentage={product.discountPercentage}
                                         reviewNumber={product.reviews.length}
-                                        id = {product.id}
+                                        productId = {product.id}
                                     />
                                 </Link>
                             ))}

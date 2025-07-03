@@ -42,7 +42,7 @@ export function WishListPage() {
                                     price={product.price}
                                     className="wishlist-page__wishlist-container__card"
                                     discountPercentage={product.discountedPercentage}
-                                    id = {product.id}
+                                    productId = {product.id}
                                 />
                             </Link>
                         ))

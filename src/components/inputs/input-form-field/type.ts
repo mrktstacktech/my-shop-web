@@ -20,5 +20,5 @@ export type InputFormFieldType = {
     isMultiline?: boolean;
     suffix?: ReactNode;
     prefix?: ReactNode;
-    ref?: React.RefObject<HTMLTextAreaElement | null>
+    ref?: React.RefObject<HTMLInputElement | HTMLTextAreaElement>;
 }

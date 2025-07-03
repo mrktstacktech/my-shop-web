@@ -1,4 +1,263 @@
+@import "@/App";
+
 .billing-form {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  padding: 2rem;
+
+  &__details {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    width: 40%;
+
+    &__title {
+      font-size: 1.5rem;
+      font-weight: 600;
+      color: #000;
+      margin-bottom: 0.5rem;
+    }
+
+    &__fields {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+
+      &__group {
+        display: flex;
+        flex-direction: column;
+        gap: 0.25rem;
+        margin-bottom: 0.8rem;
+
+        &__input-field {
+          &__label {
+            color: #b3b3b3;
+            font-weight: 600;
+            font-size: 0.875rem;
+          }
+          &__field {
+            &__input {
+              background-color: #f5f5f5;
+              padding: 0.5rem;
+              border-radius: 0.15rem;
+              font-size: medium;
+            }
+          }
+        }
+
+        &__error-message {
+          color: red;
+          font-size: 0.875rem;
+          margin-top: 0.25rem;
+        }
+      }
+    }
+  }
+
+  &__cart {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 2rem;
+    max-width: 600px;
+    gap: 1rem;
+    &__list {
+      width: 100%;
+      table {
+        tbody {
+          tr {
+            td {
+              img {
+                width: 50px;
+                height: 50px;
+                object-fit: cover;
+              }
+              padding: 0.5rem;
+
+              font-size: 1rem;
+              font-weight: 400;
+              color: black;
+            }
+
+            .image {
+              width: 50px;
+            }
+
+            .title {
+              width: 350px;
+              display: --webkit-box;
+              -webkit-box-orient: vertical;
+              -webkit-line-clamp: 1; /* Limit to 2 lines */
+              line-clamp: 1; /* Standard property for compatibility */
+              overflow: hidden;
+              text-overflow: ellipsis;
+            }
+
+            .total {
+              text-align: right;
+            }
+          }
+          .ship {
+            border-top: 1px solid #e0e0e0;
+            border-bottom: 1px solid #e0e0e0;
+          }
+        }
+      }
+    }
+
+    &__payment-method {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+
+      &__options {
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+
+        &__option {
+          display: flex;
+          align-items: center;
+          gap: 0.2rem;
+
+          input[type="radio"] {
+            margin-right: 0.5rem;
+            color: black;
+          }
+
+          label {
+            font-size: 1rem;
+            color: #333;
+          }
+        }
+      }
+    }
+
+    &__input-coupon {
+      display: flex;
+      width: 100%;
+
+      &__coupon-input {
+        border: 1px solid black;
+        border-radius: 0.375rem;
+        font-size: 1rem;
+        display: flex;
+        align-items: center;
+        padding: 0.5rem 1rem;
+        margin-right: 0.5rem;
+        width: 60%;
+
+        &::placeholder {
+          font-size: 14px;
+        }
+      }
+
+      &__button {
+        width: 40%;
+        @extend .red-button;
+      }
+    }
+
+    &__place-order {
+      display: flex;
+      justify-content: flex-start;
+
+      button {
+        @extend .red-button;
+        width: 30%;
+        padding: 0.75rem 1.5rem;
+        font-size: 1rem;
+        font-weight: 600;
+      }
+    }
+  }
+
+  @include sm {
+    flex-direction: column;
+    align-items: center;
+    padding: 1rem;
+
+    &__details {
+      width: 100%;
+      margin-bottom: 2rem;
+    }
+
+    &__cart {
+      width: 100%;
+      max-width: none;
+      padding: 0;
+
+      &__list {
+        table {
+          tbody {
+            tr {
+              td {
+                padding: 0.5rem;
+                font-size: 0.875rem; // Adjusted for smaller screens
+              }
+
+              .title {
+                width: fit-content; // Adjusted for smaller screens
+              }
+            }
+          }
+        }
+      }
+
+      &__payment-method {
+        &__options {
+          &__option {
+            label {
+              font-size: 0.875rem; // Adjusted for smaller screens
+            }
+          }
+        }
+      }
+
+      // &__input-coupon {
+      //   flex-direction: column;
+      //   width: 100%;
+
+      //   &__coupon-input {
+      //     width: 100%;
+      //     margin-bottom: 0.5rem;
+      //   }
+
+      //   &__button {
+      //     width: 100%;
+      //   }
+      // }
+
+      &__place-order {
+        justify-content: center;
+        width: 100%;
+
+        button {
+          width: 100%;
+          padding: 0.75rem;
+          font-size: 1rem;
+        }
+      }
+    }
+  }
+}
+
+.red-button {
+  background-color: #db4444;
+  color: white;
+  padding: 0.5rem 1rem;
+  border-radius: 0.375rem;
+  cursor: pointer;
+
+  &:hover {
+    background-color: #c33b3b;
+    transition: background-color 0.2s ease-in-out;
+  }
+
+  &:disabled {
+    background-color: #f5f5f5;
+    color: #b3b3b3;
+    cursor: not-allowed;
+  }
 }

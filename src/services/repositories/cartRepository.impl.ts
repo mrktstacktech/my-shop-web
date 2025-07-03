@@ -86,4 +86,26 @@ export class CartRepository implements ICartRepo {
             throw error; // Re-throw the error for further handling
         }
     }
+
+    async addSingleProductToCart(cartId: string, productId: string, quantity: number): Promise<CartEntity> {
+        try {
+            const response = await server.put<CartResponse>({
+                endpoint: EndPoints.CART,
+                params: cartId, 
+                body: {
+                    merge: true,
+                    products: [
+                        {
+                            id: productId,
+                            quantity: quantity,
+                        }
+                    ],
+                },
+            });
+            return response;
+        } catch (error) {
+            console.error("Error adding single product to cart:", error);
+            throw error; // Re-throw the error for further handling
+        }
+    }
 }

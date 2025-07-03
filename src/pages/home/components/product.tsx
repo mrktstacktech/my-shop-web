@@ -48,6 +48,7 @@ export function ProductList() {
                                     discountPercentage={product.discountPercentage}
                                     reviewNumber={product.reviews.length}
                                     onClick={() => addToCart([product])}
+                                    id = {product.id}
                                 />
                             </Link>
                         ))}

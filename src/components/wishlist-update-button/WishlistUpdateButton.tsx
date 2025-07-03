@@ -1,6 +1,6 @@
 import { HeartIcon } from "@/constants";
 import { useAddToWishlist, useRemoveFromWishlist, useIsInWishlist } from "@/hooks";
-import { useState, useCallback } from "react";
+import { useCallback } from "react";
 import './style.scss';
 
 export function WishlistUpdateButton({
@@ -10,30 +10,23 @@ export function WishlistUpdateButton({
     productId: string;
     className?: string;
 }) {
-    const [isInWishlist, setIsInWishlist] = useState(useIsInWishlist(productId));
-
-    if (isInWishlist) {
-        console.log(`Product ${productId} is already in the wishlist.`);
-    }
-    else {
-        console.log(`Product ${productId} is not in the wishlist.`);
-    }
-
+    const isInWishlist = useIsInWishlist(productId);
     const { addToWishlist } = useAddToWishlist();
     const { removeFromWishlist } = useRemoveFromWishlist();
 
-    const handleWishlistToggle = useCallback(async () => {
-        setIsInWishlist(!isInWishlist);
-
+    const handleWishlistToggle = useCallback(() => {
         if (isInWishlist) {
-            await removeFromWishlist(productId);
+            removeFromWishlist(productId);
         } else {
-            await addToWishlist(productId);
+            addToWishlist(productId);
         }
     }, [isInWishlist, productId, addToWishlist, removeFromWishlist]);
 
     return (
-        <button onClick={() => handleWishlistToggle()} className={`${isInWishlist ? 'wishlist-button--exists' : 'wishlist-button--not-exists'} ${className}`}>
+        <button onClick={(e) => {
+            e.preventDefault();
+            handleWishlistToggle();
+        }} className={`wishlist-button ${isInWishlist ? 'wishlist-button--exists' : 'wishlist-button--not-exists'} ${className}`}>
             {HeartIcon}
         </button>
     )

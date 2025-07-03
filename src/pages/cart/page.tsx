@@ -83,7 +83,7 @@ export function CartPage() {
                         <p>Total:</p>
                         <p>${total.toFixed(FIX_NUMBER)}</p>
                     </div>
-                    <button className="cart-table__total-container__cart-summary__button red">Process to checkout</button>
+                    <Link to="/check-out" className="cart-table__total-container__cart-summary__button red">Process to checkout</Link>
                 </div>
             </div>
         </div>

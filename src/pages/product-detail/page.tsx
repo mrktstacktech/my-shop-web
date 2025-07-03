@@ -5,14 +5,15 @@ import { StarRating } from '@/components';
 import './style.scss';
 import { TruckIcon, ReloadIcon } from '@/constants/icon';
 import { QuantityField } from '@/components';
-import { useGetProductByCategory } from '@hooks';
+import { useGetProductByCategory, useAddSingleProductToCart } from '@hooks';
 import { Card } from '@/components';
 import { Link } from 'react-router-dom';
 import { ProductImage, WishlistUpdateButton } from '@/components';
+import { useEffect, useState } from 'react';
 
 export function ProductDetailPage() {
-    const id = useParams();
-    const { isFound, loading, response } = useGetSingleProductById(id.id || '');
+    const params = useParams();
+    const { isFound, loading, response } = useGetSingleProductById(params.id || '');
     const { data: relatedProducts, loading: relatedLoading } = useGetProductByCategory(4, response?.category || '');
     const productImages = [
         response?.images[0],
@@ -20,8 +21,15 @@ export function ProductDetailPage() {
         response?.images[0],
         response?.images[0],
         "/public/item.svg"
-        
     ];
+    
+    const [quantity, setQuantity] = useState(1);
+
+    useEffect(() => {
+        console.log("quantity", quantity);
+    }, [quantity]);
+
+    const { addSingleProductToCart } = useAddSingleProductToCart();
 
     return (
         <div className="product-detail-page">
@@ -57,9 +65,13 @@ export function ProductDetailPage() {
                             </div>
                             <div className="product-detail-page__product-detail__info__actions">
                                 <div className='product-detail-page__product-detail__info__actions__quantity'>
-                                    <QuantityField maxQuantity={response?.stock || 0} className='product-detail-page__product-detail__info__actions__quantity' />
+                                    <QuantityField 
+                                     className='product-detail-page__product-detail__info__actions__quantity'
+                                     maxQuantity={response.stock} 
+                                     setValue={setQuantity}
+                                    />
                                 </div>
-                                <button className='product-detail-page__product-detail__info__actions__buy-button' disabled={response?.stock <= 0 ? true : false}>Buy now</button>
+                                <button onClick={() => addSingleProductToCart(response.id, quantity)} className='product-detail-page__product-detail__info__actions__buy-button' disabled={response?.stock <= 0 ? true : false}>Buy now</button>
                                 {/* <button className='product-detail-page__product-detail__info__actions__heart-button' >{HeartIcon}</button> */}
                                 <WishlistUpdateButton productId={response?.id || ''} className='product-detail-page__product-detail__info__actions__heart-button' />
                             </div>
@@ -107,6 +119,7 @@ export function ProductDetailPage() {
                                         rating={product.rating}
                                         discountPercentage={product.discountPercentage}
                                         reviewNumber={product.reviews.length}
+                                        id = {product.id}
                                     />
                                 </Link>
                             ))}

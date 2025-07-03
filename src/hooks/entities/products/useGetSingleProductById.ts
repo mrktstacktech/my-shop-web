@@ -4,6 +4,7 @@ import type { ProductEntity } from "@/services/domain/entities";
 
 export function useGetSingleProductById(id: string) {
     const [loading, setLoading] = useState<boolean>(true);
+    // TODO: rename to clear variable name
     const [response, setResponse] = useState<ProductEntity>(
         {
             id: '',

@@ -8,4 +8,5 @@ export abstract class ICartRepo {
     abstract addNewCart(cart: AddNewCartRequest): Promise<CartEntity>;
     abstract updateCart(merge: boolean, id: string, products: ProductsInCartEntity[] | ProductEntity[]): Promise<CartEntity>;
     abstract deleteCart(cartId: string): Promise<DeletedCartEntity>;
+    abstract addSingleProductToCart(cartId: string, productId: string, quantity: number): Promise<CartEntity>;
 }

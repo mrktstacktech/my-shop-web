@@ -51,29 +51,31 @@
       position: relative;
 
       &__search-input {
-        display: flex;
-        align-items: center;
-        border: 1px solid #d1d5db; // gray-300
-        width: 250px;
-        border-radius: 0.375rem;
-        padding: 0.25rem 0.5rem;
-        margin-right: 0.5rem;
+        &__field {
+          display: flex;
+          align-items: center;
+          border: 1px solid #d1d5db; // gray-300
+          width: 250px;
+          border-radius: 0.375rem;
+          padding: 0.25rem 0.5rem;
+          margin-right: 0.5rem;
 
-        &:focus {
-          outline: none;
-          box-shadow: 0 0 0 2px #3b82f6; // blue-500 ring
-        }
-
-        @include sm {
-          transition: 0.2s ease-in-out;
-          width: 160px;
-
-          #search::placeholder {
-            font-size: 11px;
+          &:focus {
+            outline: none;
+            box-shadow: 0 0 0 2px #3b82f6; // blue-500 ring
           }
 
-          span svg {
-            width: 0.75rem;
+          @include sm {
+            transition: 0.2s ease-in-out;
+            width: 160px;
+
+            #search::placeholder {
+              font-size: 11px;
+            }
+
+            span svg {
+              width: 0.75rem;
+            }
           }
         }
 

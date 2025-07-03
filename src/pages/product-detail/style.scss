@@ -110,6 +110,11 @@
             cursor: not-allowed;
           }
         }
+
+        &__heart-button {
+          padding: 0.3rem;
+          border-radius: 0.2rem;
+        }
       }
 
       &__delivery {

@@ -1,10 +1,10 @@
 import { Routes, Route } from "react-router-dom";
-import { Signup, Login, HomePage, CartPage, WishListPage, AboutPage, ContactPage, ProductDetailPage } from '@/pages';
+import { Signup, Login, HomePage, CartPage, WishListPage, AboutPage, ContactPage, ProductDetailPage, CheckOutPage } from '@/pages';
 import { Layout } from '@pages/Layout';
 
 
 import { useAuthContext } from "./context/auth-hook";
-export default function Router() { 
+export default function Router() {
     const { isAuthenticated } = useAuthContext();
 
     return (
@@ -19,6 +19,7 @@ export default function Router() {
                 <Route path="contact" element={<ContactPage />} />
                 <Route path="*" element={<div>404 Not Found</div>} />
                 <Route path="product/:id" element={<ProductDetailPage />} />
+                <Route path="check-out" element={<CheckOutPage />} />
             </Route>
         </Routes>
     );

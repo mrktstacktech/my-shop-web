@@ -40,6 +40,7 @@ export function BestSeller() {
                                     reviewNumber={product.reviews.length}
                                     className="best-seller__products__product-card"
                                     onClick={() => addToCart([product])}
+                                    id = {product.id}
                                 />
                             </Link>
                         ))}

@@ -9,7 +9,7 @@ import type { RootState } from '@/store/store';
 export function useGetCurrentCart() {
     const [totalQuantity, setTotalQuantity] = useState<number>(0);
     const { user } = useAuthContext();
-    const currentCartId = useSelector((state: RootState) => state.root.cart.currentCartId); 
+    const currentCartId = useSelector((state: RootState) => state.root.cart.currentCartId);
     const currentCartItems = useSelector((state: RootState) => state.root.cart.totalItems);
 
     const fetchCurrentCart = useCallback(() => {

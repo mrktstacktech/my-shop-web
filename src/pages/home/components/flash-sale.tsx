@@ -56,6 +56,7 @@ export function FlashSaleProduct() {
                                     reviewNumber={product.reviews.length}
                                     className="sale__products__product-card"
                                     onClick={() => addToCart([product])}
+                                    id={product.id}
                                 />
                             </Link>
                         ))}

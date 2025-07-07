@@ -1,6 +1,6 @@
 export type CardType = {
     productId: string;
-    title: string;
+    title: React.ReactNode;
     thumbnail: string;
     description?: string;
     price: number;

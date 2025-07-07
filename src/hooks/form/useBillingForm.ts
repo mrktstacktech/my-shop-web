@@ -79,6 +79,16 @@ export function useBillingForm() {
 
                 if (!payingError) {
                     const formData = {
+                        firstName,
+                        companyName,
+                        street,
+                        apartment,
+                        city,
+                        phone,
+                        email,
+                        voucher,
+                        total,
+                        cartItems,
                         payingMethod
                     };
                     console.log("Form submitted successfully with data:", formData);

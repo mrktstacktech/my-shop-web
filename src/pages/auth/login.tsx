@@ -10,8 +10,8 @@ const styles = {
     photo: "w-auto mx-auto mb-4",
     title: "text-2xl font-semibold mb-2",
     subtitle: "text-gray-600 mb-7",
-    inputField: "w-60 mb-4 border-b-2 border-gray-400",
-    button: "bg-red-600 text-white text-sm rounded hover:bg-red-700 focus:border-none rounded-full"
+    inputField: "w-60 mb-4 border-gray-400",
+    button: "bg-red-600 p-2 text-white text-sm rounded hover:bg-red-700 focus:border-none"
 };
 
 export function Login() {
@@ -59,6 +59,7 @@ export function Login() {
                             value={name}
                             className={styles.inputField}
                             required={false}
+                            style={{ borderBottom: "1px solid #ccc" }} 
                         />
 
                         <InputFormField
@@ -69,6 +70,7 @@ export function Login() {
                             onChange={(value: string) => setPassword(value)}
                             value={password}
                             className={styles.inputField}
+                            style={{ borderBottom: "1px solid #ccc" }} 
                         />
                         {error && <p className="text-red-500 text-xs mt-1 mb-2">{error}</p>}
                         <div className="pt-4 flex justify-between items-center">

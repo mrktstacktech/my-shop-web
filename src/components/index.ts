@@ -15,3 +15,5 @@ export * from './contact-form';
 export * from './product-image';
 export * from './wishlist-update-button'
 export * from './radio';
+export * from './preview-button';
+export * from './tooltip';

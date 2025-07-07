@@ -31,7 +31,6 @@ export function CheckOutPage() {
         voucher
     } = useBillingForm();
 
-
     return (
         <form onSubmit={(e) => {
             e.preventDefault();
@@ -191,7 +190,7 @@ export function CheckOutPage() {
                         value={voucher}
                         onChange={(value: string) => { setVoucher(value) }}
                     />
-                    <button disabled={isSuccess} className="billing-form__cart__input-coupon__button red">Apply Coupon</button>
+                    <button disabled={isSuccess} type="button" className="billing-form__cart__input-coupon__button red">Apply Coupon</button>
                 </div>
 
                 <div className="billing-form__cart__place-order">

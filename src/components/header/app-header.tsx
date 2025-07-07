@@ -1,4 +1,4 @@
-import { InputFormField, DropDown, Badges } from "@components";
+import { InputFormField, DropDown, Badges, Tooltip } from "@components";
 import { SearchIcon, HeartIcon, CartIcon, UserIcon, USER_DROPDOWN_ITEMS } from "@constants";
 import { useAuthContext } from "@context/auth-hook";
 import { useSearchProduct, useGetCurrentCart, useGetCurrentWishlist } from "@hooks";
@@ -40,7 +40,9 @@ export function AppHeader() {
 
             <div className="app-header__container">
                 <div className="app-header__container__logo">
-                    <img src="/logo.svg" alt="Logo" />
+                    <Link to="/" className="app-header__container__logo__link">
+                        <img src="/logo.svg" alt="Logo" />
+                    </Link>
                 </div>
 
                 <Navigation />
@@ -78,13 +80,17 @@ export function AppHeader() {
                         </div>
                     )}
 
-                    <Badges notification={isAuthenticated ? wishlistCount : 0} onClick={handleWishlistClick} className="app-header__container__controls__badge">
-                        {HeartIcon}
-                    </Badges>
+                    <Tooltip content="My Wishlist" position="bottom" className="app-header__container__controls__tooltip">
+                        <Badges notification={isAuthenticated ? wishlistCount : 0} onClick={handleWishlistClick} className="app-header__container__controls__tooltip__badge">
+                            {HeartIcon}
+                        </Badges>
+                    </Tooltip>
 
-                    <Badges notification={isAuthenticated ? cartItemCount : 0} onClick={handleCartClick} className="app-header__container__controls__badge">
-                        {CartIcon}
-                    </Badges>
+                    <Tooltip content="My Cart" position="bottom" className="app-header__container__controls__tooltip">
+                        <Badges notification={isAuthenticated ? cartItemCount : 0} onClick={handleCartClick} className="app-header__container__controls__tooltip__badge">
+                            {CartIcon}
+                        </Badges>
+                    </Tooltip>
 
                     {isAuthenticated && (
                         <DropDown

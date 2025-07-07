@@ -45,10 +45,10 @@ export function FlashSaleProduct() {
                 : products.length > 0
                     ? <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 sale__products">
                         {products.map(product => (
-                            <Link to={`/product/${product.id}`} key={product.id} className="sale__products__product-link">
+                            // <Link to={`/product/${product.id}`} key={product.id} className="sale__products__product-link">
                                 <Card
                                     key={product.id}
-                                    title={product.title}
+                                    title={<Link to={`/product/${product.id}`} key={product.id} className="sale__products__product-link">{product.title}</Link>}
                                     thumbnail="/public/item.svg"
                                     price={product.price}
                                     rating={product.rating}
@@ -58,7 +58,7 @@ export function FlashSaleProduct() {
                                     onClick={() => updateCart([product])}
                                     productId={product.id}
                                 />
-                            </Link>
+                            // </Link>
                         ))}
                     </div>
                     : <p className="text-center">No products found.</p>

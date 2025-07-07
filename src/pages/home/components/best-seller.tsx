@@ -29,20 +29,18 @@ export function BestSeller() {
                 products.length > 0
                     ? <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 best-seller__products">
                         {products.map(product => (
-                            <Link to={`/product/${product.id}`} key={product.id} className="best-seller__products__product-link">
-                                <Card
-                                    key={product.id}
-                                    title={product.title}
-                                    thumbnail="/public/item.svg"
-                                    price={product.price}
-                                    rating={product.rating}
-                                    discountPercentage={product.discountPercentage}
-                                    reviewNumber={product.reviews.length}
-                                    className="best-seller__products__product-card"
-                                    onClick={() => updateCart([product])}
-                                    productId = {product.id}
-                                />
-                            </Link>
+                            <Card
+                                key={product.id}
+                                title={<Link to={`/product/${product.id}`} key={product.id} className="sale__products__product-link">{product.title}</Link>}
+                                thumbnail="/public/item.svg"
+                                price={product.price}
+                                rating={product.rating}
+                                discountPercentage={product.discountPercentage}
+                                reviewNumber={product.reviews.length}
+                                className="best-seller__products__product-card"
+                                onClick={() => updateCart([product])}
+                                productId={product.id}
+                            />
                         ))}
                     </div>
                     : <p className="text-center">No products found.</p>

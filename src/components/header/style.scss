@@ -50,6 +50,11 @@
       align-items: center;
       position: relative;
 
+      &__tooltip {
+        &__content {
+          white-space: nowrap;
+        }
+      }
       &__search-input {
         &__field {
           display: flex;

@@ -34,17 +34,14 @@ export function WishListPage() {
                 ) : (
                     products?.length > 0 ? (
                         products.map((product) => (
-                            <Link to={`/product/${product.id}`} key={product.id} className="wishlist-page__wishlist-container__card-link">
-                                <Card
-                                    key={product.id}
-                                    title={product.title}
-                                    thumbnail="/public/item.svg"
-                                    price={product.price}
-                                    className="wishlist-page__wishlist-container__card"
-                                    discountPercentage={product.discountedPercentage}
-                                    productId = {product.id}
-                                />
-                            </Link>
+                            <Card
+                                key={product.id}
+                                title={<Link to={`/product/${product.id}`} key={product.id} className="sale__products__product-link">{product.title}</Link>} thumbnail="/public/item.svg"
+                                price={product.price}
+                                className="wishlist-page__wishlist-container__card"
+                                discountPercentage={product.discountedPercentage}
+                                productId={product.id}
+                            />
                         ))
                     ) : (
                         <p className="wishlist-page__wishlist-container--empty">Your wishlist is empty.</p>

@@ -1,5 +1,5 @@
 import { Outlet } from "react-router-dom";
-import { AppHeader } from "@/components";
+import { AppHeader, AppFooter } from "@/components";
 import { useEffect } from "react";
 
 export const Layout = function Layout() {
@@ -15,6 +15,7 @@ export const Layout = function Layout() {
         <div className="min-h-screen">
             <AppHeader />
             <Outlet />
+            <AppFooter />
         </div>
     );
 };

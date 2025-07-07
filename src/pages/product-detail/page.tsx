@@ -22,7 +22,7 @@ export function ProductDetailPage() {
         product?.images[0],
         "/public/item.svg"
     ];
-    
+
     const [quantity, setQuantity] = useState(1);
 
     useEffect(() => {
@@ -38,11 +38,11 @@ export function ProductDetailPage() {
             </div>
                 : (isFound ?
                     <div className="product-detail-page__product-detail">
-                       <ProductImage 
+                        <ProductImage
                             images={productImages}
                             className="product-detail-page__product-detail__thumbnail"
                         />
-                        
+
                         <div className="product-detail-page__product-detail__info">
                             <div className="product-detail-page__product-detail__info__title">{product?.title}</div>
                             <div className="product-detail-page__product-detail__info__rating-stock">
@@ -65,11 +65,11 @@ export function ProductDetailPage() {
                             </div>
                             <div className="product-detail-page__product-detail__info__actions">
                                 <div className='product-detail-page__product-detail__info__actions__quantity'>
-                                    <QuantityField 
-                                     className='product-detail-page__product-detail__info__actions__quantity'
-                                     maxQuantity={product.stock} 
-                                     quantity = {quantity}
-                                     setQuantity={setQuantity}
+                                    <QuantityField
+                                        className='product-detail-page__product-detail__info__actions__quantity'
+                                        maxQuantity={product.stock}
+                                        quantity={quantity}
+                                        setQuantity={setQuantity}
                                     />
                                 </div>
                                 <button onClick={() => addSingleProductToCart(product.id, quantity)} className='product-detail-page__product-detail__info__actions__buy-button' disabled={product?.stock <= 0 ? true : false}>Buy now</button>
@@ -112,17 +112,14 @@ export function ProductDetailPage() {
                     ) : (
                         <div className="product-detail-page__related-products__list-container__list">
                             {relatedProducts.map(product => (
-                                <Link to={`/product/${product.id}`} key={product.id} className="product-detail-page__related-products__list__item">
-                                    <Card
-                                        title={product.title}
-                                        thumbnail={product.images[0]}
-                                        price={product.price}
-                                        rating={product.rating}
-                                        discountPercentage={product.discountPercentage}
-                                        reviewNumber={product.reviews.length}
-                                        productId = {product.id}
-                                    />
-                                </Link>
+                                <Card
+                                    title={<Link to={`/product/${product.id}`} key={product.id} className="sale__products__product-link">{product.title}</Link>} thumbnail={product.images[0]}
+                                    price={product.price}
+                                    rating={product.rating}
+                                    discountPercentage={product.discountPercentage}
+                                    reviewNumber={product.reviews.length}
+                                    productId={product.id}
+                                />
                             ))}
                         </div>
                     )}

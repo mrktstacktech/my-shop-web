@@ -300,7 +300,9 @@
       // padding: 0.2rem;
       // grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
       display: flex;
-      flex-wrap: wrap;
+      flex-direction: column;
+      height: fit-content;
+      // flex-wrap: wrap;
     }
   }
 }

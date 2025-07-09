@@ -1,9 +1,26 @@
+@import "@/App.scss";
 .avatar {
   width: 200px;
   margin: 0 auto;
   display: flex;
   flex-direction: column;
   align-items: center;
+
+  &__spinner-container {
+    width: 100%;
+    height: 400px;
+    margin-bottom: 1rem;
+    background-color: #F5F5F5;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+
+    @include sm {
+      height: 200px;
+    }
+
+  }
 
   &__image {
     width: 100%;

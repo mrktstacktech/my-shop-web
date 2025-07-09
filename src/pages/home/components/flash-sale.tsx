@@ -1,4 +1,4 @@
-import { Card, Clock } from "@components";
+import { Card, Clock, CardSkeleton } from "@components";
 import { AngleLeftIcon, AngleRightIcon } from "@constants";
 import { useGetProductsSorted, useUpdateCart } from "@hooks";
 import { Link } from "react-router-dom";
@@ -39,25 +39,27 @@ export function FlashSaleProduct() {
             </div>
 
             {loading
-                ? <div className="flex items-center">
-                    <p>Loading...</p>
+                ? <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 sale__products">
+                    {[...Array(4)].map((_, index) => (
+                        <CardSkeleton key={index} />
+                    ))}
                 </div>
                 : products.length > 0
                     ? <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 sale__products">
                         {products.map(product => (
                             // <Link to={`/product/${product.id}`} key={product.id} className="sale__products__product-link">
-                                <Card
-                                    key={product.id}
-                                    title={<Link to={`/product/${product.id}`} key={product.id} className="sale__products__product-link">{product.title}</Link>}
-                                    thumbnail="/public/item.svg"
-                                    price={product.price}
-                                    rating={product.rating}
-                                    discountPercentage={product.discountPercentage}
-                                    reviewNumber={product.reviews.length}
-                                    className="sale__products__product-card"
-                                    onClick={() => updateCart([product])}
-                                    productId={product.id}
-                                />
+                            <Card
+                                key={product.id}
+                                title={<Link to={`/product/${product.id}`} key={product.id} className="sale__products__product-link">{product.title}</Link>}
+                                thumbnail="/public/item.svg"
+                                price={product.price}
+                                rating={product.rating}
+                                discountPercentage={product.discountPercentage}
+                                reviewNumber={product.reviews.length}
+                                className="sale__products__product-card"
+                                onClick={() => updateCart([product])}
+                                productId={product.id}
+                            />
                             // </Link>
                         ))}
                     </div>

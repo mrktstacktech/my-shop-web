@@ -6,9 +6,9 @@ import './style.scss';
 import { TruckIcon, ReloadIcon } from '@/constants/icon';
 import { QuantityField } from '@/components';
 import { useGetProductByCategory, useAddSingleProductToCart } from '@hooks';
-import { Card } from '@/components';
+import { Card, ProductDetailSkeleton } from '@/components';
 import { Link } from 'react-router-dom';
-import { ProductImage, WishlistUpdateButton } from '@/components';
+import { ProductImage, WishlistUpdateButton, CardSkeleton } from '@/components';
 import { useEffect, useState } from 'react';
 
 export function ProductDetailPage() {
@@ -34,7 +34,7 @@ export function ProductDetailPage() {
     return (
         <div className="product-detail-page">
             {loading ? <div>
-                <p>Loading...</p>
+                <ProductDetailSkeleton />
             </div>
                 : (isFound ?
                     <div className="product-detail-page__product-detail">
@@ -107,25 +107,29 @@ export function ProductDetailPage() {
                 </div>
 
                 <div className="product-detail-page__related-products__list-container">
-                    {relatedLoading ? (
-                        <p>Loading related products...</p>
-                    ) : (
+                    {relatedLoading ?
                         <div className="product-detail-page__related-products__list-container__list">
-                            {relatedProducts.map(product => (
-                                <Card
-                                    title={<Link to={`/product/${product.id}`} key={product.id} className="sale__products__product-link">{product.title}</Link>} thumbnail={product.images[0]}
-                                    price={product.price}
-                                    rating={product.rating}
-                                    discountPercentage={product.discountPercentage}
-                                    reviewNumber={product.reviews.length}
-                                    productId={product.id}
-                                />
+                            {[...Array(4)].map((_, index) => (
+                                <CardSkeleton key={index} />
                             ))}
                         </div>
-                    )}
+                        : (
+                            <div className="product-detail-page__related-products__list-container__list">
+                                {relatedProducts.map(product => (
+                                    <Card
+                                        title={<Link to={`/product/${product.id}`} key={product.id} className="sale__products__product-link">{product.title}</Link>} thumbnail={product.images[0]}
+                                        price={product.price}
+                                        rating={product.rating}
+                                        discountPercentage={product.discountPercentage}
+                                        reviewNumber={product.reviews.length}
+                                        productId={product.id}
+                                    />
+                                ))}
+                            </div>
+                        )}
                 </div>
-
             </div>
+
         </div>
 
     );

@@ -73,7 +73,7 @@ export function CartPage() {
                         value=""
                         onChange={() => { }}
                     />
-                    <button className="cart-table__total-container__input-coupon-container__button red">Apply Coupon</button>
+                    <button disabled={loading} className="cart-table__total-container__input-coupon-container__button red">Apply Coupon</button>
                 </div>
                 <div className="cart-table__total-container__cart-summary">
                     <h2>Cart Total</h2>

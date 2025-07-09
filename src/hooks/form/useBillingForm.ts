@@ -1,11 +1,12 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useAuthContext } from '@/context/auth-hook';
 import { usePayForCart } from '@/hooks';
 // import { useNavigate } from 'react-router-dom';
 import { Options } from '@/constants';
+import { toast } from 'react-toastify';
 export function useBillingForm() {
     const { user } = useAuthContext();
-    const { loading, cartItems, error: payingError, handlePayForCart, total } = usePayForCart();
+    const { loading, cartItems, error: payingError, handlePayForCart, total, isProcessing } = usePayForCart();
     // const navigate = useNavigate();
 
     const [firstName, setFirstName] = useState(user?.firstName || '');
@@ -28,6 +29,18 @@ export function useBillingForm() {
         email: '',
         payingMethod: ''
     });
+
+    useEffect(() => {
+        setFirstName(user?.firstName || '');
+        setCompanyName(user?.company?.name || '');
+        setStreet(user?.address?.street || '');
+        setApartment('');
+        setCity(user?.address?.city || '');
+        setPhone(user?.phone || '');
+        setEmail(user?.email || '');
+        setPayingMethod(Options[0].value);
+        setVoucher('');
+    }, [user]);
 
     const validateForm = () => {
         const newError = {
@@ -91,11 +104,12 @@ export function useBillingForm() {
                         cartItems,
                         payingMethod
                     };
+                    toast.success("Payment successful! Thank you for your order.");
                     console.log("Form submitted successfully with data:", formData);
                     setIsSuccess(true);
                     // navigate("/");
                 } else {
-                    alert("Payment failed. Please try again.");
+                    toast.error(`Payment failed. Please try again.`);
                 }
             } catch (err) {
                 console.error("Error during payment:", err);
@@ -130,7 +144,8 @@ export function useBillingForm() {
         setPayingMethod,
         isSuccess,
         voucher,
-        setVoucher
+        setVoucher,
+        isProcessing
     }
 
 }

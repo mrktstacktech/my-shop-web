@@ -1,10 +1,26 @@
 import type { AvatarProps } from './type';
 import './style.scss';
+import { Spinner } from "@/components";
+import { useState } from "react";
 
 export function Avatar({ className, name, position, image }: AvatarProps) {
+    const [loading, setLoading] = useState(true);
+
     return (
         <div className={`avatar ${className}`}>
-            <img src={image} alt={name} className={`avatar__image ${className}__image`} />
+            {loading && <div className={`avatar__spinner-container ${className}__spinner-container`}>
+                    <Spinner className={`avatar__spinner-container__spinner ${className}__spinner-container__spinner`} />
+                </div>
+            }
+            <img src={image}
+                alt={name} 
+                className={`avatar__image ${className}__image`} 
+                onLoad={() => setLoading(false)}
+                onError={() => setLoading(false)}
+                style={{
+                    display: loading ? 'none' : 'block',
+                }}
+            />
             <div className={`avatar__info ${className}__info`}>
                 <h3 className={`avatar__info__name ${className}__info__name`}>{name}</h3>
                 <p className={`avatar__position ${className}__position`}>{position}</p>

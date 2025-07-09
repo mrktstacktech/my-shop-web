@@ -1,7 +1,7 @@
 import type { CardType } from "./type"
 import { useState } from "react";
 import { StarRating } from "@components";
-import { WishlistUpdateButton, PreviewButton } from "@components";
+import { WishlistUpdateButton, PreviewButton, Spinner } from "@components";
 
 const styles = {
     hovered: "absolute flex flex-col right-0 top-0 bottom-0 left-0 h-full p-0",
@@ -14,6 +14,7 @@ const styles = {
 
 export function Card({ ...props }: CardType) {
     const [isHovered, setIsHovered] = useState(false);
+    const [loading, setLoading] = useState(true);
 
     const priceDiscounted = props.discountPercentage
         ? Math.round(props.price - (props.price * props.discountPercentage / 100))
@@ -26,7 +27,7 @@ export function Card({ ...props }: CardType) {
         </svg>;
 
     return (
-        <div className={`max-w-[250px] w-full ${props.className}`}>
+        <div className={`max-w-[250px] w-full h-[300px] ${props.className}`}>
             <div onMouseOver={() => setIsHovered(true)}
                 onMouseLeave={() => setIsHovered(false)}
                 className="relative bg-(--item-background-color) flex items-center justify-center h-48 w-full p-0 rounded-sm mb-2"
@@ -35,12 +36,10 @@ export function Card({ ...props }: CardType) {
                 <div
                     className={styles.hovered}
                 >
-                    {/* <button className={`${styles.button} ${styles.likeIcon}`}>{likeIcon}</button> */}
                     <WishlistUpdateButton
                         className={`${styles.button} ${styles.likeIcon}`}
                         productId={props.productId}
                     />
-                    {/* <button className={`${styles.button} ${styles.eyeIcon}`}>{eyeIcon}</button> */}
                     <PreviewButton
                         className={`${styles.button} ${styles.eyeIcon}`}
                         image={props.thumbnail}
@@ -48,7 +47,15 @@ export function Card({ ...props }: CardType) {
                     />
                     <button onClick={props.onClick} className={`${isHovered ? `block` : `hidden`} ${styles.addToCart}`}>Add to cart</button>
                 </div>
-                <img className={`w-20`} src={props.thumbnail} />
+                {loading && <Spinner color="secondary" /> }
+                <img className={`w-20`}
+                    onLoad={() => setLoading(false)}
+                    onError={() => setLoading(false)}
+                    src={props.thumbnail}
+                    style={{
+                        display: loading ? 'none' : 'block',
+                    }} />
+
 
             </div>
             <h2 className="font-medium mt-1 mb-1">{props.title}</h2>

@@ -1,4 +1,4 @@
-import { Card } from "@components";
+import { Card, CardSkeleton } from "@components";
 import { useGetProductsSorted, useUpdateCart } from "@hooks";
 import { Link } from "react-router-dom";
 
@@ -22,8 +22,10 @@ export function BestSeller() {
                 <button className="button view-button best-seller__title__view-all-inline">View All</button>
             </div>
             {loading ? (
-                <div className="flex items-center">
-                    <p>Loading...</p>
+                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 best-seller__products">
+                    {[...Array(4)].map((_, index) => (
+                        <CardSkeleton key={index} />
+                    ))}
                 </div>
             ) : (
                 products.length > 0

@@ -1,4 +1,4 @@
-import { Card } from "@components";
+import { Card, CardSkeleton } from "@components";
 import { AngleLeftIcon, AngleRightIcon } from "@constants";
 import { useGetProduct, useUpdateCart } from "@hooks";
 import { Link } from "react-router-dom";
@@ -27,8 +27,10 @@ export function ProductList() {
             </div>
 
             {loading ?
-                <div className="flex justify-center items-center">
-                    <p>Loading...</p>
+                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 product-list__products">
+                    {[...Array(8)].map((_, index) => (
+                        <CardSkeleton key={index} />
+                    ))}
                 </div>
                 :
                 (data.length === 0 ?

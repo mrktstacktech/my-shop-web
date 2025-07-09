@@ -1,7 +1,9 @@
 import { useBillingForm } from "@/hooks";
-import { InputFormField, Radio } from "@/components";
+import { InputFormField, Radio, Spinner } from "@/components";
 import "./style.scss";
 import { Options } from "@/constants";
+import { useState } from "react";
+import { ToastContainer } from "react-toastify";
 
 export function CheckOutPage() {
     const {
@@ -28,14 +30,16 @@ export function CheckOutPage() {
         setPayingMethod,
         isSuccess,
         setVoucher,
-        voucher
+        isProcessing
     } = useBillingForm();
+    const [voucherCode, setVoucherCode] = useState<string>("");
 
     return (
         <form onSubmit={(e) => {
             e.preventDefault();
             handleSubmit();
         }} className="billing-form">
+            {isProcessing && <div className="billing-form__processing"><Spinner /></div>}
             <div className="billing-form__details">
                 <div className="billing-form__details__title">Billing Details</div>
 
@@ -176,6 +180,7 @@ export function CheckOutPage() {
                         options={Options}
                         onChange={setPayingMethod}
                         className="billing-form__cart__payment-method"
+                        disabled={isSuccess}
                     />
                 </div>
 
@@ -187,10 +192,17 @@ export function CheckOutPage() {
                         placeholder="Coupon Code"
                         className="billing-form__cart__input-coupon__coupon-input"
                         required={false}
-                        value={voucher}
-                        onChange={(value: string) => { setVoucher(value) }}
+                        value={voucherCode}
+                        onChange={(value: string) => { setVoucherCode(value); }}
                     />
-                    <button disabled={isSuccess} type="button" className="billing-form__cart__input-coupon__button red">Apply Coupon</button>
+                    <button
+                        disabled={isSuccess}
+                        onClick={() => { setVoucher(voucherCode); }}
+                        type="button"
+                        className="billing-form__cart__input-coupon__button red"
+                    >
+                        Apply Coupon
+                    </button>
                 </div>
 
                 <div className="billing-form__cart__place-order">
@@ -201,9 +213,23 @@ export function CheckOutPage() {
                             {loading ? "Processing..." : "Place Order"}
                         </button>
                     }
+                    <ToastContainer
+                        position="top-right"
+                        autoClose={5000}
+                        hideProgressBar={false}
+                        newestOnTop={false}
+                        closeOnClick={false}
+                        rtl={false}
+                        closeButton={false}
+                        draggable
+                        pauseOnHover
+                        theme="light"
+                    />
                 </div>
                 {!loading && payingError && <p className="error-message">{payingError}</p>}
             </div>
         </form>
-    );
+
+    )
+
 }

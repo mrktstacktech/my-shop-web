@@ -1,9 +1,12 @@
 import './style.scss';
 import { Feature } from '@components';
 import { INTRO_LIST, FEATURE_LIST, AVATAR_DEFAULT } from '@constants';
-import { Avatar } from '@components';
+import { Avatar, Spinner } from '@components';
+import { useState } from 'react';
 
 export function AboutPage() {
+    const [loading, setLoading] = useState(true);
+
     return (
         <div className="about-page">
             <div className="about-page__header">
@@ -16,8 +19,20 @@ export function AboutPage() {
                         Exclusive has more than 1 Million products to offer, growing at a very fast. Exclusive offers a diverse assortment in categories ranging  from consumer.
                     </p>
                 </div>
-                <div>
-                    <img src="/public/side-about.svg" alt="About Us" className="w-full h-auto" />
+                <div className="about-page__header__image">
+                    {loading && <div className="about-page__header__image__spinner-container">
+                        <Spinner className="about-page__header__image__spinner-container__spinner" color="secondary" />
+                    </div>
+                    }
+                    <img src="/public/side-about.svg"
+                        alt="About Us"
+                        className="w-full h-auto"
+                        onLoad={() => setLoading(false)}
+                        onError={() => setLoading(false)}
+                        style={{
+                            display: loading ? 'none' : 'block',
+                        }}
+                    />
                 </div>
             </div>
             <div className="about-page__intro">

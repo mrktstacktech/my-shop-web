@@ -39,6 +39,16 @@
         margin-bottom: 0.75rem;
       }
     }
+
+    &__image {
+      &__spinner-container {
+        width: 100%;
+        height: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+    }
   }
 
   &__intro {

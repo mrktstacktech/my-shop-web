@@ -1,5 +1,5 @@
 import { useMemo } from "react";
-import { Image, Carousel } from "@components";
+import { Image, Carousel, Spinner } from "@components";
 import { useGetCategories } from "@hooks";
 
 export function Banner() {
@@ -67,7 +67,7 @@ export function Banner() {
     return (
         <div className="banner">
             {loading ? (
-                <div className="banner__loading">Loading categories...</div>
+                <div className="banner__categories"><Spinner /></div>
             ) : (
                 <div className="banner__categories">
                     {list.map((category) => (

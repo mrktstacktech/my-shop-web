@@ -1,4 +1,5 @@
 import { useShowProductImages } from "@/hooks";
+import { SubImage } from "./components";
 export function ProductImage({
     images,
     className = 'product-image'
@@ -12,19 +13,27 @@ export function ProductImage({
         <div className={`${className}`}>
             <div className={`${className}__images`}>
                 {images.map((image, index) => (
-                    <img
+                    <SubImage 
                         key={index}
                         src={image}
+                        size="small"
                         alt={`Product Thumbnail ${index + 1}`}
                         onClick={() => getCurrentImage(image)}
-                        className={currentImage === image ? 'active' : ''}
                         onMouseEnter={() => getCurrentImage(image)}
                         onMouseLeave={() => resetCurrentImage()}
+                        className={`${className}__images__sub-image ${currentImage === image ? 'active' : ''}`}
                     />
                 ))}
             </div>
             <div className={`${className}__main-image`}>
-                <img src={currentImage} alt="Product Main" />
+                <SubImage 
+                    src={currentImage} 
+                    alt="Product Main" 
+                    className={`${className}__main-image__image`}
+                    onClick={() => {}}
+                    onMouseEnter={() => {}}
+                    onMouseLeave={() => {}}
+                />
             </div>
         </div>
     );

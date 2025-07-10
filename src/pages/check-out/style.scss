@@ -83,7 +83,23 @@
     gap: 1rem;
     &__list {
       width: 100%;
+      &__spinner {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100px; /* Adjust height as needed */
+      }
+
       table {
+        width: 500px;
+
+        @include sm {
+          width: 100%;
+        }
+
+        @include md {
+          width: 350px;
+        }
         tbody {
           tr {
             td {
@@ -91,6 +107,11 @@
                 width: 50px;
                 height: 50px;
                 object-fit: cover;
+
+                @include md {
+                  width: 40px;
+                  height: 40px;
+                }
               }
               padding: 0.5rem;
 
@@ -111,6 +132,15 @@
               line-clamp: 1; /* Standard property for compatibility */
               overflow: hidden;
               text-overflow: ellipsis;
+
+              @include md {
+                width: 200px;
+              }
+            }
+
+            .item-total {
+              width: 100px;
+              text-align: right;
             }
 
             .total {
@@ -184,7 +214,7 @@
 
       button {
         @extend .red-button;
-        width: 30%;
+        // width: 30%;
         padding: 0.75rem 1.5rem;
         font-size: 1rem;
         font-weight: 600;

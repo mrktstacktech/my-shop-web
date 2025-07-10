@@ -32,6 +32,13 @@
           vertical-align: middle;
           text-align: left;
         }
+
+        &__loading-row {
+          td {
+            text-align: center;
+          }
+        }
+
         &__row {
           padding: 1rem;
           @extend .table-row;
@@ -46,10 +53,17 @@
             gap: 1rem;
             max-width: 450px;
 
-            img {
+            &__image {
+              display: flex;
+              align-items: center;
+              justify-content: center;
               width: 50px;
-              height: auto;
-              border-radius: 4px;
+
+              img {
+                width: 50px;
+                height: auto;
+                border-radius: 4px;
+              }
             }
 
             span {
@@ -190,6 +204,11 @@
     background-color: #c33b3b;
     transition: background-color 0.2s ease-in-out;
   }
+
+  &:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+  }
 }
 
 .table-row {
@@ -316,7 +335,9 @@
 }
 
 @keyframes spinner-border {
-  to { transform: rotate(360deg) #{"/* rtl:ignore */"}; }
+  to {
+    transform: rotate(360deg) #{"/* rtl:ignore */"};
+  }
 }
 
 @keyframes spinner-grow {

@@ -119,6 +119,10 @@ export const cartSlice = createSlice({
                 state.currentWishlistItems = state.currentWishlistItems.filter(item => item !== action.payload);
             }
         },
+        clearCart: (state) => {
+            state.currentCartItems = [];
+            state.totalItems = 0;
+        }
     }
 });
 

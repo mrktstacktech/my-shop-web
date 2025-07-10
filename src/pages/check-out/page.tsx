@@ -1,5 +1,5 @@
 import { useBillingForm } from "@/hooks";
-import { InputFormField, Radio, Spinner } from "@/components";
+import { InputFormField, Radio, Spinner, Image } from "@/components";
 import "./style.scss";
 import { Options } from "@/constants";
 import { useState } from "react";
@@ -141,16 +141,25 @@ export function CheckOutPage() {
             <div className="billing-form__cart">
                 <div className="billing-form__cart__list">
                     {loading ?
-                        <p>Loading...</p>
+                        <div className="billing-form__cart__list__spinner"><Spinner size="medium" color="secondary"  /></div>
                         :
                         <table>
                             <tbody>
                                 {cartItems && cartItems.length > 0 ? (
                                     cartItems.map(item => (
                                         <tr key={item.id}>
-                                            <td className="image"><img src={item.thumbnail} /></td>
+                                            {/* <td className="image"><img src={item.thumbnail} /></td> */}
+                                            <td className="image">
+                                                <Image
+                                                    src={item.thumbnail}
+                                                    alt={item.title}
+                                                    className="billing-form__cart__list__image"
+                                                    size="small"
+                                                    color="secondary"
+                                                />
+                                            </td>
                                             <td className="title">{item.title}</td>
-                                            <td>${item.total}</td>
+                                            <td className="item-total">${item.total}</td>
                                         </tr>
                                     ))
                                 ) : (
@@ -207,7 +216,7 @@ export function CheckOutPage() {
 
                 <div className="billing-form__cart__place-order">
                     {isSuccess ?
-                        <p className="success-message">Payment successful! Thank you for your order.</p>
+                        null
                         :
                         <button type="submit" className="billing-form__cart__place-order__button">
                             {loading ? "Processing..." : "Place Order"}

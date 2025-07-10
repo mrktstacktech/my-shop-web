@@ -24,13 +24,15 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
             return response;
         } catch (error) {
             console.error("Login error:", error);
-            return null; // or throw an error based on your error handling strategy
+            return null; 
         }
     };
 
     const logout = () => {
         setIsAuthenticated(false);
         setUser(null);
+        localStorage.removeItem('accessToken');
+        localStorage.removeItem('refreshToken');
     };
 
     const getUserInfo = useCallback(async () => {

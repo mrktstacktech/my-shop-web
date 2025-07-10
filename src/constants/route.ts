@@ -27,7 +27,7 @@ export const NAV_ITEMS = [
 export const USER_DROPDOWN_ITEMS = [
     {
         label: 'Manage my account',
-        href: '/account',
+        href: '/manage-account',
         icon: AccountIcon
     },
     {
@@ -47,7 +47,7 @@ export const USER_DROPDOWN_ITEMS = [
     },
     {
         label: 'Logout',
-        href: '/logout',
+        href: '/',
         icon: LogOutIcon
     }
 ]

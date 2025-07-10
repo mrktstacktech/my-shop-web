@@ -1,0 +1,118 @@
+.my-profile-form {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  gap: 1.2rem;
+  padding: 2rem 3rem;
+  box-shadow: 0 0 5px 5px rgba(228, 228, 228, 0.5);
+
+  &__title {
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: #db4444;
+  }
+
+  &__form-fields {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+
+    &__input-field {
+      &__field {
+        @extend .field;
+      }
+    }
+
+    &__input-container {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+
+      &__input-field {
+        &__field {
+          @extend .field;
+        }
+      }
+
+      &__error-text {
+        @extend .error-text;
+      }
+    }
+
+    &__error-container {
+      display: flex;
+      flex-direction: column;
+      gap: 0.25rem;
+
+      &__error-text {
+        @extend .error-text;
+      }
+    }
+  }
+
+  &__personal-fields {
+    display: flex;
+    flex-direction: row;
+    gap: 2rem;
+
+    div {
+      flex-grow: 1;
+    }
+
+    &__input-container {
+      &__error-text {
+        @extend .error-text;
+      }
+    }
+  }
+
+  &__password-fields {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+
+    label {
+      font-size: 0.875rem;
+      font-weight: 500;
+      color: #374151;
+      margin-bottom: 0.25rem;
+    }
+  }
+
+  &__buttons {
+    display: flex;
+    justify-content: flex-end;
+    width: 100%;
+
+    &__cancel-button,
+    &__save-button {
+      padding: 0.5rem 1rem;
+      border-radius: 4px;
+      border: none;
+      cursor: pointer;
+    }
+
+    &__cancel-button {
+      background-color: #f0f0f0;
+      color: #333;
+    }
+
+    &__save-button {
+      background-color: #db4444;
+      color: white;
+      margin-left: 0.5rem;
+    }
+  }
+}
+
+.field {
+  width: 100%;
+  padding: 0.5rem;
+  border-radius: 4px;
+  background-color: #f5f5f5;
+}
+
+.error-text {
+  color: #db4444;
+  font-size: 0.75rem;
+}

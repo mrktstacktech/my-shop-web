@@ -2,7 +2,7 @@ import { FacebookIcon, TwitterIcon, InstagramIcon, LinkedinIcon, GooglePlayIcon,
 export const ACCOUNT_LINKS = [
     {
         label: "My Account",
-        href: "/account",
+        href: "/manage-account",
     },
     {
         label: "Login/ Register",

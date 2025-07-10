@@ -10,6 +10,8 @@ export function Image(props: ImageType) {
             {loading && (
                 <Spinner
                     className="flex items-center justify-center absolute w-20"
+                    size={props.size || "medium"}
+                    color={props.color || "primary"}
                 />
             )}
             <img

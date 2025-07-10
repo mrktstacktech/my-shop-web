@@ -1,14 +1,17 @@
 import { useState, useEffect } from 'react';
 import { useAuthContext } from '@/context/auth-hook';
 import { usePayForCart } from '@/hooks';
-// import { useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { Options } from '@/constants';
 import { toast } from 'react-toastify';
+import { useDispatch } from 'react-redux';
+
 export function useBillingForm() {
     const { user } = useAuthContext();
     const { loading, cartItems, error: payingError, handlePayForCart, total, isProcessing } = usePayForCart();
     // const navigate = useNavigate();
-
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
     const [firstName, setFirstName] = useState(user?.firstName || '');
     const [companyName, setCompanyName] = useState(user?.company?.name || '');
     const [street, setStreet] = useState(user?.address?.street || '');
@@ -17,7 +20,7 @@ export function useBillingForm() {
     const [phone, setPhone] = useState(user?.phone || '');
     const [email, setEmail] = useState(user?.email || '');
     const [payingMethod, setPayingMethod] = useState<string>(Options[0].value); // Default payment method
-    const[isSuccess, setIsSuccess] = useState<boolean>(false);
+    const [isSuccess, setIsSuccess] = useState<boolean>(false);
     const [voucher, setVoucher] = useState<string>('');
     const [error, setError] = useState({
         firstName: '',
@@ -41,6 +44,7 @@ export function useBillingForm() {
         setPayingMethod(Options[0].value);
         setVoucher('');
     }, [user]);
+
 
     const validateForm = () => {
         const newError = {
@@ -69,7 +73,7 @@ export function useBillingForm() {
             newError.city = "City is required.";
         }
 
-     
+
         if (!email.trim()) {
             newError.email = "Email is required.";
         } else if (!/\S+@\S+\.\S+/.test(email)) {
@@ -104,10 +108,16 @@ export function useBillingForm() {
                         cartItems,
                         payingMethod
                     };
-                    toast.success("Payment successful! Thank you for your order.");
+                    toast.success("Payment successful! Thank you for your order.", {
+                        autoClose: 2000,
+                        onClose: () => {
+                            navigate("/my-cart");
+                        }
+                    });
+                
                     console.log("Form submitted successfully with data:", formData);
                     setIsSuccess(true);
-                    // navigate("/");
+                    dispatch({ type: 'cart/clearCart' });
                 } else {
                     toast.error(`Payment failed. Please try again.`);
                 }

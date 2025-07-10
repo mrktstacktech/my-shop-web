@@ -11,21 +11,31 @@ export function useHandleItemQuantity() {
     const [productsInCart, setProductsInCart] = useState<ProductsInCartEntity[]>([]);
     const [total, setTotal] = useState<number>(0);
     const [stock, setStock] = useState<Record<string, number>>({});
-    
+    const [productLoading, setProductLoading] = useState<boolean>(true);
+
     const getProductById = new ProductRepository().getProductById;
 
     useEffect(() => {
-        const fetchStock = async () => {
-            const stockMap: Record<string, number> = {};
-            for (const product of products) {
-                if (!stockMap[product.id]) {
-                    const productData = await getProductById(product.id);
-                    stockMap[product.id] = productData.stock;
+        try {
+            setProductLoading(true);
+
+            const fetchStock = async () => {
+                const stockMap: Record<string, number> = {};
+                for (const product of products) {
+                    if (!stockMap[product.id]) {
+                        const productData = await getProductById(product.id);
+                        stockMap[product.id] = productData.stock;
+                    }
                 }
-            }
-            setStock(stockMap);
-        };
-        fetchStock();
+                setStock(stockMap);
+            };
+            fetchStock();
+        }
+        catch (error) {
+            console.error("Error fetching stock data:", error);
+        } finally {
+            setProductLoading(false);
+        }
     }, [products, getProductById]);
 
     useEffect(() => {
@@ -44,7 +54,7 @@ export function useHandleItemQuantity() {
             if (product.id === productId) {
                 const availableStock = stock[productId] || 0;
                 if (product.quantity >= availableStock) {
-                    return product; 
+                    return product;
                 }
                 return { ...product, quantity: product.quantity + 1, total: (product.quantity + 1) * product.price };
             }
@@ -65,6 +75,7 @@ export function useHandleItemQuantity() {
     }
     return {
         productsInCart,
+        productLoading,
         total,
         stock,
         handleIncreaseQuantity,

@@ -1,7 +1,8 @@
 import { InputFormField, Button } from "@components";
 import React, { useState } from "react";
 import { useAuthContext } from "@context/auth-hook";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
+
 
 const styles = {
     container: "grid grid-cols-5",
@@ -20,6 +21,8 @@ export function Login() {
     const [error, setError] = useState<string>("");
     const { login } = useAuthContext();
     const navigate = useNavigate();
+    const location = useLocation();
+    const from = location.state?.from?.pathname || "/";
 
     const handleSubmit = async (event: React.FormEvent) => {
         event.preventDefault();
@@ -31,7 +34,7 @@ export function Login() {
             setError("Login failed. Please check your credentials.");
             return;
         }
-        navigate("/");
+        navigate(from, { replace: true });
     }
 
     return (

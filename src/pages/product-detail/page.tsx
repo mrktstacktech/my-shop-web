@@ -9,7 +9,7 @@ import { useGetProductByCategory, useAddSingleProductToCart } from '@hooks';
 import { Card, ProductDetailSkeleton } from '@/components';
 import { Link } from 'react-router-dom';
 import { ProductImage, WishlistUpdateButton, CardSkeleton } from '@/components';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 
 export function ProductDetailPage() {
     const params = useParams();
@@ -25,9 +25,6 @@ export function ProductDetailPage() {
 
     const [quantity, setQuantity] = useState(1);
 
-    useEffect(() => {
-        console.log("quantity", quantity);
-    }, [quantity]);
 
     const { addSingleProductToCart } = useAddSingleProductToCart();
 
@@ -72,7 +69,11 @@ export function ProductDetailPage() {
                                         setQuantity={setQuantity}
                                     />
                                 </div>
-                                <button onClick={() => addSingleProductToCart(product.id, quantity)} className='product-detail-page__product-detail__info__actions__buy-button' disabled={product?.stock <= 0 ? true : false}>Buy now</button>
+                                <button onClick={() => addSingleProductToCart(product.id, quantity)}
+                                className='product-detail-page__product-detail__info__actions__buy-button'
+                                disabled={product?.stock <= 0 ? true : false}>
+                                    Buy now
+                                </button>
                                 {/* <button className='product-detail-page__product-detail__info__actions__heart-button' >{HeartIcon}</button> */}
                                 <WishlistUpdateButton productId={product?.id || ''} className='product-detail-page__product-detail__info__actions__heart-button' />
                             </div>

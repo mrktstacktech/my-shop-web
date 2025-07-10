@@ -2,7 +2,7 @@ import { InputFormField, DropDown, Badges, Tooltip } from "@components";
 import { SearchIcon, HeartIcon, CartIcon, UserIcon, USER_DROPDOWN_ITEMS } from "@constants";
 import { useAuthContext } from "@context/auth-hook";
 import { useSearchProduct, useGetCurrentCart, useGetCurrentWishlist } from "@hooks";
-import { useCallback } from "react";
+import { useCallback, useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Navigation } from "./components";
 import "./style.scss";
@@ -16,6 +16,7 @@ export function AppHeader() {
         loading,
         onChangeTextSearch
     } = useSearchProduct();
+    const [isOpen, setIsOpen] = useState(false);
 
     const { totalQuantity } = useGetCurrentCart();
     const { totalWishlistQuantity } = useGetCurrentWishlist();
@@ -31,8 +32,23 @@ export function AppHeader() {
         navigator("/my-cart");
     }, [navigator]);
 
+    useEffect(() => {
+        if (inputValue.length > 0) {
+            setIsOpen(true);
+        }
+        else {
+            setIsOpen(false);
+        }
+
+    }, [inputValue]);
+
     return (
         <header className="app-header">
+            <div
+                className="app-header__wrapper"
+                onClick={() => setIsOpen(false)}
+                style={{ display: isOpen ? 'block' : 'none' }}
+            ></div>
             <div id="top-header" className="app-header__top">
                 Summer Sale For All Swim Suits And Free Express Delivery - OFF 50%!
                 <a className="app-header__top__shop-link" href="#">ShopNow</a>
@@ -60,21 +76,21 @@ export function AppHeader() {
                         suffix={SearchIcon}
                     />
 
-                    {inputValue.length > 0 && (
+                    {isOpen && inputValue.length > 0 && (
                         <div className="app-header__container__controls__search-dropdown">
                             {loading ? (
-                                <p className="app-header__search-status">Searching...</p>
+                                <p className="app-header__container__controls__search-dropdown__search-status">Searching...</p>
                             ) : (
                                 searchValue.length > 0 ? (
-                                    <ul className="app-header__search-results">
+                                    <ul className="app-header__container__controls__search-dropdown__search-results">
                                         {searchValue.map((product, index) => (
-                                            <li key={index} className="app-header__search-item">
+                                            <li key={index} className="app-header__container__controls__search-dropdown__search-results__search-item">
                                                 <Link to={`/product/${product.id}`}>{product.title}</Link>
                                             </li>
                                         ))}
                                     </ul>
                                 ) : (
-                                    <p className="app-header__search-status">No results found</p>
+                                    <p className="app-header__container__controls__search-dropdown__search-status">No results found</p>
                                 )
                             )}
                         </div>

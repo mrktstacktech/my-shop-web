@@ -5,4 +5,6 @@ export type ImageType = {
     classNameBackground?: string;
     style?: React.CSSProperties;
     children?: React.ReactNode;
+    size?: "small" | "medium" | "large";
+    color?: "primary" | "secondary" | "tertiary";
 }

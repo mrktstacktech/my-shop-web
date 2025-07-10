@@ -67,7 +67,7 @@ export function Banner() {
     return (
         <div className="banner">
             {loading ? (
-                <div className="banner__categories"><Spinner /></div>
+                <div className="banner__spinner"><Spinner /></div>
             ) : (
                 <div className="banner__categories">
                     {list.map((category) => (

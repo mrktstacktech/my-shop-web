@@ -1,7 +1,7 @@
 import { useMemo } from "react";
 // import './components/style.css';
 import './components/style.scss';
-import { ProductList, FlashSaleProduct, Banner, BestSeller, PosterGrid } from "./components";
+import { ProductList, FlashSaleProduct, Banner, BestSeller, CategoryGrid, PosterGrid, FeatureGrid } from "./components";
 export function HomePage() {
     const ProductListComponent = useMemo(() => ProductList, []);
     const FlashSaleComponent = useMemo(() => FlashSaleProduct, []);
@@ -10,9 +10,11 @@ export function HomePage() {
 
             <Banner />
             <FlashSaleComponent />
+            <CategoryGrid />
             <BestSeller />
             <ProductListComponent />
             <PosterGrid />
+            <FeatureGrid />
             
         </div>
 

@@ -16,7 +16,7 @@ export function Navigation() {
         const currentPath = window.location.pathname;
         const currentItem = NAV_ITEMS.find(item => item.href === currentPath);
         setSelectedItem(currentItem?.label);
-    }, []);
+    }, [window.location.pathname]);
 
     return (
         <>

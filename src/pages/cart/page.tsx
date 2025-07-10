@@ -1,6 +1,6 @@
 import { useHandleItemQuantity, useUpdateCart } from "@hooks";
 // import './style.css'
-import { InputFormField } from "@components";
+import { InputFormField, Image, Spinner } from "@components";
 import './style.scss'
 import { Link } from "react-router-dom";
 
@@ -8,6 +8,7 @@ const FIX_NUMBER = 2;
 
 export function CartPage() {
     const { productsInCart,
+        productLoading,
         total,
         stock,
         handleIncreaseQuantity,
@@ -29,32 +30,52 @@ export function CartPage() {
                         </tr>
                     </thead>
                     <tbody className="cart-table__wrapper__table__body">
-                        {productsInCart.map((product) => (
-                            <tr className={`cart-table__wrapper__table__body__row ${stock[product.id] ? '' : '`cart-table__wrapper__table__body__row--not-stock'}`} key={product.id}>
-                                <td className="cart-table__wrapper__table__body__row__product-cell" data-label="Product">
-                                    <img src={product.thumbnail} alt={product.title} />
-                                    <span>{product.title}</span>
+                        {productLoading ?
+                            <tr className="cart-table__wrapper__table__body__loading-row">
+                                <td colSpan={4} className="cart-table__wrapper__table__body__loading">
+                                    <Spinner size="medium" color="primary" />
                                 </td>
-                                <td data-label="Price">${product.price.toFixed(FIX_NUMBER)}</td>
-                                <td className="cart-table__wrapper__table__body__row__quantity-cell" data-label="Quantity">
-                                    <span>{product.quantity}</span>
-                                    <div className="quantity-controls">
-                                        <button onClick={() => handleIncreaseQuantity(product.id)} disabled={product.quantity >= stock[product.id]}>+</button>
-                                        <button onClick={() => handleDecreaseQuantity(product.id)} disabled={product.quantity <= 0}>-</button>
-                                    </div>
-                                </td>
-                                <td className="cart-table__wrapper__table__body__row__total-cell" data-label="Subtotal">${product.total.toFixed(FIX_NUMBER)}</td>
                             </tr>
-                        ))}
+                            :
+                            productsInCart.length === 0 ?
+                                <tr className="cart-table__wrapper__table__body__row cart-table__wrapper__table__body__row--empty">
+                                    <td colSpan={4} className="cart-table__wrapper__table__body__row__empty-message">
+                                        Your cart is empty.
+                                    </td>
+                                </tr>
+                                :
+                                productsInCart.map((product) => (
+                                    <tr className={`cart-table__wrapper__table__body__row ${stock[product.id] ? '' : '`cart-table__wrapper__table__body__row--not-stock'}`} key={product.id}>
+                                        <td className="cart-table__wrapper__table__body__row__product-cell" data-label="Product">
+                                            {/* <img src={product.thumbnail} alt={product.title} /> */}
+                                            <Image src={product.thumbnail}
+                                                alt={product.title}
+                                                classNameBackground="cart-table__wrapper__table__body__row__product-cell__image"
+                                                size="small"
+                                                color="secondary"
+                                            />
+                                            <span>{product.title}</span>
+                                        </td>
+                                        <td data-label="Price">${product.price.toFixed(FIX_NUMBER)}</td>
+                                        <td className="cart-table__wrapper__table__body__row__quantity-cell" data-label="Quantity">
+                                            <span>{product.quantity}</span>
+                                            <div className="quantity-controls">
+                                                <button onClick={() => handleIncreaseQuantity(product.id)} disabled={product.quantity >= stock[product.id]}>+</button>
+                                                <button onClick={() => handleDecreaseQuantity(product.id)} disabled={product.quantity <= 0}>-</button>
+                                            </div>
+                                        </td>
+                                        <td className="cart-table__wrapper__table__body__row__total-cell" data-label="Subtotal">${product.total.toFixed(FIX_NUMBER)}</td>
+                                    </tr>
+                                ))}
                     </tbody>
                 </table>
             </div>
 
             <div className="cart-table__cart-buttons">
                 <Link to="/" className="button" onClick={() => console.log("Return to Shop clicked")}>Return to Shop</Link>
-                <button className="button" onClick={() => updateCart(productsInCart)} disabled={loading}>
-                    {loading ? 
-                            <span role="status">Updating...</span>
+                <button className="button" onClick={() => updateCart(productsInCart)} disabled={productLoading || loading}>
+                    {loading ?
+                        <span role="status">Updating...</span>
                         :
                         <span>Update Cart</span>
                     }
@@ -73,7 +94,7 @@ export function CartPage() {
                         value=""
                         onChange={() => { }}
                     />
-                    <button disabled={loading} className="cart-table__total-container__input-coupon-container__button red">Apply Coupon</button>
+                    <button disabled={productLoading || loading || productsInCart.length === 0} className="cart-table__total-container__input-coupon-container__button red">Apply Coupon</button>
                 </div>
                 <div className="cart-table__total-container__cart-summary">
                     <h2>Cart Total</h2>
@@ -89,7 +110,7 @@ export function CartPage() {
                         <p>Total:</p>
                         <p>${total.toFixed(FIX_NUMBER)}</p>
                     </div>
-                    <Link to="/check-out" className="cart-table__total-container__cart-summary__button red">Process to checkout</Link>
+                    <Link to="/check-out" className="cart-table__total-container__cart-summary__button red" style={(loading || productLoading || productsInCart.length === 0) ? { pointerEvents: 'none', backgroundColor: '#ccc' } : undefined}>Process to checkout</Link>
                 </div>
             </div>
         </div>

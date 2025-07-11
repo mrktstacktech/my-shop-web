@@ -18,3 +18,4 @@ export * from './radio';
 export * from './preview-button';
 export * from './tooltip';
 export * from './loading';
+export * from './poster';

@@ -12,6 +12,7 @@ export function AppHeader() {
     const { isAuthenticated } = useAuthContext();
     const {
         inputValue,
+        setInputValue,
         searchValue,
         loading,
         onChangeTextSearch
@@ -82,9 +83,12 @@ export function AppHeader() {
                                 <p className="app-header__container__controls__search-dropdown__search-status">Searching...</p>
                             ) : (
                                 searchValue.length > 0 ? (
-                                    <ul className="app-header__container__controls__search-dropdown__search-results">
+                                    <ul className="app-header__container__controls__search-dropdown__search-results" >
                                         {searchValue.map((product, index) => (
-                                            <li key={index} className="app-header__container__controls__search-dropdown__search-results__search-item">
+                                            <li key={index} className="app-header__container__controls__search-dropdown__search-results__search-item" onClick={() => {
+                                                setInputValue(product.title);
+                                                setIsOpen(false);
+                                            }}>
                                                 <Link to={`/product/${product.id}`}>{product.title}</Link>
                                             </li>
                                         ))}

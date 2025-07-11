@@ -2,6 +2,7 @@ import type { DropDownType } from "./type";
 import './style.scss'
 import { useAuthContext } from "@/context/auth-hook";
 import { useState } from "react";
+import { Link } from "react-router-dom";
 const styles = {
     dropdownItem: "flex items-center px-4 py-2 text-sm",
 }
@@ -32,7 +33,7 @@ export function DropDown(props: DropDownType) {
                 <ul className={`dropdown__menu absolute rounded-md right-0 mt-2 z-10 }`}>
                 {props.options.map((option, idx) => (
                     <li onClick={() => handleLogout(option.label)} key={idx} >
-                        <a className={`${styles.dropdownItem} ${props.classNameModal || ''}`} href={option.href}><span className="pr-1">{option.icon}</span> {option.label}</a>
+                        <Link className={`${styles.dropdownItem} ${props.classNameModal || ''}`} to={option.href}><span className="pr-1">{option.icon}</span> {option.label}</Link>
                     </li>
                 ))}
             </ul>

@@ -12,6 +12,7 @@ export type InputFormFieldType = {
     onChange: (value: string) => void;
     onBlur?: (value: string) => void;
     onClick?: () => void;
+    onSuffixClick?: () => void;
     required?: boolean;
     className?: string;
     style?: React.CSSProperties;

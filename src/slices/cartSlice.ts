@@ -77,7 +77,8 @@ export const cartSlice = createSlice({
                         cartItems[existingIndex].quantity += 1;
                         cartItems[existingIndex].total = cartItems[existingIndex].quantity * cartItems[existingIndex].price;
                     } else {
-                        cartItems.push(item);
+                        const newItemWithQuantity = { ...item, quantity: 1, total: item.price };
+                        cartItems.push(newItemWithQuantity);
                     }
                 });
 
@@ -96,7 +97,8 @@ export const cartSlice = createSlice({
                 cartItems[existingIndex].quantity += 1;
                 cartItems[existingIndex].total = cartItems[existingIndex].quantity * cartItems[existingIndex].price;
             } else {
-                cartItems.push(newItem);
+                const newItemWithQuantity = { ...newItem, quantity: 1, total: newItem.price };
+                cartItems.push(newItemWithQuantity);
             }
             state.currentCartItems = cartItems;
             state.totalItems = cartItems.reduce((sum, item) => sum + (item.quantity || 1), 0);

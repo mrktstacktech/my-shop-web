@@ -54,7 +54,7 @@ export function InputFormField({ isMultiline = false, ...props }: InputFormField
                         onClick={() => props.onClick && props.onClick()}
                     />
                 )}
-                {props.suffix && <span className={`ml-2 ${props.className}__field__suffix`}>{props.suffix}</span>}
+                {props.suffix && <span onClick={props.onSuffixClick} className={`ml-2 ${props.className}__field__suffix`}>{props.suffix}</span>}
             </div>
             {props.errorText && <p className={`text-red-500 text-xs mt-1 ${props.className}__errorText`}>{props.errorText}</p>}
             {props.hintText && !props.errorText && <p className={`text-gray-500 text-xs mt-1 ${props.className}__field__hintText`}>{props.hintText}</p>}

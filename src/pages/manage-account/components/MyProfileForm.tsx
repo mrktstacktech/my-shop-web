@@ -1,5 +1,5 @@
 import { InputFormField } from "@/components";
-import { useUpdateProfile } from "@/hooks";
+import { useUpdateProfile, useShowPassword } from "@/hooks";
 import { ToastContainer } from "react-toastify";
 
 import './style.scss';
@@ -16,6 +16,18 @@ export function MyProfileForm({ className = '' }: { className?: string }) {
         processing,
         setError
     } = useUpdateProfile();
+
+    const { type: currentPasswordType, 
+        toggleShowPassword: toggleShowCurrentPassword, 
+        icon: currentPasswordIcon } = useShowPassword();
+
+    const { type: newPasswordType,
+        toggleShowPassword: toggleShowNewPassword,
+        icon: newPasswordIcon } = useShowPassword();
+        
+    const { type: confirmPasswordType,
+        toggleShowPassword: toggleShowConfirmPassword,
+        icon: confirmPasswordIcon } = useShowPassword();
 
     return (
         <form onSubmit={(e) => {
@@ -103,7 +115,9 @@ export function MyProfileForm({ className = '' }: { className?: string }) {
                 <label>Password Change</label>
                 <InputFormField
                     name="currentPassword"
-                    type="password"
+                    type={currentPasswordType}
+                    suffix={currentPasswordIcon}
+                    onSuffixClick={toggleShowCurrentPassword}
                     value={form.currentPassword}
                     placeholder="Current password"
                     id={"currentPassword"}
@@ -116,9 +130,11 @@ export function MyProfileForm({ className = '' }: { className?: string }) {
                 />
                 <InputFormField
                     name="newPassword"
-                    type="password"
+                    type={newPasswordType}
+                    suffix={newPasswordIcon}
                     value={form.newPassword}
                     placeholder="New password"
+                    onSuffixClick={toggleShowNewPassword}
                     id={"newPassword"}
                     onChange={(value: string) =>  {
                         setError({ ...error, newPassword: '' }); // Clear error on change
@@ -129,7 +145,9 @@ export function MyProfileForm({ className = '' }: { className?: string }) {
                 />
                 <InputFormField
                     name="confirmNewPassword"
-                    type="password"
+                    type={confirmPasswordType}
+                    suffix={confirmPasswordIcon}
+                    onSuffixClick={toggleShowConfirmPassword}
                     value={confirmPassword}
                     placeholder="Confirm new password"
                     id={"confirmNewPassword"}

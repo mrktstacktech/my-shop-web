@@ -1,6 +1,7 @@
 import { MyProfileForm } from "./components";
 import './style.scss';
 import { Link } from "react-router-dom";
+
 export function ManageAccountPage() {
     return (
         <div className="manage-account-page">
